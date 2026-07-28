@@ -1,0 +1,5952 @@
+{
+ "note": "CST ground truth from pyaxon cst2026; spans are [start,end,line,column] and document node IDs are stable pre-order indexes",
+ "cases": [
+  {
+   "profile": "core",
+   "input": "42",
+   "tokens": [
+    {
+     "kind": "atom",
+     "text": "42",
+     "start": 0,
+     "end": 2,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "-17",
+   "tokens": [
+    {
+     "kind": "atom",
+     "text": "-17",
+     "start": 0,
+     "end": 3,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "  \t\r\n 1  ",
+   "tokens": [
+    {
+     "kind": "whitespace",
+     "text": "  \t\r\n ",
+     "start": 0,
+     "end": 6,
+     "line": 1,
+     "column": 1,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 6,
+     "end": 7,
+     "line": 2,
+     "column": 2,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": "  ",
+     "start": 7,
+     "end": 9,
+     "line": 2,
+     "column": 3,
+     "trivia": true
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "hello world",
+   "tokens": [
+    {
+     "kind": "name",
+     "text": "hello",
+     "start": 0,
+     "end": 5,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 5,
+     "end": 6,
+     "line": 1,
+     "column": 6,
+     "trivia": true
+    },
+    {
+     "kind": "name",
+     "text": "world",
+     "start": 6,
+     "end": 11,
+     "line": 1,
+     "column": 7,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "[1 2 3]",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "[",
+     "start": 0,
+     "end": 1,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 1,
+     "end": 2,
+     "line": 1,
+     "column": 2,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 2,
+     "end": 3,
+     "line": 1,
+     "column": 3,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "2",
+     "start": 3,
+     "end": 4,
+     "line": 1,
+     "column": 4,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 4,
+     "end": 5,
+     "line": 1,
+     "column": 5,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "3",
+     "start": 5,
+     "end": 6,
+     "line": 1,
+     "column": 6,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "]",
+     "start": 6,
+     "end": 7,
+     "line": 1,
+     "column": 7,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "{a:1 b:2}",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "{",
+     "start": 0,
+     "end": 1,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "name",
+     "text": "a",
+     "start": 1,
+     "end": 2,
+     "line": 1,
+     "column": 2,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "start": 2,
+     "end": 3,
+     "line": 1,
+     "column": 3,
+     "trivia": false
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 3,
+     "end": 4,
+     "line": 1,
+     "column": 4,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 4,
+     "end": 5,
+     "line": 1,
+     "column": 5,
+     "trivia": true
+    },
+    {
+     "kind": "name",
+     "text": "b",
+     "start": 5,
+     "end": 6,
+     "line": 1,
+     "column": 6,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "start": 6,
+     "end": 7,
+     "line": 1,
+     "column": 7,
+     "trivia": false
+    },
+    {
+     "kind": "atom",
+     "text": "2",
+     "start": 7,
+     "end": 8,
+     "line": 1,
+     "column": 8,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "}",
+     "start": 8,
+     "end": 9,
+     "line": 1,
+     "column": 9,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "point{x:1 y:2}",
+   "tokens": [
+    {
+     "kind": "name",
+     "text": "point",
+     "start": 0,
+     "end": 5,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "{",
+     "start": 5,
+     "end": 6,
+     "line": 1,
+     "column": 6,
+     "trivia": false
+    },
+    {
+     "kind": "name",
+     "text": "x",
+     "start": 6,
+     "end": 7,
+     "line": 1,
+     "column": 7,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "start": 7,
+     "end": 8,
+     "line": 1,
+     "column": 8,
+     "trivia": false
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 8,
+     "end": 9,
+     "line": 1,
+     "column": 9,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 9,
+     "end": 10,
+     "line": 1,
+     "column": 10,
+     "trivia": true
+    },
+    {
+     "kind": "name",
+     "text": "y",
+     "start": 10,
+     "end": 11,
+     "line": 1,
+     "column": 11,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "start": 11,
+     "end": 12,
+     "line": 1,
+     "column": 12,
+     "trivia": false
+    },
+    {
+     "kind": "atom",
+     "text": "2",
+     "start": 12,
+     "end": 13,
+     "line": 1,
+     "column": 13,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "}",
+     "start": 13,
+     "end": 14,
+     "line": 1,
+     "column": 14,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "(1 2 3)",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "(",
+     "start": 0,
+     "end": 1,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 1,
+     "end": 2,
+     "line": 1,
+     "column": 2,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 2,
+     "end": 3,
+     "line": 1,
+     "column": 3,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "2",
+     "start": 3,
+     "end": 4,
+     "line": 1,
+     "column": 4,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 4,
+     "end": 5,
+     "line": 1,
+     "column": 5,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "3",
+     "start": 5,
+     "end": 6,
+     "line": 1,
+     "column": 6,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": ")",
+     "start": 6,
+     "end": 7,
+     "line": 1,
+     "column": 7,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "[:]",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "[",
+     "start": 0,
+     "end": 1,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "start": 1,
+     "end": 2,
+     "line": 1,
+     "column": 2,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "]",
+     "start": 2,
+     "end": 3,
+     "line": 1,
+     "column": 3,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "# a comment\n1",
+   "tokens": [
+    {
+     "kind": "comment",
+     "text": "# a comment",
+     "start": 0,
+     "end": 11,
+     "line": 1,
+     "column": 1,
+     "trivia": true
+    },
+    {
+     "kind": "whitespace",
+     "text": "\n",
+     "start": 11,
+     "end": 12,
+     "line": 1,
+     "column": 12,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 12,
+     "end": 13,
+     "line": 2,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "1 # trailing\n2",
+   "tokens": [
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 0,
+     "end": 1,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 1,
+     "end": 2,
+     "line": 1,
+     "column": 2,
+     "trivia": true
+    },
+    {
+     "kind": "comment",
+     "text": "# trailing",
+     "start": 2,
+     "end": 12,
+     "line": 1,
+     "column": 3,
+     "trivia": true
+    },
+    {
+     "kind": "whitespace",
+     "text": "\n",
+     "start": 12,
+     "end": 13,
+     "line": 1,
+     "column": 13,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "2",
+     "start": 13,
+     "end": 14,
+     "line": 2,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "#_ 1 2",
+   "tokens": [
+    {
+     "kind": "discard",
+     "text": "#_",
+     "start": 0,
+     "end": 2,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 2,
+     "end": 3,
+     "line": 1,
+     "column": 3,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 3,
+     "end": 4,
+     "line": 1,
+     "column": 4,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 4,
+     "end": 5,
+     "line": 1,
+     "column": 5,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "2",
+     "start": 5,
+     "end": 6,
+     "line": 1,
+     "column": 6,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "[1 #_ 2 3]",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "[",
+     "start": 0,
+     "end": 1,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 1,
+     "end": 2,
+     "line": 1,
+     "column": 2,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 2,
+     "end": 3,
+     "line": 1,
+     "column": 3,
+     "trivia": true
+    },
+    {
+     "kind": "discard",
+     "text": "#_",
+     "start": 3,
+     "end": 5,
+     "line": 1,
+     "column": 4,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 5,
+     "end": 6,
+     "line": 1,
+     "column": 6,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "2",
+     "start": 6,
+     "end": 7,
+     "line": 1,
+     "column": 7,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 7,
+     "end": 8,
+     "line": 1,
+     "column": 8,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "3",
+     "start": 8,
+     "end": 9,
+     "line": 1,
+     "column": 9,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "]",
+     "start": 9,
+     "end": 10,
+     "line": 1,
+     "column": 10,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "hash_comment",
+   "input": "#_ this is a comment\n1",
+   "tokens": [
+    {
+     "kind": "comment",
+     "text": "#_ this is a comment",
+     "start": 0,
+     "end": 20,
+     "line": 1,
+     "column": 1,
+     "trivia": true
+    },
+    {
+     "kind": "whitespace",
+     "text": "\n",
+     "start": 20,
+     "end": 21,
+     "line": 1,
+     "column": 21,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 21,
+     "end": 22,
+     "line": 2,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "compat",
+   "input": "#_ comment in compat\n2",
+   "tokens": [
+    {
+     "kind": "comment",
+     "text": "#_ comment in compat",
+     "start": 0,
+     "end": 20,
+     "line": 1,
+     "column": 1,
+     "trivia": true
+    },
+    {
+     "kind": "whitespace",
+     "text": "\n",
+     "start": 20,
+     "end": 21,
+     "line": 1,
+     "column": 21,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "2",
+     "start": 21,
+     "end": 22,
+     "line": 2,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "r\"x\\y\"",
+   "tokens": [
+    {
+     "kind": "raw-string",
+     "text": "r\"x\\y\"",
+     "start": 0,
+     "end": 6,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "r#\"a\"b\"#",
+   "tokens": [
+    {
+     "kind": "raw-string",
+     "text": "r#\"a\"b\"#",
+     "start": 0,
+     "end": 8,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "r##\"a\"#b\"##",
+   "tokens": [
+    {
+     "kind": "raw-string",
+     "text": "r##\"a\"#b\"##",
+     "start": 0,
+     "end": 11,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "r\"unterminated",
+   "tokens": [
+    {
+     "kind": "raw-string",
+     "text": "r\"unterminated",
+     "start": 0,
+     "end": 14,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "\"hello\"",
+   "tokens": [
+    {
+     "kind": "string",
+     "text": "\"hello\"",
+     "start": 0,
+     "end": 7,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "\"with \\\" escape\"",
+   "tokens": [
+    {
+     "kind": "string",
+     "text": "\"with \\\" escape\"",
+     "start": 0,
+     "end": 16,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "'quoted name'",
+   "tokens": [
+    {
+     "kind": "quoted-name",
+     "text": "'quoted name'",
+     "start": 0,
+     "end": 13,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "`back`",
+   "tokens": [
+    {
+     "kind": "string",
+     "text": "`back`",
+     "start": 0,
+     "end": 6,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "\"unterminated",
+   "tokens": [
+    {
+     "kind": "string",
+     "text": "\"unterminated",
+     "start": 0,
+     "end": 13,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "'weird name'{x:1}",
+   "tokens": [
+    {
+     "kind": "quoted-name",
+     "text": "'weird name'",
+     "start": 0,
+     "end": 12,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "{",
+     "start": 12,
+     "end": 13,
+     "line": 1,
+     "column": 13,
+     "trivia": false
+    },
+    {
+     "kind": "name",
+     "text": "x",
+     "start": 13,
+     "end": 14,
+     "line": 1,
+     "column": 14,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "start": 14,
+     "end": 15,
+     "line": 1,
+     "column": 15,
+     "trivia": false
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 15,
+     "end": 16,
+     "line": 1,
+     "column": 16,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "}",
+     "start": 16,
+     "end": 17,
+     "line": 1,
+     "column": 17,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "|SGVsbG8=|",
+   "tokens": [
+    {
+     "kind": "binary",
+     "text": "|SGVsbG8=|",
+     "start": 0,
+     "end": 10,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "|deadbeef|",
+   "tokens": [
+    {
+     "kind": "binary",
+     "text": "|deadbeef|",
+     "start": 0,
+     "end": 10,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "legacy_binary",
+   "input": "|SGVsbG8=|",
+   "tokens": [
+    {
+     "kind": "binary",
+     "text": "|SGVsbG8=",
+     "start": 0,
+     "end": 9,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "binary",
+     "text": "|",
+     "start": 9,
+     "end": 10,
+     "line": 1,
+     "column": 10,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "compat",
+   "input": "|SGVsbG8=| rest",
+   "tokens": [
+    {
+     "kind": "binary",
+     "text": "|SGVsbG8=",
+     "start": 0,
+     "end": 9,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "binary",
+     "text": "| rest",
+     "start": 9,
+     "end": 15,
+     "line": 1,
+     "column": 10,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "^2026-01-01",
+   "tokens": [
+    {
+     "kind": "temporal",
+     "text": "^2026-01-01",
+     "start": 0,
+     "end": 11,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "^12:00:00.5",
+   "tokens": [
+    {
+     "kind": "temporal",
+     "text": "^12:00:00.5",
+     "start": 0,
+     "end": 11,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "^2026-01-01T12:00:00Z",
+   "tokens": [
+    {
+     "kind": "temporal",
+     "text": "^2026-01-01T12:00:00Z",
+     "start": 0,
+     "end": 21,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "^2026-01-01T12:00:00+05:00[America/New_York]",
+   "tokens": [
+    {
+     "kind": "temporal",
+     "text": "^2026-01-01T12:00:00+05:00[America/New_York]",
+     "start": 0,
+     "end": 44,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "[^2026-01-01, 1]",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "[",
+     "start": 0,
+     "end": 1,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "temporal",
+     "text": "^2026-01-01",
+     "start": 1,
+     "end": 12,
+     "line": 1,
+     "column": 2,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": ",",
+     "start": 12,
+     "end": 13,
+     "line": 1,
+     "column": 13,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 13,
+     "end": 14,
+     "line": 1,
+     "column": 14,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 14,
+     "end": 15,
+     "line": 1,
+     "column": 15,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "]",
+     "start": 15,
+     "end": 16,
+     "line": 1,
+     "column": 16,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "^2026-01-01#comment",
+   "tokens": [
+    {
+     "kind": "temporal",
+     "text": "^2026-01-01",
+     "start": 0,
+     "end": 11,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "comment",
+     "text": "#comment",
+     "start": 11,
+     "end": 19,
+     "line": 1,
+     "column": 12,
+     "trivia": true
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "&a 1",
+   "tokens": [
+    {
+     "kind": "anchor",
+     "text": "&",
+     "start": 0,
+     "end": 1,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "name",
+     "text": "a",
+     "start": 1,
+     "end": 2,
+     "line": 1,
+     "column": 2,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 2,
+     "end": 3,
+     "line": 1,
+     "column": 3,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 3,
+     "end": 4,
+     "line": 1,
+     "column": 4,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "*b",
+   "tokens": [
+    {
+     "kind": "reference",
+     "text": "*",
+     "start": 0,
+     "end": 1,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "name",
+     "text": "b",
+     "start": 1,
+     "end": 2,
+     "line": 1,
+     "column": 2,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "$const",
+   "tokens": [
+    {
+     "kind": "constant",
+     "text": "$",
+     "start": 0,
+     "end": 1,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "name",
+     "text": "const",
+     "start": 1,
+     "end": 6,
+     "line": 1,
+     "column": 2,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "[&a point{x:1} *a]",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "[",
+     "start": 0,
+     "end": 1,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "anchor",
+     "text": "&",
+     "start": 1,
+     "end": 2,
+     "line": 1,
+     "column": 2,
+     "trivia": false
+    },
+    {
+     "kind": "name",
+     "text": "a",
+     "start": 2,
+     "end": 3,
+     "line": 1,
+     "column": 3,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 3,
+     "end": 4,
+     "line": 1,
+     "column": 4,
+     "trivia": true
+    },
+    {
+     "kind": "name",
+     "text": "point",
+     "start": 4,
+     "end": 9,
+     "line": 1,
+     "column": 5,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "{",
+     "start": 9,
+     "end": 10,
+     "line": 1,
+     "column": 10,
+     "trivia": false
+    },
+    {
+     "kind": "name",
+     "text": "x",
+     "start": 10,
+     "end": 11,
+     "line": 1,
+     "column": 11,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "start": 11,
+     "end": 12,
+     "line": 1,
+     "column": 12,
+     "trivia": false
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 12,
+     "end": 13,
+     "line": 1,
+     "column": 13,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "}",
+     "start": 13,
+     "end": 14,
+     "line": 1,
+     "column": 14,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 14,
+     "end": 15,
+     "line": 1,
+     "column": 15,
+     "trivia": true
+    },
+    {
+     "kind": "reference",
+     "text": "*",
+     "start": 15,
+     "end": 16,
+     "line": 1,
+     "column": 16,
+     "trivia": false
+    },
+    {
+     "kind": "name",
+     "text": "a",
+     "start": 16,
+     "end": 17,
+     "line": 1,
+     "column": 17,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "]",
+     "start": 17,
+     "end": 18,
+     "line": 1,
+     "column": 18,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "∞",
+   "tokens": [
+    {
+     "kind": "atom",
+     "text": "∞",
+     "start": 0,
+     "end": 3,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "-∞",
+   "tokens": [
+    {
+     "kind": "atom",
+     "text": "-∞",
+     "start": 0,
+     "end": 4,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "?",
+   "tokens": [
+    {
+     "kind": "atom",
+     "text": "?",
+     "start": 0,
+     "end": 1,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "∅",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "∅",
+     "start": 0,
+     "end": 3,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "∞abc",
+   "tokens": [
+    {
+     "kind": "atom",
+     "text": "∞abc",
+     "start": 0,
+     "end": 6,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "café",
+   "tokens": [
+    {
+     "kind": "name",
+     "text": "café",
+     "start": 0,
+     "end": 5,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "\"café ☕ résumé\"",
+   "tokens": [
+    {
+     "kind": "string",
+     "text": "\"café ☕ résumé\"",
+     "start": 0,
+     "end": 20,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "{café:1 naïve:2}",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "{",
+     "start": 0,
+     "end": 1,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "name",
+     "text": "café",
+     "start": 1,
+     "end": 6,
+     "line": 1,
+     "column": 2,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "start": 6,
+     "end": 7,
+     "line": 1,
+     "column": 6,
+     "trivia": false
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 7,
+     "end": 8,
+     "line": 1,
+     "column": 7,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 8,
+     "end": 9,
+     "line": 1,
+     "column": 8,
+     "trivia": true
+    },
+    {
+     "kind": "name",
+     "text": "naïve",
+     "start": 9,
+     "end": 15,
+     "line": 1,
+     "column": 9,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "start": 15,
+     "end": 16,
+     "line": 1,
+     "column": 14,
+     "trivia": false
+    },
+    {
+     "kind": "atom",
+     "text": "2",
+     "start": 16,
+     "end": 17,
+     "line": 1,
+     "column": 15,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "}",
+     "start": 17,
+     "end": 18,
+     "line": 1,
+     "column": 16,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "^2026-01-01T00:00:00+00:00[Café/Zürich]",
+   "tokens": [
+    {
+     "kind": "temporal",
+     "text": "^2026-01-01T00:00:00+00:00[Café/Zürich]",
+     "start": 0,
+     "end": 41,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "日本語 x",
+   "tokens": [
+    {
+     "kind": "name",
+     "text": "日本語",
+     "start": 0,
+     "end": 9,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 9,
+     "end": 10,
+     "line": 1,
+     "column": 4,
+     "trivia": true
+    },
+    {
+     "kind": "name",
+     "text": "x",
+     "start": 10,
+     "end": 11,
+     "line": 1,
+     "column": 5,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "😀 emoji",
+   "tokens": [
+    {
+     "kind": "name",
+     "text": "😀",
+     "start": 0,
+     "end": 4,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 4,
+     "end": 5,
+     "line": 1,
+     "column": 2,
+     "trivia": true
+    },
+    {
+     "kind": "name",
+     "text": "emoji",
+     "start": 5,
+     "end": 10,
+     "line": 1,
+     "column": 3,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "١",
+   "tokens": [
+    {
+     "kind": "atom",
+     "text": "١",
+     "start": 0,
+     "end": 2,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "²",
+   "tokens": [
+    {
+     "kind": "atom",
+     "text": "²",
+     "start": 0,
+     "end": 2,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "½",
+   "tokens": [
+    {
+     "kind": "name",
+     "text": "½",
+     "start": 0,
+     "end": 2,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "axon{edition:\"2026\"} 1",
+   "tokens": [
+    {
+     "kind": "name",
+     "text": "axon",
+     "start": 0,
+     "end": 4,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "{",
+     "start": 4,
+     "end": 5,
+     "line": 1,
+     "column": 5,
+     "trivia": false
+    },
+    {
+     "kind": "name",
+     "text": "edition",
+     "start": 5,
+     "end": 12,
+     "line": 1,
+     "column": 6,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "start": 12,
+     "end": 13,
+     "line": 1,
+     "column": 13,
+     "trivia": false
+    },
+    {
+     "kind": "string",
+     "text": "\"2026\"",
+     "start": 13,
+     "end": 19,
+     "line": 1,
+     "column": 14,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "}",
+     "start": 19,
+     "end": 20,
+     "line": 1,
+     "column": 20,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 20,
+     "end": 21,
+     "line": 1,
+     "column": 21,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 21,
+     "end": 22,
+     "line": 1,
+     "column": 22,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "{a:[1 2] b:{c:3}}",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "{",
+     "start": 0,
+     "end": 1,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "name",
+     "text": "a",
+     "start": 1,
+     "end": 2,
+     "line": 1,
+     "column": 2,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "start": 2,
+     "end": 3,
+     "line": 1,
+     "column": 3,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "[",
+     "start": 3,
+     "end": 4,
+     "line": 1,
+     "column": 4,
+     "trivia": false
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 4,
+     "end": 5,
+     "line": 1,
+     "column": 5,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 5,
+     "end": 6,
+     "line": 1,
+     "column": 6,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "2",
+     "start": 6,
+     "end": 7,
+     "line": 1,
+     "column": 7,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "]",
+     "start": 7,
+     "end": 8,
+     "line": 1,
+     "column": 8,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 8,
+     "end": 9,
+     "line": 1,
+     "column": 9,
+     "trivia": true
+    },
+    {
+     "kind": "name",
+     "text": "b",
+     "start": 9,
+     "end": 10,
+     "line": 1,
+     "column": 10,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "start": 10,
+     "end": 11,
+     "line": 1,
+     "column": 11,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "{",
+     "start": 11,
+     "end": 12,
+     "line": 1,
+     "column": 12,
+     "trivia": false
+    },
+    {
+     "kind": "name",
+     "text": "c",
+     "start": 12,
+     "end": 13,
+     "line": 1,
+     "column": 13,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "start": 13,
+     "end": 14,
+     "line": 1,
+     "column": 14,
+     "trivia": false
+    },
+    {
+     "kind": "atom",
+     "text": "3",
+     "start": 14,
+     "end": 15,
+     "line": 1,
+     "column": 15,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "}",
+     "start": 15,
+     "end": 16,
+     "line": 1,
+     "column": 16,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "}",
+     "start": 16,
+     "end": 17,
+     "line": 1,
+     "column": 17,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "[&root [1 2 3] *root]",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "[",
+     "start": 0,
+     "end": 1,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "anchor",
+     "text": "&",
+     "start": 1,
+     "end": 2,
+     "line": 1,
+     "column": 2,
+     "trivia": false
+    },
+    {
+     "kind": "name",
+     "text": "root",
+     "start": 2,
+     "end": 6,
+     "line": 1,
+     "column": 3,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 6,
+     "end": 7,
+     "line": 1,
+     "column": 7,
+     "trivia": true
+    },
+    {
+     "kind": "punctuation",
+     "text": "[",
+     "start": 7,
+     "end": 8,
+     "line": 1,
+     "column": 8,
+     "trivia": false
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 8,
+     "end": 9,
+     "line": 1,
+     "column": 9,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 9,
+     "end": 10,
+     "line": 1,
+     "column": 10,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "2",
+     "start": 10,
+     "end": 11,
+     "line": 1,
+     "column": 11,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 11,
+     "end": 12,
+     "line": 1,
+     "column": 12,
+     "trivia": true
+    },
+    {
+     "kind": "atom",
+     "text": "3",
+     "start": 12,
+     "end": 13,
+     "line": 1,
+     "column": 13,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "]",
+     "start": 13,
+     "end": 14,
+     "line": 1,
+     "column": 14,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 14,
+     "end": 15,
+     "line": 1,
+     "column": 15,
+     "trivia": true
+    },
+    {
+     "kind": "reference",
+     "text": "*",
+     "start": 15,
+     "end": 16,
+     "line": 1,
+     "column": 16,
+     "trivia": false
+    },
+    {
+     "kind": "name",
+     "text": "root",
+     "start": 16,
+     "end": 20,
+     "line": 1,
+     "column": 17,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "]",
+     "start": 20,
+     "end": 21,
+     "line": 1,
+     "column": 21,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "p{x:1 x:2}",
+   "tokens": [
+    {
+     "kind": "name",
+     "text": "p",
+     "start": 0,
+     "end": 1,
+     "line": 1,
+     "column": 1,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "{",
+     "start": 1,
+     "end": 2,
+     "line": 1,
+     "column": 2,
+     "trivia": false
+    },
+    {
+     "kind": "name",
+     "text": "x",
+     "start": 2,
+     "end": 3,
+     "line": 1,
+     "column": 3,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "start": 3,
+     "end": 4,
+     "line": 1,
+     "column": 4,
+     "trivia": false
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "start": 4,
+     "end": 5,
+     "line": 1,
+     "column": 5,
+     "trivia": false
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "start": 5,
+     "end": 6,
+     "line": 1,
+     "column": 6,
+     "trivia": true
+    },
+    {
+     "kind": "name",
+     "text": "x",
+     "start": 6,
+     "end": 7,
+     "line": 1,
+     "column": 7,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "start": 7,
+     "end": 8,
+     "line": 1,
+     "column": 8,
+     "trivia": false
+    },
+    {
+     "kind": "atom",
+     "text": "2",
+     "start": 8,
+     "end": 9,
+     "line": 1,
+     "column": 9,
+     "trivia": false
+    },
+    {
+     "kind": "punctuation",
+     "text": "}",
+     "start": 9,
+     "end": 10,
+     "line": 1,
+     "column": 10,
+     "trivia": false
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "",
+   "tokens": []
+  },
+  {
+   "profile": "core",
+   "input": "   ",
+   "tokens": [
+    {
+     "kind": "whitespace",
+     "text": "   ",
+     "start": 0,
+     "end": 3,
+     "line": 1,
+     "column": 1,
+     "trivia": true
+    }
+   ]
+  },
+  {
+   "profile": "core",
+   "input": "\n\n\n",
+   "tokens": [
+    {
+     "kind": "whitespace",
+     "text": "\n\n\n",
+     "start": 0,
+     "end": 3,
+     "line": 1,
+     "column": 1,
+     "trivia": true
+    }
+   ]
+  }
+ ],
+ "migrate": [
+  {
+   "profile": "core",
+   "input": "point\n  x:1\n  y:2\n",
+   "outcome": "ok",
+   "output": "point{\n  x:1\n  y:2\n}\n"
+  },
+  {
+   "profile": "core",
+   "input": "root\n  a:1\n  child\n    b:2\n",
+   "outcome": "ok",
+   "output": "root{\n  a:1\n  child{\n    b:2\n  }\n}\n"
+  },
+  {
+   "profile": "core",
+   "input": "point\n  x:1\n  y:2\n  z:3\n",
+   "outcome": "ok",
+   "output": "point{\n  x:1\n  y:2\n  z:3\n}\n"
+  },
+  {
+   "profile": "core",
+   "input": "a:1\nb:2\n",
+   "outcome": "ok",
+   "output": "a:1\nb:2\n"
+  },
+  {
+   "profile": "core",
+   "input": "config\n  # a comment\n  x:1\n\n  y:2\n",
+   "outcome": "ok",
+   "output": "config{\n  # a comment\n  x:1\n\n  y:2\n}\n"
+  },
+  {
+   "profile": "core",
+   "input": "ns/node\n  x:1\n",
+   "outcome": "ok",
+   "output": "ns/node{\n  x:1\n}\n"
+  },
+  {
+   "profile": "core",
+   "input": "outer\n  inner\n    deep\n      v:1\n",
+   "outcome": "ok",
+   "output": "outer{\n  inner{\n    deep{\n      v:1\n    }\n  }\n}\n"
+  },
+  {
+   "profile": "core",
+   "input": "point\r\n  x:1\r\n  y:2\r\n",
+   "outcome": "ok",
+   "output": "point{\r\n  x:1\r\n  y:2\r\n}\n"
+  },
+  {
+   "profile": "core",
+   "input": "{x:1 y:2}\n",
+   "outcome": "ok",
+   "output": "{x:1 y:2}\n"
+  },
+  {
+   "profile": "core",
+   "input": "42\n",
+   "outcome": "ok",
+   "output": "42\n"
+  },
+  {
+   "profile": "core",
+   "input": "a\n  b:1\nc\n  d:2\n",
+   "outcome": "ok",
+   "output": "a{\n  b:1\n}\nc{\n  d:2\n}\n"
+  },
+  {
+   "profile": "core",
+   "input": "\n\npoint\n  x:1\n\n",
+   "outcome": "ok",
+   "output": "\n\npoint{\n  x:1\n\n}\n"
+  },
+  {
+   "profile": "core",
+   "input": "point\n\tx:1\n\ty:2\n",
+   "outcome": "ok",
+   "output": "point{\n\tx:1\n\ty:2\n}\n"
+  },
+  {
+   "profile": "core",
+   "input": "  point\n    x:1\n",
+   "outcome": "ok",
+   "output": "  point{\n    x:1\n  }\n"
+  },
+  {
+   "profile": "core",
+   "input": "top\n  mid1\n    x:1\n  mid2\n    y:2\n",
+   "outcome": "ok",
+   "output": "top{\n  mid1{\n    x:1\n  }\n  mid2{\n    y:2\n  }\n}\n"
+  }
+ ],
+ "documents": [
+  {
+   "id": "Q001",
+   "profile": "core",
+   "input": "[\"é\" @]",
+   "render": "[\"é\" @]",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "[",
+     "span": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "string",
+     "text": "\"é\"",
+     "span": [
+      1,
+      5,
+      1,
+      2
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "span": [
+      5,
+      6,
+      1,
+      5
+     ],
+     "trivia": true,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "name",
+     "text": "@",
+     "span": [
+      6,
+      7,
+      1,
+      6
+     ],
+     "trivia": false,
+     "leading": [
+      2
+     ],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": "]",
+     "span": [
+      7,
+      8,
+      1,
+      7
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    }
+   ],
+   "root": 0,
+   "nodes": [
+    {
+     "id": 0,
+     "kind": "document",
+     "span": [
+      0,
+      8,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       1
+      ]
+     ]
+    },
+    {
+     "id": 1,
+     "kind": "stream-value",
+     "span": [
+      0,
+      8,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       2
+      ]
+     ]
+    },
+    {
+     "id": 2,
+     "kind": "bracket",
+     "span": [
+      0,
+      8,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "token",
+       0
+      ],
+      [
+       "node",
+       3
+      ],
+      [
+       "token",
+       2
+      ],
+      [
+       "node",
+       5
+      ],
+      [
+       "token",
+       4
+      ]
+     ]
+    },
+    {
+     "id": 3,
+     "kind": "atom",
+     "span": [
+      1,
+      5,
+      1,
+      2
+     ],
+     "children": [
+      [
+       "node",
+       4
+      ]
+     ]
+    },
+    {
+     "id": 4,
+     "kind": "string-literal",
+     "span": [
+      1,
+      5,
+      1,
+      2
+     ],
+     "children": [
+      [
+       "token",
+       1
+      ]
+     ]
+    },
+    {
+     "id": 5,
+     "kind": "atom",
+     "span": [
+      6,
+      7,
+      1,
+      6
+     ],
+     "children": [
+      [
+       "node",
+       6
+      ]
+     ]
+    },
+    {
+     "id": 6,
+     "kind": "name",
+     "span": [
+      6,
+      7,
+      1,
+      6
+     ],
+     "children": [
+      [
+       "token",
+       3
+      ]
+     ]
+    }
+   ],
+   "diagnostics": [
+    {
+     "category": "unexpected-token",
+     "message": "unexpected-token at 1:6: unexpected character '@'",
+     "span": [
+      6,
+      6,
+      1,
+      6
+     ],
+     "expected": [],
+     "fixes": []
+    }
+   ],
+   "value_count": 0,
+   "semantic_nodes": [],
+   "semantic_traces": []
+  },
+  {
+   "id": "Q002",
+   "profile": "core",
+   "input": "[1}",
+   "render": "[1}",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "[",
+     "span": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": "}",
+     "span": [
+      2,
+      3,
+      1,
+      3
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    }
+   ],
+   "root": 0,
+   "nodes": [
+    {
+     "id": 0,
+     "kind": "document",
+     "span": [
+      0,
+      3,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       1
+      ]
+     ]
+    },
+    {
+     "id": 1,
+     "kind": "stream-value",
+     "span": [
+      0,
+      3,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       2
+      ]
+     ]
+    },
+    {
+     "id": 2,
+     "kind": "bracket",
+     "span": [
+      0,
+      3,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "token",
+       0
+      ],
+      [
+       "node",
+       3
+      ],
+      [
+       "token",
+       2
+      ]
+     ]
+    },
+    {
+     "id": 3,
+     "kind": "atom",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "children": [
+      [
+       "node",
+       4
+      ]
+     ]
+    },
+    {
+     "id": 4,
+     "kind": "scalar-literal",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "children": [
+      [
+       "token",
+       1
+      ]
+     ]
+    }
+   ],
+   "diagnostics": [
+    {
+     "category": "unexpected-token",
+     "message": "mismatched delimiter: expected ]",
+     "span": [
+      2,
+      3,
+      1,
+      3
+     ],
+     "expected": [
+      "]"
+     ],
+     "fixes": [
+      {
+       "title": "Replace with ]",
+       "start": 2,
+       "end": 3,
+       "replacement": "]"
+      }
+     ]
+    }
+   ],
+   "value_count": 0,
+   "semantic_nodes": [],
+   "semantic_traces": []
+  },
+  {
+   "id": "Q003",
+   "profile": "core",
+   "input": "[1",
+   "render": "[1",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "[",
+     "span": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    }
+   ],
+   "root": 0,
+   "nodes": [
+    {
+     "id": 0,
+     "kind": "document",
+     "span": [
+      0,
+      2,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       1
+      ]
+     ]
+    },
+    {
+     "id": 1,
+     "kind": "stream-value",
+     "span": [
+      0,
+      2,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       2
+      ]
+     ]
+    },
+    {
+     "id": 2,
+     "kind": "bracket",
+     "span": [
+      0,
+      2,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "token",
+       0
+      ],
+      [
+       "node",
+       3
+      ]
+     ]
+    },
+    {
+     "id": 3,
+     "kind": "atom",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "children": [
+      [
+       "node",
+       4
+      ]
+     ]
+    },
+    {
+     "id": 4,
+     "kind": "scalar-literal",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "children": [
+      [
+       "token",
+       1
+      ]
+     ]
+    }
+   ],
+   "diagnostics": [
+    {
+     "category": "unexpected-end",
+     "message": "unterminated bracket; expected ]",
+     "span": [
+      2,
+      2,
+      1,
+      1
+     ],
+     "expected": [
+      "]"
+     ],
+     "fixes": [
+      {
+       "title": "Insert missing ]",
+       "start": 2,
+       "end": 2,
+       "replacement": "]"
+      }
+     ]
+    }
+   ],
+   "value_count": 0,
+   "semantic_nodes": [],
+   "semantic_traces": []
+  },
+  {
+   "id": "Q005",
+   "profile": "core",
+   "input": "[1 2]",
+   "render": "[1 2]",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "[",
+     "span": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "span": [
+      2,
+      3,
+      1,
+      3
+     ],
+     "trivia": true,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "atom",
+     "text": "2",
+     "span": [
+      3,
+      4,
+      1,
+      4
+     ],
+     "trivia": false,
+     "leading": [
+      2
+     ],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": "]",
+     "span": [
+      4,
+      5,
+      1,
+      5
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    }
+   ],
+   "root": 0,
+   "nodes": [
+    {
+     "id": 0,
+     "kind": "document",
+     "span": [
+      0,
+      5,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       1
+      ]
+     ]
+    },
+    {
+     "id": 1,
+     "kind": "stream-value",
+     "span": [
+      0,
+      5,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       2
+      ]
+     ]
+    },
+    {
+     "id": 2,
+     "kind": "bracket",
+     "span": [
+      0,
+      5,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "token",
+       0
+      ],
+      [
+       "node",
+       3
+      ],
+      [
+       "token",
+       2
+      ],
+      [
+       "node",
+       5
+      ],
+      [
+       "token",
+       4
+      ]
+     ]
+    },
+    {
+     "id": 3,
+     "kind": "atom",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "children": [
+      [
+       "node",
+       4
+      ]
+     ]
+    },
+    {
+     "id": 4,
+     "kind": "scalar-literal",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "children": [
+      [
+       "token",
+       1
+      ]
+     ]
+    },
+    {
+     "id": 5,
+     "kind": "atom",
+     "span": [
+      3,
+      4,
+      1,
+      4
+     ],
+     "children": [
+      [
+       "node",
+       6
+      ]
+     ]
+    },
+    {
+     "id": 6,
+     "kind": "scalar-literal",
+     "span": [
+      3,
+      4,
+      1,
+      4
+     ],
+     "children": [
+      [
+       "token",
+       3
+      ]
+     ]
+    }
+   ],
+   "diagnostics": [],
+   "value_count": 1,
+   "semantic_nodes": [
+    1
+   ],
+   "semantic_traces": [
+    {
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "owner": 4
+    },
+    {
+     "span": [
+      3,
+      4,
+      1,
+      4
+     ],
+     "owner": 6
+    },
+    {
+     "span": [
+      0,
+      5,
+      1,
+      1
+     ],
+     "owner": 2
+    }
+   ]
+  },
+  {
+   "id": "Q006",
+   "profile": "legacy_binary",
+   "input": "|YQ== 1",
+   "render": "|YQ== 1",
+   "tokens": [
+    {
+     "kind": "binary",
+     "text": "|YQ==",
+     "span": [
+      0,
+      5,
+      1,
+      1
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "span": [
+      5,
+      6,
+      1,
+      6
+     ],
+     "trivia": true,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "trivia": false,
+     "leading": [
+      1
+     ],
+     "trailing": []
+    }
+   ],
+   "root": 0,
+   "nodes": [
+    {
+     "id": 0,
+     "kind": "document",
+     "span": [
+      0,
+      7,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       1
+      ],
+      [
+       "token",
+       1
+      ],
+      [
+       "node",
+       4
+      ]
+     ]
+    },
+    {
+     "id": 1,
+     "kind": "stream-value",
+     "span": [
+      0,
+      5,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       2
+      ]
+     ]
+    },
+    {
+     "id": 2,
+     "kind": "atom",
+     "span": [
+      0,
+      5,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       3
+      ]
+     ]
+    },
+    {
+     "id": 3,
+     "kind": "binary-literal",
+     "span": [
+      0,
+      5,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "token",
+       0
+      ]
+     ]
+    },
+    {
+     "id": 4,
+     "kind": "stream-value",
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "children": [
+      [
+       "node",
+       5
+      ]
+     ]
+    },
+    {
+     "id": 5,
+     "kind": "atom",
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "children": [
+      [
+       "node",
+       6
+      ]
+     ]
+    },
+    {
+     "id": 6,
+     "kind": "scalar-literal",
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "children": [
+      [
+       "token",
+       2
+      ]
+     ]
+    }
+   ],
+   "diagnostics": [],
+   "value_count": 2,
+   "semantic_nodes": [
+    1,
+    4
+   ],
+   "semantic_traces": [
+    {
+     "span": [
+      0,
+      5,
+      1,
+      1
+     ],
+     "owner": 3
+    },
+    {
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "owner": 6
+    }
+   ]
+  },
+  {
+   "id": "production",
+   "profile": "core",
+   "input": "{a:[1 2]}",
+   "render": "{a:[1 2]}",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "{",
+     "span": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "name",
+     "text": "a",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "span": [
+      2,
+      3,
+      1,
+      3
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": "[",
+     "span": [
+      3,
+      4,
+      1,
+      4
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "span": [
+      4,
+      5,
+      1,
+      5
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "span": [
+      5,
+      6,
+      1,
+      6
+     ],
+     "trivia": true,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "atom",
+     "text": "2",
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "trivia": false,
+     "leading": [
+      5
+     ],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": "]",
+     "span": [
+      7,
+      8,
+      1,
+      8
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": "}",
+     "span": [
+      8,
+      9,
+      1,
+      9
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    }
+   ],
+   "root": 0,
+   "nodes": [
+    {
+     "id": 0,
+     "kind": "document",
+     "span": [
+      0,
+      9,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       1
+      ]
+     ]
+    },
+    {
+     "id": 1,
+     "kind": "stream-value",
+     "span": [
+      0,
+      9,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       2
+      ]
+     ]
+    },
+    {
+     "id": 2,
+     "kind": "brace",
+     "span": [
+      0,
+      9,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "token",
+       0
+      ],
+      [
+       "node",
+       3
+      ],
+      [
+       "token",
+       8
+      ]
+     ]
+    },
+    {
+     "id": 3,
+     "kind": "pair",
+     "span": [
+      1,
+      8,
+      1,
+      2
+     ],
+     "children": [
+      [
+       "node",
+       4
+      ],
+      [
+       "token",
+       2
+      ],
+      [
+       "node",
+       5
+      ]
+     ]
+    },
+    {
+     "id": 4,
+     "kind": "name",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "children": [
+      [
+       "token",
+       1
+      ]
+     ]
+    },
+    {
+     "id": 5,
+     "kind": "bracket",
+     "span": [
+      3,
+      8,
+      1,
+      4
+     ],
+     "children": [
+      [
+       "token",
+       3
+      ],
+      [
+       "node",
+       6
+      ],
+      [
+       "token",
+       5
+      ],
+      [
+       "node",
+       8
+      ],
+      [
+       "token",
+       7
+      ]
+     ]
+    },
+    {
+     "id": 6,
+     "kind": "atom",
+     "span": [
+      4,
+      5,
+      1,
+      5
+     ],
+     "children": [
+      [
+       "node",
+       7
+      ]
+     ]
+    },
+    {
+     "id": 7,
+     "kind": "scalar-literal",
+     "span": [
+      4,
+      5,
+      1,
+      5
+     ],
+     "children": [
+      [
+       "token",
+       4
+      ]
+     ]
+    },
+    {
+     "id": 8,
+     "kind": "atom",
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "children": [
+      [
+       "node",
+       9
+      ]
+     ]
+    },
+    {
+     "id": 9,
+     "kind": "scalar-literal",
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "children": [
+      [
+       "token",
+       6
+      ]
+     ]
+    }
+   ],
+   "diagnostics": [],
+   "value_count": 1,
+   "semantic_nodes": [
+    1
+   ],
+   "semantic_traces": [
+    {
+     "span": [
+      4,
+      5,
+      1,
+      5
+     ],
+     "owner": 7
+    },
+    {
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "owner": 9
+    },
+    {
+     "span": [
+      3,
+      8,
+      1,
+      4
+     ],
+     "owner": 5
+    },
+    {
+     "span": [
+      0,
+      9,
+      1,
+      1
+     ],
+     "owner": 2
+    }
+   ]
+  },
+  {
+   "id": "trivia",
+   "profile": "core",
+   "input": "a # tail\n b",
+   "render": "a # tail\n b",
+   "tokens": [
+    {
+     "kind": "name",
+     "text": "a",
+     "span": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": [
+      1,
+      2
+     ]
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "trivia": true,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "comment",
+     "text": "# tail",
+     "span": [
+      2,
+      8,
+      1,
+      3
+     ],
+     "trivia": true,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "whitespace",
+     "text": "\n ",
+     "span": [
+      8,
+      10,
+      1,
+      9
+     ],
+     "trivia": true,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "name",
+     "text": "b",
+     "span": [
+      10,
+      11,
+      2,
+      2
+     ],
+     "trivia": false,
+     "leading": [
+      3
+     ],
+     "trailing": []
+    }
+   ],
+   "root": 0,
+   "nodes": [
+    {
+     "id": 0,
+     "kind": "document",
+     "span": [
+      0,
+      11,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       1
+      ],
+      [
+       "token",
+       1
+      ],
+      [
+       "token",
+       2
+      ],
+      [
+       "token",
+       3
+      ],
+      [
+       "node",
+       4
+      ]
+     ]
+    },
+    {
+     "id": 1,
+     "kind": "stream-value",
+     "span": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       2
+      ]
+     ]
+    },
+    {
+     "id": 2,
+     "kind": "atom",
+     "span": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       3
+      ]
+     ]
+    },
+    {
+     "id": 3,
+     "kind": "name",
+     "span": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "token",
+       0
+      ]
+     ]
+    },
+    {
+     "id": 4,
+     "kind": "stream-value",
+     "span": [
+      10,
+      11,
+      2,
+      2
+     ],
+     "children": [
+      [
+       "node",
+       5
+      ]
+     ]
+    },
+    {
+     "id": 5,
+     "kind": "atom",
+     "span": [
+      10,
+      11,
+      2,
+      2
+     ],
+     "children": [
+      [
+       "node",
+       6
+      ]
+     ]
+    },
+    {
+     "id": 6,
+     "kind": "name",
+     "span": [
+      10,
+      11,
+      2,
+      2
+     ],
+     "children": [
+      [
+       "token",
+       4
+      ]
+     ]
+    }
+   ],
+   "diagnostics": [],
+   "value_count": 2,
+   "semantic_nodes": [
+    1,
+    4
+   ],
+   "semantic_traces": [
+    {
+     "span": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "owner": 3
+    },
+    {
+     "span": [
+      10,
+      11,
+      2,
+      2
+     ],
+     "owner": 6
+    }
+   ]
+  },
+  {
+   "id": "discard",
+   "profile": "core",
+   "input": "[1 #_ 2 3]",
+   "render": "[1 #_ 2 3]",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "[",
+     "span": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "span": [
+      2,
+      3,
+      1,
+      3
+     ],
+     "trivia": true,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "discard",
+     "text": "#_",
+     "span": [
+      3,
+      5,
+      1,
+      4
+     ],
+     "trivia": false,
+     "leading": [
+      2
+     ],
+     "trailing": []
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "span": [
+      5,
+      6,
+      1,
+      6
+     ],
+     "trivia": true,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "atom",
+     "text": "2",
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "trivia": false,
+     "leading": [
+      4
+     ],
+     "trailing": []
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "span": [
+      7,
+      8,
+      1,
+      8
+     ],
+     "trivia": true,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "atom",
+     "text": "3",
+     "span": [
+      8,
+      9,
+      1,
+      9
+     ],
+     "trivia": false,
+     "leading": [
+      6
+     ],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": "]",
+     "span": [
+      9,
+      10,
+      1,
+      10
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    }
+   ],
+   "root": 0,
+   "nodes": [
+    {
+     "id": 0,
+     "kind": "document",
+     "span": [
+      0,
+      10,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       1
+      ]
+     ]
+    },
+    {
+     "id": 1,
+     "kind": "stream-value",
+     "span": [
+      0,
+      10,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       2
+      ]
+     ]
+    },
+    {
+     "id": 2,
+     "kind": "bracket",
+     "span": [
+      0,
+      10,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "token",
+       0
+      ],
+      [
+       "node",
+       3
+      ],
+      [
+       "token",
+       2
+      ],
+      [
+       "node",
+       5
+      ],
+      [
+       "token",
+       6
+      ],
+      [
+       "node",
+       8
+      ],
+      [
+       "token",
+       8
+      ]
+     ]
+    },
+    {
+     "id": 3,
+     "kind": "atom",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "children": [
+      [
+       "node",
+       4
+      ]
+     ]
+    },
+    {
+     "id": 4,
+     "kind": "scalar-literal",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "children": [
+      [
+       "token",
+       1
+      ]
+     ]
+    },
+    {
+     "id": 5,
+     "kind": "discard-operand",
+     "span": [
+      3,
+      7,
+      1,
+      4
+     ],
+     "children": [
+      [
+       "node",
+       6
+      ],
+      [
+       "token",
+       4
+      ],
+      [
+       "node",
+       7
+      ]
+     ]
+    },
+    {
+     "id": 6,
+     "kind": "discard-prefix",
+     "span": [
+      3,
+      5,
+      1,
+      4
+     ],
+     "children": [
+      [
+       "token",
+       3
+      ]
+     ]
+    },
+    {
+     "id": 7,
+     "kind": "scalar-literal",
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "children": [
+      [
+       "token",
+       5
+      ]
+     ]
+    },
+    {
+     "id": 8,
+     "kind": "atom",
+     "span": [
+      8,
+      9,
+      1,
+      9
+     ],
+     "children": [
+      [
+       "node",
+       9
+      ]
+     ]
+    },
+    {
+     "id": 9,
+     "kind": "scalar-literal",
+     "span": [
+      8,
+      9,
+      1,
+      9
+     ],
+     "children": [
+      [
+       "token",
+       7
+      ]
+     ]
+    }
+   ],
+   "diagnostics": [],
+   "value_count": 1,
+   "semantic_nodes": [
+    1
+   ],
+   "semantic_traces": [
+    {
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "owner": 4
+    },
+    {
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "owner": 7
+    },
+    {
+     "span": [
+      8,
+      9,
+      1,
+      9
+     ],
+     "owner": 9
+    },
+    {
+     "span": [
+      0,
+      10,
+      1,
+      1
+     ],
+     "owner": 2
+    }
+   ]
+  },
+  {
+   "id": "header",
+   "profile": "core",
+   "input": "axon{require:[\"cst\"]} 1",
+   "render": "axon{require:[\"cst\"]} 1",
+   "tokens": [
+    {
+     "kind": "name",
+     "text": "axon",
+     "span": [
+      0,
+      4,
+      1,
+      1
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": "{",
+     "span": [
+      4,
+      5,
+      1,
+      5
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "name",
+     "text": "require",
+     "span": [
+      5,
+      12,
+      1,
+      6
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "span": [
+      12,
+      13,
+      1,
+      13
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": "[",
+     "span": [
+      13,
+      14,
+      1,
+      14
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "string",
+     "text": "\"cst\"",
+     "span": [
+      14,
+      19,
+      1,
+      15
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": "]",
+     "span": [
+      19,
+      20,
+      1,
+      20
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": "}",
+     "span": [
+      20,
+      21,
+      1,
+      21
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "span": [
+      21,
+      22,
+      1,
+      22
+     ],
+     "trivia": true,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "span": [
+      22,
+      23,
+      1,
+      23
+     ],
+     "trivia": false,
+     "leading": [
+      8
+     ],
+     "trailing": []
+    }
+   ],
+   "root": 0,
+   "nodes": [
+    {
+     "id": 0,
+     "kind": "document",
+     "span": [
+      0,
+      23,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       1
+      ],
+      [
+       "token",
+       8
+      ],
+      [
+       "node",
+       11
+      ]
+     ]
+    },
+    {
+     "id": 1,
+     "kind": "stream-value",
+     "span": [
+      0,
+      21,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       2
+      ]
+     ]
+    },
+    {
+     "id": 2,
+     "kind": "node",
+     "span": [
+      0,
+      21,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       3
+      ],
+      [
+       "node",
+       4
+      ]
+     ]
+    },
+    {
+     "id": 3,
+     "kind": "node-name",
+     "span": [
+      0,
+      4,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "token",
+       0
+      ]
+     ]
+    },
+    {
+     "id": 4,
+     "kind": "body",
+     "span": [
+      4,
+      21,
+      1,
+      5
+     ],
+     "children": [
+      [
+       "node",
+       5
+      ]
+     ]
+    },
+    {
+     "id": 5,
+     "kind": "brace",
+     "span": [
+      4,
+      21,
+      1,
+      5
+     ],
+     "children": [
+      [
+       "token",
+       1
+      ],
+      [
+       "node",
+       6
+      ],
+      [
+       "token",
+       7
+      ]
+     ]
+    },
+    {
+     "id": 6,
+     "kind": "pair",
+     "span": [
+      5,
+      20,
+      1,
+      6
+     ],
+     "children": [
+      [
+       "node",
+       7
+      ],
+      [
+       "token",
+       3
+      ],
+      [
+       "node",
+       8
+      ]
+     ]
+    },
+    {
+     "id": 7,
+     "kind": "name",
+     "span": [
+      5,
+      12,
+      1,
+      6
+     ],
+     "children": [
+      [
+       "token",
+       2
+      ]
+     ]
+    },
+    {
+     "id": 8,
+     "kind": "bracket",
+     "span": [
+      13,
+      20,
+      1,
+      14
+     ],
+     "children": [
+      [
+       "token",
+       4
+      ],
+      [
+       "node",
+       9
+      ],
+      [
+       "token",
+       6
+      ]
+     ]
+    },
+    {
+     "id": 9,
+     "kind": "atom",
+     "span": [
+      14,
+      19,
+      1,
+      15
+     ],
+     "children": [
+      [
+       "node",
+       10
+      ]
+     ]
+    },
+    {
+     "id": 10,
+     "kind": "string-literal",
+     "span": [
+      14,
+      19,
+      1,
+      15
+     ],
+     "children": [
+      [
+       "token",
+       5
+      ]
+     ]
+    },
+    {
+     "id": 11,
+     "kind": "stream-value",
+     "span": [
+      22,
+      23,
+      1,
+      23
+     ],
+     "children": [
+      [
+       "node",
+       12
+      ]
+     ]
+    },
+    {
+     "id": 12,
+     "kind": "atom",
+     "span": [
+      22,
+      23,
+      1,
+      23
+     ],
+     "children": [
+      [
+       "node",
+       13
+      ]
+     ]
+    },
+    {
+     "id": 13,
+     "kind": "scalar-literal",
+     "span": [
+      22,
+      23,
+      1,
+      23
+     ],
+     "children": [
+      [
+       "token",
+       9
+      ]
+     ]
+    }
+   ],
+   "diagnostics": [],
+   "value_count": 1,
+   "semantic_nodes": [
+    11
+   ],
+   "semantic_traces": [
+    {
+     "span": [
+      14,
+      19,
+      1,
+      15
+     ],
+     "owner": 10
+    },
+    {
+     "span": [
+      13,
+      20,
+      1,
+      14
+     ],
+     "owner": 8
+    },
+    {
+     "span": [
+      0,
+      21,
+      1,
+      1
+     ],
+     "owner": 2
+    },
+    {
+     "span": [
+      22,
+      23,
+      1,
+      23
+     ],
+     "owner": 13
+    }
+   ]
+  },
+  {
+   "id": "node",
+   "profile": "core",
+   "input": "outer((inner))",
+   "render": "outer((inner))",
+   "tokens": [
+    {
+     "kind": "name",
+     "text": "outer",
+     "span": [
+      0,
+      5,
+      1,
+      1
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": "(",
+     "span": [
+      5,
+      6,
+      1,
+      6
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": "(",
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "name",
+     "text": "inner",
+     "span": [
+      7,
+      12,
+      1,
+      8
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": ")",
+     "span": [
+      12,
+      13,
+      1,
+      13
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": ")",
+     "span": [
+      13,
+      14,
+      1,
+      14
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    }
+   ],
+   "root": 0,
+   "nodes": [
+    {
+     "id": 0,
+     "kind": "document",
+     "span": [
+      0,
+      14,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       1
+      ]
+     ]
+    },
+    {
+     "id": 1,
+     "kind": "stream-value",
+     "span": [
+      0,
+      14,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       2
+      ]
+     ]
+    },
+    {
+     "id": 2,
+     "kind": "node",
+     "span": [
+      0,
+      14,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       3
+      ],
+      [
+       "node",
+       4
+      ]
+     ]
+    },
+    {
+     "id": 3,
+     "kind": "node-name",
+     "span": [
+      0,
+      5,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "token",
+       0
+      ]
+     ]
+    },
+    {
+     "id": 4,
+     "kind": "body",
+     "span": [
+      5,
+      14,
+      1,
+      6
+     ],
+     "children": [
+      [
+       "node",
+       5
+      ]
+     ]
+    },
+    {
+     "id": 5,
+     "kind": "tuple",
+     "span": [
+      5,
+      14,
+      1,
+      6
+     ],
+     "children": [
+      [
+       "token",
+       1
+      ],
+      [
+       "node",
+       6
+      ],
+      [
+       "token",
+       5
+      ]
+     ]
+    },
+    {
+     "id": 6,
+     "kind": "tuple",
+     "span": [
+      6,
+      13,
+      1,
+      7
+     ],
+     "children": [
+      [
+       "token",
+       2
+      ],
+      [
+       "node",
+       7
+      ],
+      [
+       "token",
+       4
+      ]
+     ]
+    },
+    {
+     "id": 7,
+     "kind": "atom",
+     "span": [
+      7,
+      12,
+      1,
+      8
+     ],
+     "children": [
+      [
+       "node",
+       8
+      ]
+     ]
+    },
+    {
+     "id": 8,
+     "kind": "name",
+     "span": [
+      7,
+      12,
+      1,
+      8
+     ],
+     "children": [
+      [
+       "token",
+       3
+      ]
+     ]
+    }
+   ],
+   "diagnostics": [],
+   "value_count": 1,
+   "semantic_nodes": [
+    1
+   ],
+   "semantic_traces": [
+    {
+     "span": [
+      7,
+      12,
+      1,
+      8
+     ],
+     "owner": 8
+    },
+    {
+     "span": [
+      6,
+      13,
+      1,
+      7
+     ],
+     "owner": 6
+    },
+    {
+     "span": [
+      0,
+      14,
+      1,
+      1
+     ],
+     "owner": 2
+    }
+   ]
+  },
+  {
+   "id": "unicode",
+   "profile": "core",
+   "input": "# café\nétage{name:\"A\"}",
+   "render": "# café\nétage{name:\"A\"}",
+   "tokens": [
+    {
+     "kind": "comment",
+     "text": "# café",
+     "span": [
+      0,
+      7,
+      1,
+      1
+     ],
+     "trivia": true,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "whitespace",
+     "text": "\n",
+     "span": [
+      7,
+      8,
+      1,
+      7
+     ],
+     "trivia": true,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "name",
+     "text": "étage",
+     "span": [
+      8,
+      14,
+      2,
+      1
+     ],
+     "trivia": false,
+     "leading": [
+      0,
+      1
+     ],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": "{",
+     "span": [
+      14,
+      15,
+      2,
+      6
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "name",
+     "text": "name",
+     "span": [
+      15,
+      19,
+      2,
+      7
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "span": [
+      19,
+      20,
+      2,
+      11
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "string",
+     "text": "\"A\"",
+     "span": [
+      20,
+      23,
+      2,
+      12
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": "}",
+     "span": [
+      23,
+      24,
+      2,
+      15
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    }
+   ],
+   "root": 0,
+   "nodes": [
+    {
+     "id": 0,
+     "kind": "document",
+     "span": [
+      0,
+      24,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "token",
+       0
+      ],
+      [
+       "token",
+       1
+      ],
+      [
+       "node",
+       1
+      ]
+     ]
+    },
+    {
+     "id": 1,
+     "kind": "stream-value",
+     "span": [
+      8,
+      24,
+      2,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       2
+      ]
+     ]
+    },
+    {
+     "id": 2,
+     "kind": "node",
+     "span": [
+      8,
+      24,
+      2,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       3
+      ],
+      [
+       "node",
+       4
+      ]
+     ]
+    },
+    {
+     "id": 3,
+     "kind": "node-name",
+     "span": [
+      8,
+      14,
+      2,
+      1
+     ],
+     "children": [
+      [
+       "token",
+       2
+      ]
+     ]
+    },
+    {
+     "id": 4,
+     "kind": "body",
+     "span": [
+      14,
+      24,
+      2,
+      6
+     ],
+     "children": [
+      [
+       "node",
+       5
+      ]
+     ]
+    },
+    {
+     "id": 5,
+     "kind": "brace",
+     "span": [
+      14,
+      24,
+      2,
+      6
+     ],
+     "children": [
+      [
+       "token",
+       3
+      ],
+      [
+       "node",
+       6
+      ],
+      [
+       "token",
+       7
+      ]
+     ]
+    },
+    {
+     "id": 6,
+     "kind": "pair",
+     "span": [
+      15,
+      23,
+      2,
+      7
+     ],
+     "children": [
+      [
+       "node",
+       7
+      ],
+      [
+       "token",
+       5
+      ],
+      [
+       "node",
+       8
+      ]
+     ]
+    },
+    {
+     "id": 7,
+     "kind": "name",
+     "span": [
+      15,
+      19,
+      2,
+      7
+     ],
+     "children": [
+      [
+       "token",
+       4
+      ]
+     ]
+    },
+    {
+     "id": 8,
+     "kind": "string-literal",
+     "span": [
+      20,
+      23,
+      2,
+      12
+     ],
+     "children": [
+      [
+       "token",
+       6
+      ]
+     ]
+    }
+   ],
+   "diagnostics": [],
+   "value_count": 1,
+   "semantic_nodes": [
+    1
+   ],
+   "semantic_traces": [
+    {
+     "span": [
+      20,
+      23,
+      2,
+      12
+     ],
+     "owner": 8
+    },
+    {
+     "span": [
+      8,
+      24,
+      2,
+      1
+     ],
+     "owner": 2
+    }
+   ]
+  },
+  {
+   "id": "attribute-document",
+   "profile": "core",
+   "input": "a:1 b:2",
+   "render": "a:1 b:2",
+   "tokens": [
+    {
+     "kind": "name",
+     "text": "a",
+     "span": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "span": [
+      2,
+      3,
+      1,
+      3
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "span": [
+      3,
+      4,
+      1,
+      4
+     ],
+     "trivia": true,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "name",
+     "text": "b",
+     "span": [
+      4,
+      5,
+      1,
+      5
+     ],
+     "trivia": false,
+     "leading": [
+      3
+     ],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": ":",
+     "span": [
+      5,
+      6,
+      1,
+      6
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "atom",
+     "text": "2",
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    }
+   ],
+   "root": 0,
+   "nodes": [
+    {
+     "id": 0,
+     "kind": "document",
+     "span": [
+      0,
+      7,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       1
+      ]
+     ]
+    },
+    {
+     "id": 1,
+     "kind": "stream-value",
+     "span": [
+      0,
+      7,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       2
+      ]
+     ]
+    },
+    {
+     "id": 2,
+     "kind": "attribute-document",
+     "span": [
+      0,
+      7,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       3
+      ],
+      [
+       "token",
+       3
+      ],
+      [
+       "node",
+       6
+      ]
+     ]
+    },
+    {
+     "id": 3,
+     "kind": "pair",
+     "span": [
+      0,
+      3,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       4
+      ],
+      [
+       "token",
+       1
+      ],
+      [
+       "node",
+       5
+      ]
+     ]
+    },
+    {
+     "id": 4,
+     "kind": "name",
+     "span": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "token",
+       0
+      ]
+     ]
+    },
+    {
+     "id": 5,
+     "kind": "scalar-literal",
+     "span": [
+      2,
+      3,
+      1,
+      3
+     ],
+     "children": [
+      [
+       "token",
+       2
+      ]
+     ]
+    },
+    {
+     "id": 6,
+     "kind": "pair",
+     "span": [
+      4,
+      7,
+      1,
+      5
+     ],
+     "children": [
+      [
+       "node",
+       7
+      ],
+      [
+       "token",
+       5
+      ],
+      [
+       "node",
+       8
+      ]
+     ]
+    },
+    {
+     "id": 7,
+     "kind": "name",
+     "span": [
+      4,
+      5,
+      1,
+      5
+     ],
+     "children": [
+      [
+       "token",
+       4
+      ]
+     ]
+    },
+    {
+     "id": 8,
+     "kind": "scalar-literal",
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "children": [
+      [
+       "token",
+       6
+      ]
+     ]
+    }
+   ],
+   "diagnostics": [],
+   "value_count": 1,
+   "semantic_nodes": [
+    1
+   ],
+   "semantic_traces": [
+    {
+     "span": [
+      2,
+      3,
+      1,
+      3
+     ],
+     "owner": 5
+    },
+    {
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "owner": 8
+    }
+   ]
+  },
+  {
+   "id": "multi-error",
+   "profile": "core",
+   "input": "[1 } (2",
+   "render": "[1 } (2",
+   "tokens": [
+    {
+     "kind": "punctuation",
+     "text": "[",
+     "span": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "atom",
+     "text": "1",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "span": [
+      2,
+      3,
+      1,
+      3
+     ],
+     "trivia": true,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": "}",
+     "span": [
+      3,
+      4,
+      1,
+      4
+     ],
+     "trivia": false,
+     "leading": [
+      2
+     ],
+     "trailing": []
+    },
+    {
+     "kind": "whitespace",
+     "text": " ",
+     "span": [
+      4,
+      5,
+      1,
+      5
+     ],
+     "trivia": true,
+     "leading": [],
+     "trailing": []
+    },
+    {
+     "kind": "punctuation",
+     "text": "(",
+     "span": [
+      5,
+      6,
+      1,
+      6
+     ],
+     "trivia": false,
+     "leading": [
+      4
+     ],
+     "trailing": []
+    },
+    {
+     "kind": "atom",
+     "text": "2",
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "trivia": false,
+     "leading": [],
+     "trailing": []
+    }
+   ],
+   "root": 0,
+   "nodes": [
+    {
+     "id": 0,
+     "kind": "document",
+     "span": [
+      0,
+      7,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       1
+      ],
+      [
+       "token",
+       4
+      ],
+      [
+       "node",
+       5
+      ]
+     ]
+    },
+    {
+     "id": 1,
+     "kind": "stream-value",
+     "span": [
+      0,
+      4,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "node",
+       2
+      ]
+     ]
+    },
+    {
+     "id": 2,
+     "kind": "bracket",
+     "span": [
+      0,
+      4,
+      1,
+      1
+     ],
+     "children": [
+      [
+       "token",
+       0
+      ],
+      [
+       "node",
+       3
+      ],
+      [
+       "token",
+       2
+      ],
+      [
+       "token",
+       3
+      ]
+     ]
+    },
+    {
+     "id": 3,
+     "kind": "atom",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "children": [
+      [
+       "node",
+       4
+      ]
+     ]
+    },
+    {
+     "id": 4,
+     "kind": "scalar-literal",
+     "span": [
+      1,
+      2,
+      1,
+      2
+     ],
+     "children": [
+      [
+       "token",
+       1
+      ]
+     ]
+    },
+    {
+     "id": 5,
+     "kind": "stream-value",
+     "span": [
+      5,
+      7,
+      1,
+      6
+     ],
+     "children": [
+      [
+       "node",
+       6
+      ]
+     ]
+    },
+    {
+     "id": 6,
+     "kind": "tuple",
+     "span": [
+      5,
+      7,
+      1,
+      6
+     ],
+     "children": [
+      [
+       "token",
+       5
+      ],
+      [
+       "node",
+       7
+      ]
+     ]
+    },
+    {
+     "id": 7,
+     "kind": "atom",
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "children": [
+      [
+       "node",
+       8
+      ]
+     ]
+    },
+    {
+     "id": 8,
+     "kind": "scalar-literal",
+     "span": [
+      6,
+      7,
+      1,
+      7
+     ],
+     "children": [
+      [
+       "token",
+       6
+      ]
+     ]
+    }
+   ],
+   "diagnostics": [
+    {
+     "category": "unexpected-token",
+     "message": "mismatched delimiter: expected ]",
+     "span": [
+      3,
+      4,
+      1,
+      4
+     ],
+     "expected": [
+      "]"
+     ],
+     "fixes": [
+      {
+       "title": "Replace with ]",
+       "start": 3,
+       "end": 4,
+       "replacement": "]"
+      }
+     ]
+    },
+    {
+     "category": "unexpected-end",
+     "message": "unterminated tuple; expected )",
+     "span": [
+      7,
+      7,
+      1,
+      6
+     ],
+     "expected": [
+      ")"
+     ],
+     "fixes": [
+      {
+       "title": "Insert missing )",
+       "start": 7,
+       "end": 7,
+       "replacement": ")"
+      }
+     ]
+    }
+   ],
+   "value_count": 0,
+   "semantic_nodes": [],
+   "semantic_traces": []
+  }
+ ],
+ "format": [
+  {
+   "id": "comments",
+   "profile": "core",
+   "input": "{a:1 # retained\n b:[2 3]}",
+   "indent": 2,
+   "outcome": "ok",
+   "output": "{\n  a:1 # retained\n  b: [\n    2 3\n  ]\n}\n"
+  },
+  {
+   "id": "stream",
+   "profile": "core",
+   "input": "false\n{nested:(40.3)}",
+   "indent": 2,
+   "outcome": "ok",
+   "output": "false\n{\n  nested: (\n    40.3\n  )\n}\n"
+  },
+  {
+   "id": "graph",
+   "profile": "graph",
+   "input": "&1 {self:*1}",
+   "indent": 2,
+   "outcome": "ok",
+   "output": "&1 {\n  self:*1\n}\n"
+  },
+  {
+   "id": "tz-name",
+   "profile": "tz_names",
+   "input": "^2026-11-01T01:30:00-07:00[America/Edmonton]",
+   "indent": 2,
+   "outcome": "ok",
+   "output": "^2026-11-01T01:30:00-07:00[America/Edmonton]\n"
+  },
+  {
+   "id": "indented",
+   "profile": "core",
+   "input": "person\n  # retained\n  name:\"Alex\"\n  address\n    city:\"Edmonton\"\nnext\n",
+   "indent": 2,
+   "outcome": "ok",
+   "output": "person{\n  # retained\n  name:\"Alex\" address{\n    city:\"Edmonton\"\n  }\n}\nnext\n"
+  }
+ ]
+}

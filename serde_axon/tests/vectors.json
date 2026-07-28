@@ -1,0 +1,728 @@
+{
+ "note": "Ground-truth conformance vectors from pyaxon 0.11.0a13 for serde_axon",
+ "accept": [
+  {
+   "input": "null",
+   "values": [
+    {
+     "k": "null"
+    }
+   ]
+  },
+  {
+   "input": "true",
+   "values": [
+    {
+     "k": "bool",
+     "v": true
+    }
+   ]
+  },
+  {
+   "input": "false",
+   "values": [
+    {
+     "k": "bool",
+     "v": false
+    }
+   ]
+  },
+  {
+   "input": "0",
+   "values": [
+    {
+     "k": "int",
+     "v": "0"
+    }
+   ]
+  },
+  {
+   "input": "42",
+   "values": [
+    {
+     "k": "int",
+     "v": "42"
+    }
+   ]
+  },
+  {
+   "input": "-7",
+   "values": [
+    {
+     "k": "int",
+     "v": "-7"
+    }
+   ]
+  },
+  {
+   "input": "1_000",
+   "values": [
+    {
+     "k": "int",
+     "v": "1000"
+    }
+   ]
+  },
+  {
+   "input": "123456789012345678901234567890",
+   "values": [
+    {
+     "k": "int",
+     "v": "123456789012345678901234567890"
+    }
+   ]
+  },
+  {
+   "input": "3.14159",
+   "values": [
+    {
+     "k": "float",
+     "v": "3.14159"
+    }
+   ]
+  },
+  {
+   "input": "-0.0",
+   "values": [
+    {
+     "k": "float",
+     "v": "-0.0"
+    }
+   ]
+  },
+  {
+   "input": "1e10",
+   "values": [
+    {
+     "k": "float",
+     "v": "10000000000.0"
+    }
+   ]
+  },
+  {
+   "input": "?",
+   "values": [
+    {
+     "k": "float",
+     "v": "nan"
+    }
+   ]
+  },
+  {
+   "input": "∞",
+   "values": [
+    {
+     "k": "float",
+     "v": "inf"
+    }
+   ]
+  },
+  {
+   "input": "-∞",
+   "values": [
+    {
+     "k": "float",
+     "v": "-inf"
+    }
+   ]
+  },
+  {
+   "input": "1000.35D",
+   "values": [
+    {
+     "k": "decimal",
+     "v": "1000.35"
+    }
+   ]
+  },
+  {
+   "input": "1000.350D",
+   "values": [
+    {
+     "k": "decimal",
+     "v": "1000.350"
+    }
+   ]
+  },
+  {
+   "input": "∞D",
+   "values": [
+    {
+     "k": "decimal",
+     "v": "inf"
+    }
+   ]
+  },
+  {
+   "input": "-∞D",
+   "values": [
+    {
+     "k": "decimal",
+     "v": "-inf"
+    }
+   ]
+  },
+  {
+   "input": "?D",
+   "values": [
+    {
+     "k": "decimal",
+     "v": "nan"
+    }
+   ]
+  },
+  {
+   "input": "\"hello\"",
+   "values": [
+    {
+     "k": "string",
+     "v": "hello"
+    }
+   ]
+  },
+  {
+   "input": "\"café\"",
+   "values": [
+    {
+     "k": "string",
+     "v": "café"
+    }
+   ]
+  },
+  {
+   "input": "\"a\\nb\"",
+   "values": [
+    {
+     "k": "string",
+     "v": "a\nb"
+    }
+   ]
+  },
+  {
+   "input": "\"\\u{1F600}\"",
+   "values": [
+    {
+     "k": "string",
+     "v": "😀"
+    }
+   ]
+  },
+  {
+   "input": "|SGVsbG8=|",
+   "values": [
+    {
+     "k": "bytes",
+     "v": [
+      72,
+      101,
+      108,
+      108,
+      111
+     ]
+    }
+   ]
+  },
+  {
+   "input": "|QUJD|",
+   "values": [
+    {
+     "k": "bytes",
+     "v": [
+      65,
+      66,
+      67
+     ]
+    }
+   ]
+  },
+  {
+   "input": "^2026-07-12",
+   "values": [
+    {
+     "k": "date",
+     "date": [
+      2026,
+      7,
+      12
+     ]
+    }
+   ]
+  },
+  {
+   "input": "^12:30",
+   "values": [
+    {
+     "k": "time",
+     "time": [
+      12,
+      30,
+      0,
+      0
+     ],
+     "tz": null
+    }
+   ]
+  },
+  {
+   "input": "^12:00:00.5",
+   "values": [
+    {
+     "k": "time",
+     "time": [
+      12,
+      0,
+      0,
+      500000000
+     ],
+     "tz": null
+    }
+   ]
+  },
+  {
+   "input": "^2026-07-12T09:35:00Z",
+   "values": [
+    {
+     "k": "datetime",
+     "date": [
+      2026,
+      7,
+      12
+     ],
+     "time": [
+      9,
+      35,
+      0,
+      0
+     ],
+     "tz": "Z",
+     "zone": null
+    }
+   ]
+  },
+  {
+   "input": "^12:35:00+03:00",
+   "values": [
+    {
+     "k": "time",
+     "time": [
+      12,
+      35,
+      0,
+      0
+     ],
+     "tz": 180
+    }
+   ]
+  },
+  {
+   "input": "^2026-07-12T12:30",
+   "values": [
+    {
+     "k": "datetime",
+     "date": [
+      2026,
+      7,
+      12
+     ],
+     "time": [
+      12,
+      30,
+      0,
+      0
+     ],
+     "tz": null,
+     "zone": null
+    }
+   ]
+  },
+  {
+   "input": "[]",
+   "values": [
+    {
+     "k": "list",
+     "items": []
+    }
+   ]
+  },
+  {
+   "input": "[1 2 3]",
+   "values": [
+    {
+     "k": "list",
+     "items": [
+      {
+       "k": "int",
+       "v": "1"
+      },
+      {
+       "k": "int",
+       "v": "2"
+      },
+      {
+       "k": "int",
+       "v": "3"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "input": "[1 2 3]",
+   "values": [
+    {
+     "k": "list",
+     "items": [
+      {
+       "k": "int",
+       "v": "1"
+      },
+      {
+       "k": "int",
+       "v": "2"
+      },
+      {
+       "k": "int",
+       "v": "3"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "input": "(1 2 3)",
+   "values": [
+    {
+     "k": "tuple",
+     "items": [
+      {
+       "k": "int",
+       "v": "1"
+      },
+      {
+       "k": "int",
+       "v": "2"
+      },
+      {
+       "k": "int",
+       "v": "3"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "input": "{}",
+   "values": [
+    {
+     "k": "map",
+     "pairs": []
+    }
+   ]
+  },
+  {
+   "input": "{a:1 b:2}",
+   "values": [
+    {
+     "k": "map",
+     "pairs": [
+      [
+       "a",
+       {
+        "k": "int",
+        "v": "1"
+       }
+      ],
+      [
+       "b",
+       {
+        "k": "int",
+        "v": "2"
+       }
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "input": "[:]",
+   "values": [
+    {
+     "k": "omap",
+     "pairs": []
+    }
+   ]
+  },
+  {
+   "input": "[a:1 b:2]",
+   "values": [
+    {
+     "k": "omap",
+     "pairs": [
+      [
+       "a",
+       {
+        "k": "int",
+        "v": "1"
+       }
+      ],
+      [
+       "b",
+       {
+        "k": "int",
+        "v": "2"
+       }
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "input": "∅",
+   "values": [
+    {
+     "k": "set",
+     "items": []
+    }
+   ]
+  },
+  {
+   "input": "{1 2 3}",
+   "values": [
+    {
+     "k": "set",
+     "items": [
+      {
+       "k": "int",
+       "v": "1"
+      },
+      {
+       "k": "int",
+       "v": "2"
+      },
+      {
+       "k": "int",
+       "v": "3"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "input": "point{x:1 y:-2}",
+   "values": [
+    {
+     "k": "node",
+     "name": "point",
+     "style": "brace",
+     "attrs": [
+      [
+       "x",
+       {
+        "k": "int",
+        "v": "1"
+       }
+      ],
+      [
+       "y",
+       {
+        "k": "int",
+        "v": "-2"
+       }
+      ]
+     ],
+     "children": []
+    }
+   ]
+  },
+  {
+   "input": "Rgb(255 128 0)",
+   "values": [
+    {
+     "k": "node",
+     "name": "Rgb",
+     "style": "tuple",
+     "attrs": [],
+     "children": [
+      {
+       "k": "int",
+       "v": "255"
+      },
+      {
+       "k": "int",
+       "v": "128"
+      },
+      {
+       "k": "int",
+       "v": "0"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "input": "Tags[1 2]",
+   "values": [
+    {
+     "k": "node",
+     "name": "Tags",
+     "style": "list",
+     "attrs": [],
+     "children": [
+      {
+       "k": "int",
+       "v": "1"
+      },
+      {
+       "k": "int",
+       "v": "2"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "input": "Foo",
+   "values": [
+    {
+     "k": "node",
+     "name": "Foo",
+     "style": "unit",
+     "attrs": [],
+     "children": []
+    }
+   ]
+  },
+  {
+   "input": "Foo()",
+   "values": [
+    {
+     "k": "node",
+     "name": "Foo",
+     "style": "tuple",
+     "attrs": [],
+     "children": []
+    }
+   ]
+  },
+  {
+   "input": "geo/point{lat:1 lon:2}",
+   "values": [
+    {
+     "k": "node",
+     "name": "geo/point",
+     "style": "brace",
+     "attrs": [
+      [
+       "lat",
+       {
+        "k": "int",
+        "v": "1"
+       }
+      ],
+      [
+       "lon",
+       {
+        "k": "int",
+        "v": "2"
+       }
+      ]
+     ],
+     "children": []
+    }
+   ]
+  },
+  {
+   "input": "#_ 1 2",
+   "values": [
+    {
+     "k": "int",
+     "v": "2"
+    }
+   ]
+  }
+ ],
+ "errors": [
+  {
+   "input": "007",
+   "error": "invalid-number"
+  },
+  {
+   "input": "5.",
+   "error": "invalid-number"
+  },
+  {
+   "input": "[1-2]",
+   "error": "invalid-temporal"
+  },
+  {
+   "input": "12:30",
+   "error": "invalid-temporal"
+  },
+  {
+   "input": "1__0",
+   "error": "unexpected-token"
+  },
+  {
+   "input": "1abc",
+   "error": "unexpected-token"
+  },
+  {
+   "input": "1230$",
+   "error": "unexpected-token"
+  },
+  {
+   "input": "{a:1 a:2}",
+   "error": "duplicate-key"
+  },
+  {
+   "input": "{1 1}",
+   "error": "duplicate-set-element"
+  },
+  {
+   "input": "\"a\u0001b\"",
+   "error": "invalid-escape"
+  },
+  {
+   "input": "true{x:1}",
+   "error": "unexpected-token"
+  },
+  {
+   "input": "&1 [1]",
+   "error": "unsupported-profile-feature"
+  },
+  {
+   "input": "$pi",
+   "error": "unknown-constant"
+  },
+  {
+   "input": "|SGVsbG8=",
+   "error": "unexpected-end"
+  },
+  {
+   "input": "`raw\\path`",
+   "error": "invalid-escape"
+  }
+ ],
+ "doc_link": [
+  {
+   "input": "cid(\"bafkreih3ae7pnumhejqs67xflc6ub5to7jrdottd626oxe3s4y2tngjyqa\")",
+   "values": [
+    {
+     "k": "link",
+     "kind": "cid",
+     "target": "bafkreih3ae7pnumhejqs67xflc6ub5to7jrdottd626oxe3s4y2tngjyqa"
+    }
+   ]
+  },
+  {
+   "input": "link(\"https://example.com\")",
+   "values": [
+    {
+     "k": "link",
+     "kind": "uri",
+     "target": "https://example.com"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,2169 @@
+{
+ "note": "cross-surface differential ground truth from pyaxon 0.11.0a13",
+ "binary": {
+  "cases": [
+   {
+    "id": "null",
+    "profile": "core",
+    "input": "null",
+    "compact_hex": "f6",
+    "canonical_hex": "f6",
+    "canonical_text": "null",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "bool",
+    "profile": "core",
+    "input": "true",
+    "compact_hex": "f5",
+    "canonical_hex": "f5",
+    "canonical_text": "true",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "small-int",
+    "profile": "core",
+    "input": "23",
+    "compact_hex": "17",
+    "canonical_hex": "17",
+    "canonical_text": "23",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "negative-int",
+    "profile": "core",
+    "input": "-1000",
+    "compact_hex": "3903e7",
+    "canonical_hex": "3903e7",
+    "canonical_text": "-1000",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "big-int",
+    "profile": "core",
+    "input": "123456789012345678901234567890",
+    "compact_hex": "c24d018ee90ff6c373e0ee4e3f0ad2",
+    "canonical_hex": "c24d018ee90ff6c373e0ee4e3f0ad2",
+    "canonical_text": "123456789012345678901234567890",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "float-half",
+    "profile": "core",
+    "input": "1.5",
+    "compact_hex": "fb3ff8000000000000",
+    "canonical_hex": "f93e00",
+    "canonical_text": "1.5",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "float-single",
+    "profile": "core",
+    "input": "100000.0",
+    "compact_hex": "fb40f86a0000000000",
+    "canonical_hex": "fa47c35000",
+    "canonical_text": "100000.0",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "float-double",
+    "profile": "core",
+    "input": "1e300",
+    "compact_hex": "fb7e37e43c8800759c",
+    "canonical_hex": "fb7e37e43c8800759c",
+    "canonical_text": "1e+300",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "float-negative-zero",
+    "profile": "core",
+    "input": "-0.0",
+    "compact_hex": "fb8000000000000000",
+    "canonical_hex": "f98000",
+    "canonical_text": "-0.0",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "float-infinity",
+    "profile": "core",
+    "input": "∞",
+    "compact_hex": "f97c00",
+    "canonical_hex": "f97c00",
+    "canonical_text": "∞",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "float-nan",
+    "profile": "core",
+    "input": "?",
+    "compact_hex": "f97e00",
+    "canonical_hex": "f97e00",
+    "canonical_text": "?",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "decimal",
+    "profile": "core",
+    "input": "1000.350D",
+    "compact_hex": "c482221a000f439e",
+    "canonical_hex": "c482211a000186c3",
+    "canonical_text": "1000.35D",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "decimal-infinity",
+    "profile": "core",
+    "input": "∞D",
+    "compact_hex": "d902db00",
+    "canonical_hex": "d902db00",
+    "canonical_text": "∞D",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "string-unicode",
+    "profile": "core",
+    "input": "\"café ☕\"",
+    "compact_hex": "69636166c3a920e29895",
+    "canonical_hex": "69636166c3a920e29895",
+    "canonical_text": "\"café ☕\"",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "binary",
+    "profile": "core",
+    "input": "|AAEC/w==|",
+    "compact_hex": "44000102ff",
+    "canonical_hex": "44000102ff",
+    "canonical_text": "|AAEC/w==|",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "date",
+    "profile": "core",
+    "input": "^2026-07-18",
+    "compact_hex": "d902d784001907ea0712",
+    "canonical_hex": "d902d784001907ea0712",
+    "canonical_text": "^2026-07-18",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "time-local",
+    "profile": "core",
+    "input": "^12:30:45",
+    "compact_hex": "d902d786010c181e182d00f6",
+    "canonical_hex": "d902d786010c181e182d00f6",
+    "canonical_text": "^12:30:45",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "time",
+    "profile": "core",
+    "input": "^12:30:45.123456789Z",
+    "compact_hex": "d902d786010c181e182d1a075bcd15615a",
+    "canonical_hex": "d902d786010c181e182d1a075bcd15615a",
+    "canonical_text": "^12:30:45.123456789Z",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "datetime-local",
+    "profile": "core",
+    "input": "^2026-07-18T12:30:45.500",
+    "compact_hex": "d902d789021907ea07120c181e182d1a1dcd6500f6",
+    "canonical_hex": "d902d789021907ea07120c181e182d1a1dcd6500f6",
+    "canonical_text": "^2026-07-18T12:30:45.5",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "datetime-offset",
+    "profile": "core",
+    "input": "^2026-07-18T12:30:45-06:00",
+    "compact_hex": "d902d789021907ea07120c181e182d00390167",
+    "canonical_hex": "d902d789021907ea07120c181e182d00390167",
+    "canonical_text": "^2026-07-18T12:30:45-06:00",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "datetime-named-zone",
+    "profile": "tz_names",
+    "input": "^2026-07-18T12:30:45-06:00[America/Edmonton]",
+    "compact_hex": "d902d789021907ea07120c181e182d008239016770416d65726963612f45646d6f6e746f6e",
+    "canonical_hex": "d902d789021907ea07120c181e182d008239016770416d65726963612f45646d6f6e746f6e",
+    "canonical_text": "^2026-07-18T12:30:45-06:00[America/Edmonton]",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "list",
+    "profile": "core",
+    "input": "[1 true null]",
+    "compact_hex": "8301f5f6",
+    "canonical_hex": "8301f5f6",
+    "canonical_text": "[1 true null]",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "tuple",
+    "profile": "core",
+    "input": "(1 2 3)",
+    "compact_hex": "d902d483010203",
+    "canonical_hex": "d902d483010203",
+    "canonical_text": "(1 2 3)",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "map",
+    "profile": "core",
+    "input": "{z:1 a:\"x\"}",
+    "compact_hex": "a2617a0161616178",
+    "canonical_hex": "a261616178617a01",
+    "canonical_text": "{a:\"x\" z:1}",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "ordered-map",
+    "profile": "core",
+    "input": "[z:1 a:2]",
+    "compact_hex": "d902d58282617a0182616102",
+    "canonical_hex": "d902d58282617a0182616102",
+    "canonical_text": "[z:1 a:2]",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "set",
+    "profile": "core",
+    "input": "{3 1 2}",
+    "compact_hex": "d9010283030102",
+    "canonical_hex": "d9010283010203",
+    "canonical_text": "{1 2 3}",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "node",
+    "profile": "core",
+    "input": "point{x:1 y:-2 \"label\"}",
+    "compact_hex": "d902d0830165706f696e7482a261780161792181656c6162656c",
+    "canonical_hex": "d902d0830165706f696e7482a261780161792181656c6162656c",
+    "canonical_text": "point{x:1 y:-2 \"label\"}",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "cid-link",
+    "profile": "doc_link",
+    "input": "cid(\"bafkreiec5tzcwyhehbpob5yir5idmjfqf2qzpiiguoia4qt5fquhrbx4ym\")",
+    "compact_hex": "d82a583c006261666b726569656335747a63777968656862706f62357969723569646d6a66716632717a70696967756f6961347174356671756872627834796d",
+    "canonical_hex": "d82a583c006261666b726569656335747a63777968656862706f62357969723569646d6a66716632717a70696967756f6961347174356671756872627834796d",
+    "canonical_text": "cid(\"bafkreiec5tzcwyhehbpob5yir5idmjfqf2qzpiiguoia4qt5fquhrbx4ym\")",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "uri-link",
+    "profile": "doc_link",
+    "input": "link(\"https://example.com/a\")",
+    "compact_hex": "d8207568747470733a2f2f6578616d706c652e636f6d2f61",
+    "canonical_hex": "d8207568747470733a2f2f6578616d706c652e636f6d2f61",
+    "canonical_text": "link(\"https://example.com/a\")",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "graph-shared",
+    "profile": "graph",
+    "input": "[&item point{x:1} *item]",
+    "compact_hex": "82d81cd902d0830165706f696e7482a161780180d81d00",
+    "canonical_hex": "82d81cd902d0830165706f696e7482a161780180d81d00",
+    "canonical_text": "[&1 point{x:1} *1]",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   },
+   {
+    "id": "graph-cycle",
+    "profile": "graph",
+    "input": "&root [*root]",
+    "compact_hex": "d81c81d81d00",
+    "canonical_hex": "d81c81d81d00",
+    "canonical_text": "&1 [*1]",
+    "compact_decode_outcome": "accept",
+    "canonical_decode_outcome": "accept"
+   }
+  ],
+  "malformed": [
+   {
+    "id": "empty",
+    "hex": "",
+    "outcome": "error",
+    "category": "BinaryAxonError",
+    "message": "unexpected end of binary input"
+   },
+   {
+    "id": "truncated-head",
+    "hex": "18",
+    "outcome": "error",
+    "category": "BinaryAxonError",
+    "message": "unexpected end of binary input"
+   },
+   {
+    "id": "truncated-text",
+    "hex": "636162",
+    "outcome": "error",
+    "category": "BinaryAxonError",
+    "message": "unexpected end of binary input"
+   },
+   {
+    "id": "invalid-utf8",
+    "hex": "61ff",
+    "outcome": "error",
+    "category": "BinaryAxonError",
+    "message": "invalid UTF-8 in text string"
+   },
+   {
+    "id": "trailing-data",
+    "hex": "f6f6",
+    "outcome": "error",
+    "category": "BinaryAxonError",
+    "message": "trailing bytes: consumed 1 of 2"
+   },
+   {
+    "id": "unknown-tag",
+    "hex": "d903e7f6",
+    "outcome": "error",
+    "category": "BinaryAxonError",
+    "message": "unsupported Binary AXON tag 999"
+   }
+  ]
+ },
+ "cid": {
+  "cases": [
+   {
+    "id": "null",
+    "input": "null",
+    "cid": "bafkreiduenhjrl7hjgh3lwxr6nvmfv4kzqzzizhzkbydxdabtcjptavzbm",
+    "digest_hex": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "verify": true
+   },
+   {
+    "id": "map-order",
+    "input": "{z:1 a:2}",
+    "cid": "bafkreiggijdxakcl7t7uknk2i3gjwfct3skatjuclj5xtwutgeqypayqia",
+    "digest_hex": "c6424770284bfcff45355a46cc9b1453dc9409a6825a7b79da93312187831040",
+    "verify": true
+   },
+   {
+    "id": "unicode",
+    "input": "\"café\"",
+    "cid": "bafkreibihah6xbze2zu3zdkm6w22loy23pogdoa6xudph6v4kz5u6oypyu",
+    "digest_hex": "28380feb8724d669bc8d4cf5b5a5bb1adbdc61b81ebd06f3fabc567b4f3b0fc5",
+    "verify": true
+   },
+   {
+    "id": "decimal",
+    "input": "1000.350D",
+    "cid": "bafkreic62dg5pmun47fenoiriknygjvx436utciniu3w6t3g3yxerfwjsm",
+    "digest_hex": "5ed0cdd7b28de7ca46b911429b8326b7e6fd49890d45376f4f66de2e4896c993",
+    "verify": true
+   },
+   {
+    "id": "node",
+    "input": "point{x:1 y:2}",
+    "cid": "bafkreig4depfne3fawkc2hj36ci43ed5rcnrlea6ts3zl4x3o5rye6olze",
+    "digest_hex": "dc191e56936505942d1d3bf091cd907d889b15901e9cb795f2fb77638279cbc9",
+    "verify": true
+   }
+  ],
+  "invalid": [
+   {
+    "id": "empty",
+    "input": "",
+    "outcome": "error"
+   },
+   {
+    "id": "wrong-multibase",
+    "input": "zafkreiduenhjrl7hjgh3lwxr6nvmfv4kzqzzizhzkbydxdabtcjptavzbm",
+    "outcome": "error"
+   },
+   {
+    "id": "uppercase",
+    "input": "BAFKREIDUENHJRL7HJGH3LWXR6NVMFV4KZQZZIZHZKBYDXDABTCJPTAVZBM",
+    "outcome": "error"
+   },
+   {
+    "id": "padding",
+    "input": "bafkreiduenhjrl7hjgh3lwxr6nvmfv4kzqzzizhzkbydxdabtcjptavzbm=",
+    "outcome": "error"
+   },
+   {
+    "id": "truncated",
+    "input": "bafkreiduenhjrl7hjgh3lwxr6nvmfv4kzqzzizhzkbydxdabtcjptavzb",
+    "outcome": "error"
+   },
+   {
+    "id": "garbage",
+    "input": "not-a-cid",
+    "outcome": "error"
+   }
+  ]
+ },
+ "canonical_verification": [
+  {
+   "id": "null",
+   "input": "null",
+   "expected": true
+  },
+  {
+   "id": "stream",
+   "input": "1\n2",
+   "expected": true
+  },
+  {
+   "id": "trailing-newline",
+   "input": "1\n",
+   "expected": false
+  },
+  {
+   "id": "map-sorted",
+   "input": "{a:2 z:1}",
+   "expected": true
+  },
+  {
+   "id": "map-unsorted",
+   "input": "{z:1 a:2}",
+   "expected": false
+  },
+  {
+   "id": "set-sorted",
+   "input": "{1 2 3}",
+   "expected": true
+  },
+  {
+   "id": "decimal-normal",
+   "input": "1000.35D",
+   "expected": true
+  },
+  {
+   "id": "decimal-scale",
+   "input": "1000.350D",
+   "expected": false
+  },
+  {
+   "id": "graph-canonical-stream",
+   "input": "&1 []\n*1",
+   "expected": true
+  },
+  {
+   "id": "graph-label-stream",
+   "input": "&item []\n*item",
+   "expected": false
+  }
+ ],
+ "text_profiles": [
+  {
+   "id": "scale-time-short",
+   "profile": "scale_significant",
+   "input": "^12:00:00.5",
+   "outcome": "accept",
+   "count": 1,
+   "compact": "^12:00:00.5",
+   "canonical": {
+    "outcome": "accept",
+    "text": "^12:00:00.5"
+   }
+  },
+  {
+   "id": "scale-time-long",
+   "profile": "scale_significant",
+   "input": "^12:00:00.500",
+   "outcome": "accept",
+   "count": 1,
+   "compact": "^12:00:00.500",
+   "canonical": {
+    "outcome": "accept",
+    "text": "^12:00:00.500"
+   }
+  },
+  {
+   "id": "scale-time-zero",
+   "profile": "scale_significant",
+   "input": "^12:00:00.000",
+   "outcome": "accept",
+   "count": 1,
+   "compact": "^12:00:00.000",
+   "canonical": {
+    "outcome": "accept",
+    "text": "^12:00:00.000"
+   }
+  },
+  {
+   "id": "scale-datetime",
+   "profile": "scale_significant",
+   "input": "^2026-07-18T12:30:45.500000000Z",
+   "outcome": "accept",
+   "count": 1,
+   "compact": "^2026-07-18T12:30:45.500000000Z",
+   "canonical": {
+    "outcome": "accept",
+    "text": "^2026-07-18T12:30:45.500000000Z"
+   }
+  },
+  {
+   "id": "scale-decimal",
+   "profile": "scale_significant",
+   "input": "1.0D 1.00D",
+   "outcome": "accept",
+   "count": 2,
+   "compact": "1.0D\n1.00D",
+   "canonical": {
+    "outcome": "error",
+    "category": "unsupported-profile-feature",
+    "message": "scale-significant values are incompatible with canonical output",
+    "offset": 0,
+    "end_offset": 0,
+    "line": 1,
+    "column": 1
+   }
+  },
+  {
+   "id": "tz-ambiguous-summer",
+   "profile": "tz_names",
+   "input": "^2026-11-01T01:30:00-06:00[America/Edmonton]",
+   "outcome": "accept",
+   "count": 1,
+   "compact": "^2026-11-01T01:30:00-06:00[America/Edmonton]",
+   "canonical": {
+    "outcome": "accept",
+    "text": "^2026-11-01T01:30:00-06:00[America/Edmonton]"
+   }
+  },
+  {
+   "id": "tz-ambiguous-winter",
+   "profile": "tz_names",
+   "input": "^2026-11-01T01:30:00-07:00[America/Edmonton]",
+   "outcome": "accept",
+   "count": 1,
+   "compact": "^2026-11-01T01:30:00-07:00[America/Edmonton]",
+   "canonical": {
+    "outcome": "accept",
+    "text": "^2026-11-01T01:30:00-07:00[America/Edmonton]"
+   }
+  },
+  {
+   "id": "tz-nonexistent",
+   "profile": "tz_names",
+   "input": "^2026-03-08T02:30:00-07:00[America/Edmonton]",
+   "outcome": "error",
+   "category": "invalid-temporal",
+   "message": "numeric offset does not match named time zone",
+   "offset": 44,
+   "end_offset": 44,
+   "line": 1,
+   "column": 45
+  },
+  {
+   "id": "tz-offset-mismatch",
+   "profile": "tz_names",
+   "input": "^2026-07-18T12:30:45-07:00[America/Edmonton]",
+   "outcome": "error",
+   "category": "invalid-temporal",
+   "message": "numeric offset does not match named time zone",
+   "offset": 44,
+   "end_offset": 44,
+   "line": 1,
+   "column": 45
+  },
+  {
+   "id": "tz-profile-required",
+   "profile": "core",
+   "input": "^2026-07-18T12:30:45-06:00[America/Edmonton]",
+   "outcome": "error",
+   "category": "unsupported-profile-feature",
+   "message": "named time zones require tz-names profile",
+   "offset": 26,
+   "end_offset": 26,
+   "line": 1,
+   "column": 27
+  },
+  {
+   "id": "uri-https",
+   "profile": "doc_link",
+   "input": "link(\"https://example.com/a?b=c#d\")",
+   "outcome": "accept",
+   "count": 1,
+   "compact": "link(\"https://example.com/a?b=c#d\")",
+   "canonical": {
+    "outcome": "accept",
+    "text": "link(\"https://example.com/a?b=c#d\")"
+   }
+  },
+  {
+   "id": "uri-mailto",
+   "profile": "doc_link",
+   "input": "link(\"mailto:person@example.com\")",
+   "outcome": "accept",
+   "count": 1,
+   "compact": "link(\"mailto:person@example.com\")",
+   "canonical": {
+    "outcome": "accept",
+    "text": "link(\"mailto:person@example.com\")"
+   }
+  },
+  {
+   "id": "uri-urn",
+   "profile": "doc_link",
+   "input": "link(\"urn:example:animal:ferret:nose\")",
+   "outcome": "accept",
+   "count": 1,
+   "compact": "link(\"urn:example:animal:ferret:nose\")",
+   "canonical": {
+    "outcome": "accept",
+    "text": "link(\"urn:example:animal:ferret:nose\")"
+   }
+  },
+  {
+   "id": "uri-relative",
+   "profile": "doc_link",
+   "input": "link(\"relative/path\")",
+   "outcome": "error",
+   "category": "invalid-link",
+   "message": "link requires an absolute URI",
+   "offset": 21,
+   "end_offset": 21,
+   "line": 1,
+   "column": 22
+  },
+  {
+   "id": "uri-space",
+   "profile": "doc_link",
+   "input": "link(\"https://example.com/a b\")",
+   "outcome": "error",
+   "category": "invalid-link",
+   "message": "link requires an absolute URI",
+   "offset": 31,
+   "end_offset": 31,
+   "line": 1,
+   "column": 32
+  },
+  {
+   "id": "uri-bad-percent",
+   "profile": "doc_link",
+   "input": "link(\"https://example.com/%zz\")",
+   "outcome": "error",
+   "category": "invalid-link",
+   "message": "link requires an absolute URI",
+   "offset": 31,
+   "end_offset": 31,
+   "line": 1,
+   "column": 32
+  },
+  {
+   "id": "uri-nonascii",
+   "profile": "doc_link",
+   "input": "link(\"https://example.com/café\")",
+   "outcome": "error",
+   "category": "invalid-link",
+   "message": "link requires an absolute URI",
+   "offset": 33,
+   "end_offset": 33,
+   "line": 1,
+   "column": 33
+  },
+  {
+   "id": "uri-bad-port",
+   "profile": "doc_link",
+   "input": "link(\"https://example.com:99999/a\")",
+   "outcome": "error",
+   "category": "invalid-link",
+   "message": "link requires an absolute URI",
+   "offset": 35,
+   "end_offset": 35,
+   "line": 1,
+   "column": 36
+  },
+  {
+   "id": "uri-http-no-host",
+   "profile": "doc_link",
+   "input": "link(\"https:/path\")",
+   "outcome": "error",
+   "category": "invalid-link",
+   "message": "link requires an absolute URI",
+   "offset": 19,
+   "end_offset": 19,
+   "line": 1,
+   "column": 20
+  }
+ ],
+ "incremental": [
+  {
+   "id": "prefix-before-error",
+   "profile": "core",
+   "input": "1 [",
+   "yielded": [
+    "1"
+   ],
+   "terminal": {
+    "outcome": "error",
+    "category": "unexpected-end",
+    "message": "unterminated container",
+    "offset": 3,
+    "end_offset": 3,
+    "line": 1,
+    "column": 4
+   },
+   "fused_after_error": true
+  },
+  {
+   "id": "attribute-document-atomic",
+   "profile": "core",
+   "input": "a:1 b:2",
+   "yielded": [
+    "[a:1 b:2]"
+   ],
+   "terminal": {
+    "outcome": "end"
+   },
+   "fused_after_error": null
+  },
+  {
+   "id": "indented-preprocessing",
+   "profile": "indented_bodies",
+   "input": "person\n  age:3\n",
+   "yielded": [
+    "person{age:3}"
+   ],
+   "terminal": {
+    "outcome": "end"
+   },
+   "fused_after_error": null
+  },
+  {
+   "id": "canonical-valid",
+   "profile": "canonical_verify",
+   "input": "{a:1}",
+   "yielded": [
+    "{a:1}"
+   ],
+   "terminal": {
+    "outcome": "end"
+   },
+   "fused_after_error": null
+  },
+  {
+   "id": "canonical-invalid",
+   "profile": "canonical_verify",
+   "input": "{ a:1 }",
+   "yielded": [],
+   "terminal": {
+    "outcome": "error",
+    "category": "unexpected-token",
+    "message": "document payload is not canonical AXON",
+    "offset": 7,
+    "end_offset": 7,
+    "line": 1,
+    "column": 8
+   },
+   "fused_after_error": true
+  },
+  {
+   "id": "max-input-preflight",
+   "profile": "max_input_4",
+   "input": "12345",
+   "yielded": [],
+   "terminal": {
+    "outcome": "error",
+    "category": "resource-limit-exceeded",
+    "message": "input is too large",
+    "offset": 0,
+    "end_offset": 0,
+    "line": 1,
+    "column": 1
+   },
+   "fused_after_error": true
+  },
+  {
+   "id": "discard-then-value",
+   "profile": "core",
+   "input": "#_ 1 2",
+   "yielded": [
+    "2"
+   ],
+   "terminal": {
+    "outcome": "end"
+   },
+   "fused_after_error": null
+  },
+  {
+   "id": "header-profile",
+   "profile": "core",
+   "input": "axon{require:[\"doc-link\"]} link(\"https://example.com/a\")",
+   "yielded": [
+    "link(\"https://example.com/a\")"
+   ],
+   "terminal": {
+    "outcome": "end"
+   },
+   "fused_after_error": null
+  },
+  {
+   "id": "compat-numbers",
+   "profile": "compat",
+   "input": "007 5.",
+   "yielded": [
+    "7",
+    "5.0"
+   ],
+   "terminal": {
+    "outcome": "end"
+   },
+   "fused_after_error": null
+  }
+ ],
+ "migration": [
+  {
+   "id": "canonical-leading-zero",
+   "operation": "canonical",
+   "graph": false,
+   "input": "007",
+   "outcome": "accept",
+   "output": "7",
+   "mode": "canonical",
+   "events": [
+    {
+     "code": "leading-zero-number",
+     "message": "removed legacy leading zeros",
+     "offset": 0
+    },
+    {
+     "code": "core-canonicalization",
+     "message": "emitted one strict deterministic Core spelling",
+     "offset": 0
+    }
+   ],
+   "edits": []
+  },
+  {
+   "id": "canonical-temporal",
+   "operation": "canonical",
+   "graph": false,
+   "input": "007\n12:30",
+   "outcome": "accept",
+   "output": "7\n^12:30:00",
+   "mode": "canonical",
+   "events": [
+    {
+     "code": "leading-zero-number",
+     "message": "removed legacy leading zeros",
+     "offset": 0
+    },
+    {
+     "code": "bare-temporal",
+     "message": "added the Core temporal marker and field padding",
+     "offset": 4
+    },
+    {
+     "code": "core-canonicalization",
+     "message": "emitted one strict deterministic Core spelling",
+     "offset": 0
+    }
+   ],
+   "edits": []
+  },
+  {
+   "id": "selective-leading-zero",
+   "operation": "selective",
+   "graph": false,
+   "input": "# keep\n007\n",
+   "outcome": "accept",
+   "output": "# keep\n7\n",
+   "mode": "selective",
+   "events": [
+    {
+     "code": "leading-zero-number",
+     "message": "removed legacy leading zeros",
+     "offset": 7
+    },
+    {
+     "code": "core-canonicalization",
+     "message": "emitted one strict deterministic Core spelling",
+     "offset": 0
+    }
+   ],
+   "edits": [
+    {
+     "code": "selective-rewrite",
+     "start": 7,
+     "end": 9,
+     "replacement": ""
+    }
+   ]
+  },
+  {
+   "id": "selective-unchanged",
+   "operation": "selective",
+   "graph": false,
+   "input": "# keep\n7\n",
+   "outcome": "accept",
+   "output": "# keep\n7\n",
+   "mode": "selective",
+   "events": [
+    {
+     "code": "core-canonicalization",
+     "message": "emitted one strict deterministic Core spelling",
+     "offset": 0
+    }
+   ],
+   "edits": []
+  },
+  {
+   "id": "selective-comment-opener",
+   "operation": "selective",
+   "graph": false,
+   "input": "#_ legacy comment\n1",
+   "outcome": "accept",
+   "output": "# _ legacy comment\n1",
+   "mode": "selective",
+   "events": [
+    {
+     "code": "hash-underscore-comment",
+     "message": "separated the legacy #_ comment opener from Core discard",
+     "offset": 0
+    },
+    {
+     "code": "core-canonicalization",
+     "message": "emitted one strict deterministic Core spelling",
+     "offset": 0
+    }
+   ],
+   "edits": [
+    {
+     "code": "selective-rewrite",
+     "start": 1,
+     "end": 1,
+     "replacement": " "
+    }
+   ]
+  },
+  {
+   "id": "selective-trailing-point",
+   "operation": "selective",
+   "graph": false,
+   "input": "5.",
+   "outcome": "accept",
+   "output": "5.0",
+   "mode": "selective",
+   "events": [
+    {
+     "code": "trailing-point-number",
+     "message": "added a fractional digit to a trailing-point number",
+     "offset": 0
+    },
+    {
+     "code": "core-canonicalization",
+     "message": "emitted one strict deterministic Core spelling",
+     "offset": 0
+    }
+   ],
+   "edits": [
+    {
+     "code": "selective-rewrite",
+     "start": 2,
+     "end": 2,
+     "replacement": "0"
+    }
+   ]
+  },
+  {
+   "id": "selective-binary",
+   "operation": "selective",
+   "graph": false,
+   "input": "|YQ==",
+   "outcome": "accept",
+   "output": "|YQ==|",
+   "mode": "selective",
+   "events": [
+    {
+     "code": "legacy-binary",
+     "message": "closed a legacy binary literal",
+     "offset": 0
+    },
+    {
+     "code": "core-canonicalization",
+     "message": "emitted one strict deterministic Core spelling",
+     "offset": 0
+    }
+   ],
+   "edits": [
+    {
+     "code": "selective-rewrite",
+     "start": 5,
+     "end": 5,
+     "replacement": "|"
+    }
+   ]
+  },
+  {
+   "id": "selective-fraction",
+   "operation": "selective",
+   "graph": false,
+   "input": "^12:00:00.5",
+   "outcome": "accept",
+   "output": "^12:00:00.000005",
+   "mode": "selective",
+   "events": [
+    {
+     "code": "temporal-fraction",
+     "message": "normalized a legacy temporal fraction to six digits",
+     "offset": 10
+    },
+    {
+     "code": "core-canonicalization",
+     "message": "emitted one strict deterministic Core spelling",
+     "offset": 0
+    }
+   ],
+   "edits": [
+    {
+     "code": "selective-rewrite",
+     "start": 10,
+     "end": 10,
+     "replacement": "00000"
+    }
+   ]
+  },
+  {
+   "id": "selective-continuation",
+   "operation": "selective",
+   "graph": false,
+   "input": "\"ab\\\nc\"",
+   "outcome": "accept",
+   "output": "\"abab\\\\c\"",
+   "mode": "selective",
+   "events": [
+    {
+     "code": "legacy-continuation",
+     "message": "preserved the baseline continuation value with Core escapes",
+     "offset": 3
+    },
+    {
+     "code": "core-canonicalization",
+     "message": "emitted one strict deterministic Core spelling",
+     "offset": 0
+    }
+   ],
+   "edits": [
+    {
+     "code": "selective-rewrite",
+     "start": 3,
+     "end": 3,
+     "replacement": "ab"
+    },
+    {
+     "code": "selective-rewrite",
+     "start": 4,
+     "end": 5,
+     "replacement": "\\"
+    }
+   ]
+  },
+  {
+   "id": "selective-indented",
+   "operation": "selective",
+   "graph": false,
+   "input": "person\n  name:\"Alex\"\n",
+   "outcome": "accept",
+   "output": "person{\n  name:\"Alex\"\n}\n",
+   "mode": "selective",
+   "events": [
+    {
+     "code": "indented-body",
+     "message": "rewrote an indentation-bound body with Core braces",
+     "offset": 0
+    },
+    {
+     "code": "core-canonicalization",
+     "message": "emitted one strict deterministic Core spelling",
+     "offset": 0
+    }
+   ],
+   "edits": [
+    {
+     "code": "selective-rewrite",
+     "start": 6,
+     "end": 6,
+     "replacement": "{"
+    },
+    {
+     "code": "selective-rewrite",
+     "start": 21,
+     "end": 21,
+     "replacement": "}\n"
+    }
+   ]
+  },
+  {
+   "id": "fallback-duplicate-map",
+   "operation": "selective",
+   "graph": false,
+   "input": "{a:1 a:2}",
+   "outcome": "accept",
+   "output": "{a:2}",
+   "mode": "canonical-fallback",
+   "events": [
+    {
+     "code": "duplicate-key",
+     "message": "kept the last duplicate key with a warning",
+     "offset": 8
+    },
+    {
+     "code": "core-canonicalization",
+     "message": "emitted one strict deterministic Core spelling",
+     "offset": 0
+    }
+   ],
+   "edits": [
+    {
+     "code": "selective-rewrite",
+     "start": 1,
+     "end": 5,
+     "replacement": ""
+    }
+   ]
+  },
+  {
+   "id": "fallback-duplicate-set",
+   "operation": "selective",
+   "graph": false,
+   "input": "{1 1}",
+   "outcome": "accept",
+   "output": "{1}",
+   "mode": "canonical-fallback",
+   "events": [
+    {
+     "code": "duplicate-set-element",
+     "message": "dropped a duplicate set element with a warning",
+     "offset": 5
+    },
+    {
+     "code": "core-canonicalization",
+     "message": "emitted one strict deterministic Core spelling",
+     "offset": 0
+    }
+   ],
+   "edits": [
+    {
+     "code": "selective-rewrite",
+     "start": 2,
+     "end": 4,
+     "replacement": ""
+    }
+   ]
+  },
+  {
+   "id": "legacy-binding",
+   "operation": "canonical",
+   "graph": false,
+   "input": "Rgb(1 2 3)",
+   "outcome": "accept",
+   "output": "null\n(1 2 3)",
+   "mode": "canonical",
+   "events": [
+    {
+     "code": "legacy-binding",
+     "message": "preserved the historical pending-name value shape",
+     "offset": 0
+    },
+    {
+     "code": "core-canonicalization",
+     "message": "emitted one strict deterministic Core spelling",
+     "offset": 0
+    }
+   ],
+   "edits": []
+  },
+  {
+   "id": "graph-stream-canonical",
+   "operation": "canonical",
+   "graph": true,
+   "input": "&item []\n*item",
+   "outcome": "accept",
+   "output": "&1 []\n*1",
+   "mode": "canonical",
+   "events": [
+    {
+     "code": "core-canonicalization",
+     "message": "emitted one strict deterministic Core spelling",
+     "offset": 0
+    }
+   ],
+   "edits": []
+  },
+  {
+   "id": "graph-stream-selective",
+   "operation": "selective",
+   "graph": true,
+   "input": "&item []\n*item",
+   "outcome": "accept",
+   "output": "&item []\n*item",
+   "mode": "selective",
+   "events": [
+    {
+     "code": "core-canonicalization",
+     "message": "emitted one strict deterministic Core spelling",
+     "offset": 0
+    }
+   ],
+   "edits": []
+  },
+  {
+   "id": "unicode-byte-edits",
+   "operation": "selective",
+   "graph": false,
+   "input": "\"é\"\n007\n12:30",
+   "outcome": "accept",
+   "output": "\"é\"\n7\n^12:30:00",
+   "mode": "selective",
+   "events": [
+    {
+     "code": "leading-zero-number",
+     "message": "removed legacy leading zeros",
+     "offset": 5
+    },
+    {
+     "code": "bare-temporal",
+     "message": "added the Core temporal marker and field padding",
+     "offset": 9
+    },
+    {
+     "code": "core-canonicalization",
+     "message": "emitted one strict deterministic Core spelling",
+     "offset": 0
+    }
+   ],
+   "edits": [
+    {
+     "code": "selective-rewrite",
+     "start": 5,
+     "end": 7,
+     "replacement": ""
+    },
+    {
+     "code": "selective-rewrite",
+     "start": 9,
+     "end": 9,
+     "replacement": "^"
+    },
+    {
+     "code": "selective-rewrite",
+     "start": 14,
+     "end": 14,
+     "replacement": ":00"
+    }
+   ]
+  },
+  {
+   "id": "unknown-reference",
+   "operation": "canonical",
+   "graph": true,
+   "input": "*missing",
+   "outcome": "error",
+   "category": "unknown-reference",
+   "message": "undefined sentinel has no Core spelling",
+   "offset": 0,
+   "end_offset": 0,
+   "line": 1,
+   "column": 1
+  }
+ ],
+ "lsp": {
+  "diagnostics": [
+   {
+    "id": "double-comma",
+    "profile": "core",
+    "input": "[1,,2]",
+    "result": [
+     {
+      "code": "unexpected-token",
+      "message": "comma does not have a preceding item",
+      "start_byte": 3,
+      "end_byte": 4,
+      "line": 0,
+      "character": 3,
+      "expected": [
+       "value"
+      ],
+      "fixes": [
+       {
+        "title": "Remove comma",
+        "start_byte": 3,
+        "end_byte": 4,
+        "new_text": ""
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "missing-close",
+    "profile": "core",
+    "input": "[1",
+    "result": [
+     {
+      "code": "unexpected-end",
+      "message": "unterminated bracket; expected ]",
+      "start_byte": 2,
+      "end_byte": 2,
+      "line": 0,
+      "character": 0,
+      "expected": [
+       "]"
+      ],
+      "fixes": [
+       {
+        "title": "Insert missing ]",
+        "start_byte": 2,
+        "end_byte": 2,
+        "new_text": "]"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "multibyte-error",
+    "profile": "core",
+    "input": "[\"é\" @]",
+    "result": [
+     {
+      "code": "unexpected-token",
+      "message": "unexpected-token at 1:6: unexpected character '@'",
+      "start_byte": 6,
+      "end_byte": 6,
+      "line": 0,
+      "character": 5,
+      "expected": [],
+      "fixes": []
+     }
+    ]
+   },
+   {
+    "id": "clean",
+    "profile": "core",
+    "input": "point{x:1}",
+    "result": []
+   }
+  ],
+  "hover": [
+   {
+    "id": "multibyte-interior",
+    "profile": "core",
+    "input": "étage{name:\"A\"} # tail",
+    "byte_offset": 1,
+    "result": {
+     "kind": "name",
+     "text": "étage",
+     "start_byte": 0,
+     "end_byte": 6,
+     "line": 0,
+     "character": 0,
+     "trivia": false
+    }
+   },
+   {
+    "id": "attribute-name",
+    "profile": "core",
+    "input": "étage{name:\"A\"} # tail",
+    "byte_offset": 7,
+    "result": {
+     "kind": "name",
+     "text": "name",
+     "start_byte": 7,
+     "end_byte": 11,
+     "line": 0,
+     "character": 6,
+     "trivia": false
+    }
+   },
+   {
+    "id": "trivia",
+    "profile": "core",
+    "input": "étage{name:\"A\"} # tail",
+    "byte_offset": 16,
+    "result": {
+     "kind": "whitespace",
+     "text": " ",
+     "start_byte": 16,
+     "end_byte": 17,
+     "line": 0,
+     "character": 15,
+     "trivia": true
+    }
+   },
+   {
+    "id": "eof",
+    "profile": "core",
+    "input": "étage{name:\"A\"} # tail",
+    "byte_offset": 23,
+    "result": null
+   }
+  ],
+  "formatting": [
+   {
+    "id": "nested-comment",
+    "profile": "core",
+    "input": "{a:1 # keep\n b:[2 3]}",
+    "indent": 2,
+    "result": [
+     {
+      "start_byte": 0,
+      "end_byte": 21,
+      "new_text": "{\n  a:1 # keep\n  b: [\n    2 3\n  ]\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "stream",
+    "profile": "core",
+    "input": "false\n{nested:(40.3)}",
+    "indent": 4,
+    "result": [
+     {
+      "start_byte": 0,
+      "end_byte": 21,
+      "new_text": "false\n{\n    nested: (\n        40.3\n    )\n}\n"
+     }
+    ]
+   },
+   {
+    "id": "indent-zero",
+    "profile": "core",
+    "input": "{a:[1 2] b:3}",
+    "indent": 0,
+    "result": [
+     {
+      "start_byte": 0,
+      "end_byte": 13,
+      "new_text": "{\na: [\n1 2\n] b:3\n}\n"
+     }
+    ]
+   }
+  ],
+  "symbols": [
+   {
+    "id": "nested",
+    "profile": "core",
+    "input": "outer{list:[leaf] child inner{x:1}}",
+    "result": [
+     {
+      "name": "outer",
+      "kind": "node",
+      "path": [
+       0
+      ]
+     },
+     {
+      "name": "leaf",
+      "kind": "node",
+      "path": [
+       0,
+       "@",
+       "list",
+       0
+      ]
+     },
+     {
+      "name": "child",
+      "kind": "node",
+      "path": [
+       0,
+       0
+      ]
+     },
+     {
+      "name": "inner",
+      "kind": "node",
+      "path": [
+       0,
+       1
+      ]
+     }
+    ]
+   },
+   {
+    "id": "map-path",
+    "profile": "core",
+    "input": "{root:item{nested}}",
+    "result": [
+     {
+      "name": "item",
+      "kind": "node",
+      "path": [
+       0,
+       "root"
+      ]
+     },
+     {
+      "name": "nested",
+      "kind": "node",
+      "path": [
+       0,
+       "root",
+       0
+      ]
+     }
+    ]
+   },
+   {
+    "id": "malformed",
+    "profile": "core",
+    "input": "outer{[}",
+    "result": []
+   },
+   {
+    "id": "graph-cycle",
+    "profile": "graph",
+    "input": "&a [outer *a]",
+    "result": [
+     {
+      "name": "outer",
+      "kind": "node",
+      "path": [
+       0,
+       0
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "scientific": {
+  "cases": [
+   {
+    "id": "u8",
+    "tag": "u8",
+    "element_size": 1,
+    "shape": [
+     2
+    ],
+    "order": "C",
+    "data_hex": "00ff",
+    "source": "Array{data:|AP8=| shape:[2] type:\"u8\"}",
+    "roundtrip_data_hex": "00ff"
+   },
+   {
+    "id": "u16",
+    "tag": "u16",
+    "element_size": 2,
+    "shape": [
+     2
+    ],
+    "order": "C",
+    "data_hex": "0000ffff",
+    "source": "Array{data:|AAD//w==| shape:[2] type:\"u16\"}",
+    "roundtrip_data_hex": "0000ffff"
+   },
+   {
+    "id": "u32",
+    "tag": "u32",
+    "element_size": 4,
+    "shape": [
+     2
+    ],
+    "order": "C",
+    "data_hex": "00000000ffffffff",
+    "source": "Array{data:|AAAAAP////8=| shape:[2] type:\"u32\"}",
+    "roundtrip_data_hex": "00000000ffffffff"
+   },
+   {
+    "id": "u64",
+    "tag": "u64",
+    "element_size": 8,
+    "shape": [
+     2
+    ],
+    "order": "C",
+    "data_hex": "0000000000000000ffffffffffffffff",
+    "source": "Array{data:|AAAAAAAAAAD//////////w==| shape:[2] type:\"u64\"}",
+    "roundtrip_data_hex": "0000000000000000ffffffffffffffff"
+   },
+   {
+    "id": "i8",
+    "tag": "i8",
+    "element_size": 1,
+    "shape": [
+     2
+    ],
+    "order": "C",
+    "data_hex": "807f",
+    "source": "Array{data:|gH8=| shape:[2] type:\"i8\"}",
+    "roundtrip_data_hex": "807f"
+   },
+   {
+    "id": "i16",
+    "tag": "i16",
+    "element_size": 2,
+    "shape": [
+     2
+    ],
+    "order": "C",
+    "data_hex": "0080ff7f",
+    "source": "Array{data:|AID/fw==| shape:[2] type:\"i16\"}",
+    "roundtrip_data_hex": "0080ff7f"
+   },
+   {
+    "id": "i32",
+    "tag": "i32",
+    "element_size": 4,
+    "shape": [
+     2
+    ],
+    "order": "C",
+    "data_hex": "00000080ffffff7f",
+    "source": "Array{data:|AAAAgP///38=| shape:[2] type:\"i32\"}",
+    "roundtrip_data_hex": "00000080ffffff7f"
+   },
+   {
+    "id": "i64",
+    "tag": "i64",
+    "element_size": 8,
+    "shape": [
+     2
+    ],
+    "order": "C",
+    "data_hex": "0000000000000080ffffffffffffff7f",
+    "source": "Array{data:|AAAAAAAAAID/////////fw==| shape:[2] type:\"i64\"}",
+    "roundtrip_data_hex": "0000000000000080ffffffffffffff7f"
+   },
+   {
+    "id": "f16",
+    "tag": "f16",
+    "element_size": 2,
+    "shape": [
+     2
+    ],
+    "order": "C",
+    "data_hex": "003e00c0",
+    "source": "Array{data:|AD4AwA==| shape:[2] type:\"f16\"}",
+    "roundtrip_data_hex": "003e00c0"
+   },
+   {
+    "id": "f32",
+    "tag": "f32",
+    "element_size": 4,
+    "shape": [
+     2
+    ],
+    "order": "C",
+    "data_hex": "0000c03f000000c0",
+    "source": "Array{data:|AADAPwAAAMA=| shape:[2] type:\"f32\"}",
+    "roundtrip_data_hex": "0000c03f000000c0"
+   },
+   {
+    "id": "f64",
+    "tag": "f64",
+    "element_size": 8,
+    "shape": [
+     2
+    ],
+    "order": "C",
+    "data_hex": "0000000000000a400000000000000080",
+    "source": "Array{data:|AAAAAAAACkAAAAAAAAAAgA==| shape:[2] type:\"f64\"}",
+    "roundtrip_data_hex": "0000000000000a400000000000000080"
+   },
+   {
+    "id": "c64",
+    "tag": "c64",
+    "element_size": 8,
+    "shape": [
+     2
+    ],
+    "order": "C",
+    "data_hex": "0000803f00000040000040c00000003f",
+    "source": "Array{data:|AACAPwAAAEAAAEDAAAAAPw==| shape:[2] type:\"c64\"}",
+    "roundtrip_data_hex": "0000803f00000040000040c00000003f"
+   },
+   {
+    "id": "c128",
+    "tag": "c128",
+    "element_size": 16,
+    "shape": [
+     2
+    ],
+    "order": "C",
+    "data_hex": "000000000000f03f000000000000004000000000000008c0000000000000e03f",
+    "source": "Array{data:|AAAAAAAA8D8AAAAAAAAAQAAAAAAAAAjAAAAAAAAA4D8=| shape:[2] type:\"c128\"}",
+    "roundtrip_data_hex": "000000000000f03f000000000000004000000000000008c0000000000000e03f"
+   },
+   {
+    "id": "fortran-i32",
+    "tag": "i32",
+    "element_size": 4,
+    "shape": [
+     2,
+     3
+    ],
+    "order": "F",
+    "data_hex": "010000000400000002000000050000000300000006000000",
+    "source": "Array{data:|AQAAAAQAAAACAAAABQAAAAMAAAAGAAAA| order:\"F\" shape:[2 3] type:\"i32\"}",
+    "roundtrip_data_hex": "010000000400000002000000050000000300000006000000"
+   }
+  ],
+  "edge": [
+   {
+    "id": "default-empty-f32",
+    "source": "Array{shape:[0]}",
+    "outcome": "accept",
+    "dtype": "f32",
+    "shape": [
+     0
+    ],
+    "order": "C",
+    "data_hex": ""
+   },
+   {
+    "id": "default-type",
+    "source": "Array{shape:[1] data:|AAAAAA==|}",
+    "outcome": "accept",
+    "dtype": "f32",
+    "shape": [
+     1
+    ],
+    "order": "C",
+    "data_hex": "00000000"
+   },
+   {
+    "id": "default-shape-scalar",
+    "source": "Array{type:\"u8\" data:|Bw==|}",
+    "outcome": "accept",
+    "dtype": "u8",
+    "shape": [],
+    "order": "C",
+    "data_hex": "07"
+   },
+   {
+    "id": "child-ignored",
+    "source": "Array{shape:[1] type:\"u8\" data:|Bw==| null}",
+    "outcome": "accept",
+    "dtype": "u8",
+    "shape": [
+     1
+    ],
+    "order": "C",
+    "data_hex": "07"
+   },
+   {
+    "id": "integer-shape",
+    "source": "Array{shape:2 type:\"u8\" data:|AQI=|}",
+    "outcome": "accept",
+    "dtype": "u8",
+    "shape": [
+     2
+    ],
+    "order": "C",
+    "data_hex": "0102"
+   },
+   {
+    "id": "null-shape-flattens",
+    "source": "Array{shape:null type:\"u8\" data:|AQI=|}",
+    "outcome": "accept",
+    "dtype": "u8",
+    "shape": [
+     2
+    ],
+    "order": "C",
+    "data_hex": "0102"
+   },
+   {
+    "id": "tuple-shape",
+    "source": "Array{shape:(1 2) type:\"u8\" data:|AQI=|}",
+    "outcome": "accept",
+    "dtype": "u8",
+    "shape": [
+     1,
+     2
+    ],
+    "order": "C",
+    "data_hex": "0102"
+   },
+   {
+    "id": "inferred-shape",
+    "source": "Array{shape:[-1 2] type:\"u8\" data:|AQIDBA==|}",
+    "outcome": "accept",
+    "dtype": "u8",
+    "shape": [
+     2,
+     2
+    ],
+    "order": "C",
+    "data_hex": "01020304"
+   },
+   {
+    "id": "lowercase-order",
+    "source": "Array{shape:[2] type:\"u8\" data:|AQI=| order:\"f\"}",
+    "outcome": "accept",
+    "dtype": "u8",
+    "shape": [
+     2
+    ],
+    "order": "F",
+    "data_hex": "0102"
+   },
+   {
+    "id": "automatic-order",
+    "source": "Array{shape:[2] type:\"u8\" data:|AQI=| order:\"A\"}",
+    "outcome": "accept",
+    "dtype": "u8",
+    "shape": [
+     2
+    ],
+    "order": "C",
+    "data_hex": "0102"
+   },
+   {
+    "id": "null-order",
+    "source": "Array{shape:[2] type:\"u8\" data:|AQI=| order:null}",
+    "outcome": "accept",
+    "dtype": "u8",
+    "shape": [
+     2
+    ],
+    "order": "C",
+    "data_hex": "0102"
+   }
+  ],
+  "invalid": [
+   {
+    "id": "wrong-node",
+    "source": "NotArray{shape:[1] type:\"u8\" data:|AA==|}",
+    "outcome": "error",
+    "category": "ValueError",
+    "message": "Expected an AXON Array Node"
+   },
+   {
+    "id": "unknown-dtype",
+    "source": "Array{shape:[1] type:\"x8\" data:|AA==|}",
+    "outcome": "error",
+    "category": "ValueError",
+    "message": "Unsupported AXON array type: x8"
+   },
+   {
+    "id": "shape-entry",
+    "source": "Array{shape:[\"x\"] type:\"u8\" data:|AA==|}",
+    "outcome": "error",
+    "category": "TypeError",
+    "message": "'str' object cannot be interpreted as an integer"
+   },
+   {
+    "id": "short-data",
+    "source": "Array{shape:[2 2] type:\"f32\" data:|AACAPwAAAEA=|}",
+    "outcome": "error",
+    "category": "ValueError",
+    "message": "cannot reshape array of size 2 into shape (2,2)"
+   },
+   {
+    "id": "wrong-data",
+    "source": "Array{shape:[1] type:\"u8\" data:\"x\"}",
+    "outcome": "error",
+    "category": "TypeError",
+    "message": "a bytes-like object is required, not 'str'"
+   },
+   {
+    "id": "bad-order",
+    "source": "Array{shape:[1] type:\"u8\" data:|AA==| order:\"X\"}",
+    "outcome": "error",
+    "category": "ValueError",
+    "message": "order must be one of 'C', 'F', 'A', or 'K' (got 'X')"
+   }
+  ]
+ },
+ "stream": [
+  {
+   "id": "valid-count",
+   "input": "StreamStart 1 2 StreamEnd{count:2}",
+   "yielded": [
+    "1",
+    "2"
+   ],
+   "terminal": {
+    "outcome": "end"
+   },
+   "fused_after_error": false
+  },
+  {
+   "id": "valid-no-count",
+   "input": "StreamStart 1 2 StreamEnd",
+   "yielded": [
+    "1",
+    "2"
+   ],
+   "terminal": {
+    "outcome": "end"
+   },
+   "fused_after_error": false
+  },
+  {
+   "id": "zero",
+   "input": "StreamStart StreamEnd{count:0}",
+   "yielded": [],
+   "terminal": {
+    "outcome": "end"
+   },
+   "fused_after_error": false
+  },
+  {
+   "id": "numeric-equal-bool",
+   "input": "StreamStart 1 StreamEnd{count:true}",
+   "yielded": [
+    "1"
+   ],
+   "terminal": {
+    "outcome": "end"
+   },
+   "fused_after_error": false
+  },
+  {
+   "id": "numeric-equal-float",
+   "input": "StreamStart 1 StreamEnd{count:1.0}",
+   "yielded": [
+    "1"
+   ],
+   "terminal": {
+    "outcome": "end"
+   },
+   "fused_after_error": false
+  },
+  {
+   "id": "numeric-equal-decimal",
+   "input": "StreamStart 1 StreamEnd{count:1D}",
+   "yielded": [
+    "1"
+   ],
+   "terminal": {
+    "outcome": "end"
+   },
+   "fused_after_error": false
+  },
+  {
+   "id": "zero-false",
+   "input": "StreamStart StreamEnd{count:false}",
+   "yielded": [],
+   "terminal": {
+    "outcome": "end"
+   },
+   "fused_after_error": false
+  },
+  {
+   "id": "zero-float",
+   "input": "StreamStart StreamEnd{count:0.0}",
+   "yielded": [],
+   "terminal": {
+    "outcome": "end"
+   },
+   "fused_after_error": false
+  },
+  {
+   "id": "null-count-empty",
+   "input": "StreamStart StreamEnd{count:null}",
+   "yielded": [],
+   "terminal": {
+    "outcome": "end"
+   },
+   "fused_after_error": false
+  },
+  {
+   "id": "null-count-nonempty",
+   "input": "StreamStart 1 StreamEnd{count:null}",
+   "yielded": [
+    "1"
+   ],
+   "terminal": {
+    "outcome": "end"
+   },
+   "fused_after_error": false
+  },
+  {
+   "id": "two-envelopes",
+   "input": "StreamStart 1 StreamEnd{count:1} StreamStart 2 StreamEnd{count:1}",
+   "yielded": [
+    "1",
+    "2"
+   ],
+   "terminal": {
+    "outcome": "end"
+   },
+   "fused_after_error": false
+  },
+  {
+   "id": "mismatch",
+   "input": "StreamStart 1 StreamEnd{count:2}",
+   "yielded": [
+    "1"
+   ],
+   "terminal": {
+    "outcome": "error",
+    "code": "count-mismatch",
+    "message": "StreamEnd count mismatch: expected 2, got 1"
+   },
+   "fused_after_error": true
+  },
+  {
+   "id": "mismatch-false",
+   "input": "StreamStart 1 StreamEnd{count:false}",
+   "yielded": [
+    "1"
+   ],
+   "terminal": {
+    "outcome": "error",
+    "code": "count-mismatch",
+    "message": "StreamEnd count mismatch: expected False, got 1"
+   },
+   "fused_after_error": true
+  },
+  {
+   "id": "mismatch-float",
+   "input": "StreamStart 1 StreamEnd{count:2.0}",
+   "yielded": [
+    "1"
+   ],
+   "terminal": {
+    "outcome": "error",
+    "code": "count-mismatch",
+    "message": "StreamEnd count mismatch: expected 2.0, got 1"
+   },
+   "fused_after_error": true
+  },
+  {
+   "id": "mismatch-bytes",
+   "input": "StreamStart 1 StreamEnd{count:|eA==|}",
+   "yielded": [
+    "1"
+   ],
+   "terminal": {
+    "outcome": "error",
+    "code": "count-mismatch",
+    "message": "StreamEnd count mismatch: expected b'x', got 1"
+   },
+   "fused_after_error": true
+  },
+  {
+   "id": "string-count",
+   "input": "StreamStart 1 StreamEnd{count:\"1\"}",
+   "yielded": [
+    "1"
+   ],
+   "terminal": {
+    "outcome": "error",
+    "code": "count-mismatch",
+    "message": "StreamEnd count mismatch: expected 1, got 1"
+   },
+   "fused_after_error": true
+  },
+  {
+   "id": "negative-count",
+   "input": "StreamStart 1 StreamEnd{count:-1}",
+   "yielded": [
+    "1"
+   ],
+   "terminal": {
+    "outcome": "error",
+    "code": "count-mismatch",
+    "message": "StreamEnd count mismatch: expected -1, got 1"
+   },
+   "fused_after_error": true
+  },
+  {
+   "id": "outside",
+   "input": "0 StreamStart 1 StreamEnd",
+   "yielded": [],
+   "terminal": {
+    "outcome": "error",
+    "code": "outside-envelope",
+    "message": "Received data outside of a stream envelope: 0"
+   },
+   "fused_after_error": true
+  },
+  {
+   "id": "outside-empty-list",
+   "input": "[] StreamStart StreamEnd",
+   "yielded": [],
+   "terminal": {
+    "outcome": "error",
+    "code": "outside-envelope",
+    "message": "Received data outside of a stream envelope: []"
+   },
+   "fused_after_error": true
+  },
+  {
+   "id": "end-without-start",
+   "input": "StreamEnd",
+   "yielded": [],
+   "terminal": {
+    "outcome": "error",
+    "code": "end-without-start",
+    "message": "Received StreamEnd without a prior StreamStart"
+   },
+   "fused_after_error": true
+  },
+  {
+   "id": "abrupt",
+   "input": "StreamStart 1",
+   "yielded": [
+    "1"
+   ],
+   "terminal": {
+    "outcome": "error",
+    "code": "abrupt-end",
+    "message": "Stream ended abruptly without a StreamEnd envelope node"
+   },
+   "fused_after_error": true
+  },
+  {
+   "id": "nested-start",
+   "input": "StreamStart 1 StreamStart 2 StreamEnd",
+   "yielded": [
+    "1"
+   ],
+   "terminal": {
+    "outcome": "error",
+    "code": "nested-start",
+    "message": "Received StreamStart but a stream is already open"
+   },
+   "fused_after_error": true
+  },
+  {
+   "id": "parse-error",
+   "input": "StreamStart 1 [",
+   "yielded": [
+    "1"
+   ],
+   "terminal": {
+    "outcome": "error",
+    "code": "unexpected-end",
+    "message": "unterminated container"
+   },
+   "fused_after_error": true
+  }
+ ]
+}

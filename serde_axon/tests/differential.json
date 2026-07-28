@@ -1,0 +1,932 @@
+{
+ "note": "differential ground truth from pyaxon 0.11.0a13",
+ "cases": [
+  {
+   "profile": "core",
+   "input": "[a:1 a:2]",
+   "outcome": "error",
+   "category": "duplicate-key",
+   "message": "duplicate key 'a'",
+   "offset": 8,
+   "end_offset": 8,
+   "line": 1,
+   "column": 9
+  },
+  {
+   "profile": "core",
+   "input": "{a:1 a:2}",
+   "outcome": "error",
+   "category": "duplicate-key",
+   "message": "duplicate key 'a'",
+   "offset": 8,
+   "end_offset": 8,
+   "line": 1,
+   "column": 9
+  },
+  {
+   "profile": "core",
+   "input": "p{x:1 x:2}",
+   "outcome": "error",
+   "category": "duplicate-key",
+   "message": "duplicate key 'x'",
+   "offset": 9,
+   "end_offset": 9,
+   "line": 1,
+   "column": 10
+  },
+  {
+   "profile": "core",
+   "input": "[a:1 b:2]",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "[a:1 b:2]",
+   "compact": "[a:1 b:2]"
+  },
+  {
+   "profile": "compat",
+   "input": "{a:1 a:2}",
+   "outcome": "error",
+   "category": "duplicate-key",
+   "message": "duplicate key 'a'",
+   "offset": 8,
+   "end_offset": 8,
+   "line": 1,
+   "column": 9
+  },
+  {
+   "profile": "core",
+   "input": "^2026-02-30",
+   "outcome": "error",
+   "category": "invalid-temporal",
+   "message": "day is out of range for month",
+   "offset": 11,
+   "end_offset": 11,
+   "line": 1,
+   "column": 12
+  },
+  {
+   "profile": "core",
+   "input": "^2026-04-31",
+   "outcome": "error",
+   "category": "invalid-temporal",
+   "message": "day is out of range for month",
+   "offset": 11,
+   "end_offset": 11,
+   "line": 1,
+   "column": 12
+  },
+  {
+   "profile": "core",
+   "input": "^2024-02-29",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "^2024-02-29",
+   "compact": "^2024-02-29"
+  },
+  {
+   "profile": "core",
+   "input": "^0000-01-01",
+   "outcome": "error",
+   "category": "invalid-temporal",
+   "message": "year 0 is out of range",
+   "offset": 11,
+   "end_offset": 11,
+   "line": 1,
+   "column": 12
+  },
+  {
+   "profile": "core",
+   "input": "^2026-01-01",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "^2026-01-01",
+   "compact": "^2026-01-01"
+  },
+  {
+   "profile": "core",
+   "input": "^12:00+00:60",
+   "outcome": "error",
+   "category": "invalid-temporal",
+   "message": "offset out of range",
+   "offset": 12,
+   "end_offset": 12,
+   "line": 1,
+   "column": 13
+  },
+  {
+   "profile": "core",
+   "input": "^12:00+00:59",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "^12:00:00+00:59",
+   "compact": "^12:00:00+00:59"
+  },
+  {
+   "profile": "core",
+   "input": "^12:5",
+   "outcome": "error",
+   "category": "invalid-temporal",
+   "message": "invalid time",
+   "offset": 5,
+   "end_offset": 5,
+   "line": 1,
+   "column": 6
+  },
+  {
+   "profile": "core",
+   "input": "^12:05",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "^12:05:00",
+   "compact": "^12:05:00"
+  },
+  {
+   "profile": "core",
+   "input": "^12:00:00.5",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "^12:00:00.5",
+   "compact": "^12:00:00.5"
+  },
+  {
+   "profile": "doc_link",
+   "input": "cid(\"notacid\")",
+   "outcome": "error",
+   "category": "invalid-link",
+   "message": "CID must use lowercase base32 multibase",
+   "offset": 14,
+   "end_offset": 14,
+   "line": 1,
+   "column": 15
+  },
+  {
+   "profile": "doc_link",
+   "input": "link(\"not a uri\")",
+   "outcome": "error",
+   "category": "invalid-link",
+   "message": "link requires an absolute URI",
+   "offset": 17,
+   "end_offset": 17,
+   "line": 1,
+   "column": 18
+  },
+  {
+   "profile": "doc_link",
+   "input": "cid(\"bafkreiec5tzcwyhehbpob5yir5idmjfqf2qzpiiguoia4qt5fquhrbx4ym\")",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "cid(\"bafkreiec5tzcwyhehbpob5yir5idmjfqf2qzpiiguoia4qt5fquhrbx4ym\")",
+   "compact": "cid(\"bafkreiec5tzcwyhehbpob5yir5idmjfqf2qzpiiguoia4qt5fquhrbx4ym\")"
+  },
+  {
+   "profile": "doc_link",
+   "input": "link(\"https://example.com/a\")",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "link(\"https://example.com/a\")",
+   "compact": "link(\"https://example.com/a\")"
+  },
+  {
+   "profile": "core",
+   "input": "[1 #_ 2 3]",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "[1 3]",
+   "compact": "[1 3]"
+  },
+  {
+   "profile": "core",
+   "input": "{a:1 #_ b:2 c:3}",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "{a:1 c:3}",
+   "compact": "{a:1 c:3}"
+  },
+  {
+   "profile": "core",
+   "input": "(1 #_ 2 3)",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "(1 3)",
+   "compact": "(1 3)"
+  },
+  {
+   "profile": "core",
+   "input": "#_ 1 2",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "2",
+   "compact": "2"
+  },
+  {
+   "profile": "core",
+   "input": "r\"x\\y\"",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "\"x\\\\y\"",
+   "compact": "\"x\\\\y\""
+  },
+  {
+   "profile": "core",
+   "input": "r#\"a\"b\"#",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "\"a\\\"b\"",
+   "compact": "\"a\\\"b\""
+  },
+  {
+   "profile": "core",
+   "input": "'weird name'{x:1}",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "'weird name'{x:1}",
+   "compact": "'weird name'{x:1}"
+  },
+  {
+   "profile": "core",
+   "input": "axon{edition:\"2026\"} 1",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "1",
+   "compact": "1"
+  },
+  {
+   "profile": "core",
+   "input": "axon{edition:\"2026\" require:[\"graph\"]} &a 1",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "1",
+   "compact_modes": {
+    "graph_false": {
+     "outcome": "accept",
+     "text": "1"
+    },
+    "graph_true": {
+     "outcome": "accept",
+     "text": "1"
+    }
+   }
+  },
+  {
+   "profile": "core",
+   "input": "axon{edition:\"2026\" require:[\"graph\"]}\n&a []\n*a",
+   "outcome": "accept",
+   "count": 2,
+   "canonical": "&1 []\n*1",
+   "compact_modes": {
+    "graph_false": {
+     "outcome": "accept",
+     "text": "[]\n[]"
+    },
+    "graph_true": {
+     "outcome": "accept",
+     "text": "&1 []\n*1"
+    }
+   }
+  },
+  {
+   "profile": "core",
+   "input": "axon{edition:\"2026\" require:[\"graph\"]}\n&a [*a]",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "&1 [*1]",
+   "compact_modes": {
+    "graph_false": {
+     "outcome": "error",
+     "category": "unsupported-profile-feature",
+     "message": "cyclic values require graph output"
+    },
+    "graph_true": {
+     "outcome": "accept",
+     "text": "&1 [*1]"
+    }
+   }
+  },
+  {
+   "profile": "core",
+   "input": "{2 1}",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "{1 2}",
+   "compact": "{2 1}"
+  },
+  {
+   "profile": "core",
+   "input": "{3 1 2}",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "{1 2 3}",
+   "compact": "{3 1 2}"
+  },
+  {
+   "profile": "core",
+   "input": "1e21",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "1e+21",
+   "compact": "1e+21"
+  },
+  {
+   "profile": "core",
+   "input": "1e20",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "100000000000000000000.0",
+   "compact": "100000000000000000000.0"
+  },
+  {
+   "profile": "core",
+   "input": "1e-7",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "1e-7",
+   "compact": "1e-7"
+  },
+  {
+   "profile": "core",
+   "input": "1e-6",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "0.000001",
+   "compact": "0.000001"
+  },
+  {
+   "profile": "core",
+   "input": "3.14",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "3.14",
+   "compact": "3.14"
+  },
+  {
+   "profile": "core",
+   "input": "100.0",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "100.0",
+   "compact": "100.0"
+  },
+  {
+   "profile": "core",
+   "input": "1e300",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "1e+300",
+   "compact": "1e+300"
+  },
+  {
+   "profile": "core",
+   "input": "-0.0",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "-0.0",
+   "compact": "-0.0"
+  },
+  {
+   "profile": "core",
+   "input": "∞abc",
+   "outcome": "error",
+   "category": "unexpected-token",
+   "message": "a numeric special must be separated from a following value",
+   "offset": 3,
+   "end_offset": 3,
+   "line": 1,
+   "column": 2
+  },
+  {
+   "profile": "core",
+   "input": "{null:1}",
+   "outcome": "error",
+   "category": "unexpected-token",
+   "message": "unexpected character ':'",
+   "offset": 5,
+   "end_offset": 5,
+   "line": 1,
+   "column": 6
+  },
+  {
+   "profile": "graph",
+   "input": "[&a point{x:1} *a]",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "[&1 point{x:1} *1]",
+   "compact_modes": {
+    "graph_false": {
+     "outcome": "accept",
+     "text": "[point{x:1} point{x:1}]"
+    },
+    "graph_true": {
+     "outcome": "accept",
+     "text": "[&1 point{x:1} *1]"
+    }
+   }
+  },
+  {
+   "profile": "graph",
+   "input": "[&a 1 &a 2]",
+   "outcome": "error",
+   "category": "duplicate-anchor",
+   "message": "duplicate anchor 'a'",
+   "offset": 8,
+   "end_offset": 8,
+   "line": 1,
+   "column": 9
+  },
+  {
+   "profile": "graph",
+   "input": "[*b]",
+   "outcome": "error",
+   "category": "unknown-reference",
+   "message": "reference must follow its anchor 'b'",
+   "offset": 3,
+   "end_offset": 3,
+   "line": 1,
+   "column": 4
+  },
+  {
+   "profile": "graph",
+   "input": "&root [1 2 3]",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "[1 2 3]",
+   "compact_modes": {
+    "graph_false": {
+     "outcome": "accept",
+     "text": "[1 2 3]"
+    },
+    "graph_true": {
+     "outcome": "accept",
+     "text": "[1 2 3]"
+    }
+   }
+  },
+  {
+   "profile": "graph",
+   "input": "&a []\n*a",
+   "outcome": "accept",
+   "count": 2,
+   "canonical": "&1 []\n*1",
+   "compact_modes": {
+    "graph_false": {
+     "outcome": "accept",
+     "text": "[]\n[]"
+    },
+    "graph_true": {
+     "outcome": "accept",
+     "text": "&1 []\n*1"
+    }
+   }
+  },
+  {
+   "profile": "graph",
+   "input": "&1 []\n*1",
+   "outcome": "accept",
+   "count": 2,
+   "canonical": "&1 []\n*1",
+   "compact_modes": {
+    "graph_false": {
+     "outcome": "accept",
+     "text": "[]\n[]"
+    },
+    "graph_true": {
+     "outcome": "accept",
+     "text": "&1 []\n*1"
+    }
+   }
+  },
+  {
+   "profile": "graph",
+   "input": "&a [*a]",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "&1 [*1]",
+   "compact_modes": {
+    "graph_false": {
+     "outcome": "error",
+     "category": "unsupported-profile-feature",
+     "message": "cyclic values require graph output"
+    },
+    "graph_true": {
+     "outcome": "accept",
+     "text": "&1 [*1]"
+    }
+   }
+  },
+  {
+   "profile": "tz_names",
+   "input": "^2026-11-01T01:30:00-07:00[America/Edmonton]",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "^2026-11-01T01:30:00-07:00[America/Edmonton]",
+   "compact": "^2026-11-01T01:30:00-07:00[America/Edmonton]"
+  },
+  {
+   "profile": "core",
+   "input": "^2026-11-01T01:30:00-07:00[America/Edmonton]",
+   "outcome": "error",
+   "category": "unsupported-profile-feature",
+   "message": "named time zones require tz-names profile",
+   "offset": 26,
+   "end_offset": 26,
+   "line": 1,
+   "column": 27
+  },
+  {
+   "profile": "canonical_verify",
+   "input": "{a:1}",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "{a:1}",
+   "compact": "{a:1}"
+  },
+  {
+   "profile": "canonical_verify",
+   "input": "{ a:1 }",
+   "outcome": "error",
+   "category": "unexpected-token",
+   "message": "document payload is not canonical AXON",
+   "offset": 7,
+   "end_offset": 7,
+   "line": 1,
+   "column": 8
+  },
+  {
+   "profile": "scale_significant",
+   "input": "1.00D",
+   "outcome": "accept",
+   "count": 1,
+   "compact": "1.00D"
+  },
+  {
+   "profile": "numeric_separators_off",
+   "input": "1_000",
+   "outcome": "error",
+   "category": "invalid-number",
+   "message": "numeric separators are disabled",
+   "offset": 5,
+   "end_offset": 5,
+   "line": 1,
+   "column": 6
+  },
+  {
+   "profile": "compat_bundle",
+   "input": "007",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "7",
+   "compact": "7"
+  },
+  {
+   "profile": "compat_bundle",
+   "input": "12:30",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "^12:30:00",
+   "compact": "^12:30:00"
+  },
+  {
+   "profile": "compat_bundle",
+   "input": "|YQ==",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "|YQ==|",
+   "compact": "|YQ==|"
+  },
+  {
+   "profile": "header_profiles_off",
+   "input": "axon{edition:\"2026\" require:[\"graph\"]} &a 1",
+   "outcome": "error",
+   "category": "unsupported-profile-feature",
+   "message": "caller policy forbids header-enabled profiles: graph",
+   "offset": 38,
+   "end_offset": 38,
+   "line": 1,
+   "column": 39
+  },
+  {
+   "profile": "core",
+   "input": "42",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "42",
+   "compact": "42"
+  },
+  {
+   "profile": "core",
+   "input": "-17",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "-17",
+   "compact": "-17"
+  },
+  {
+   "profile": "core",
+   "input": "\"hello\"",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "\"hello\"",
+   "compact": "\"hello\""
+  },
+  {
+   "profile": "core",
+   "input": "[1 2 3]",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "[1 2 3]",
+   "compact": "[1 2 3]"
+  },
+  {
+   "profile": "core",
+   "input": "point{x:1 y:2}",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "point{x:1 y:2}",
+   "compact": "point{x:1 y:2}"
+  },
+  {
+   "profile": "core",
+   "input": "1000.350D",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "1000.35D",
+   "compact": "1000.350D"
+  },
+  {
+   "profile": "core",
+   "input": "|SGVsbG8=|",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "|SGVsbG8=|",
+   "compact": "|SGVsbG8=|"
+  },
+  {
+   "profile": "core",
+   "input": "∅",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "∅",
+   "compact": "∅"
+  },
+  {
+   "profile": "core",
+   "input": "[:]",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "[:]",
+   "compact": "[:]"
+  },
+  {
+   "profile": "core",
+   "input": "a:1 b:2",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "[a:1 b:2]",
+   "compact": "[a:1 b:2]"
+  },
+  {
+   "profile": "core",
+   "input": "a:1",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "[a:1]",
+   "compact": "[a:1]"
+  },
+  {
+   "profile": "core",
+   "input": "a:1\n\nb:2",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "[a:1 b:2]",
+   "compact": "[a:1 b:2]"
+  },
+  {
+   "profile": "core",
+   "input": "a:1, b:2",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "[a:1 b:2]",
+   "compact": "[a:1 b:2]"
+  },
+  {
+   "profile": "core",
+   "input": "a:1,b:2",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "[a:1 b:2]",
+   "compact": "[a:1 b:2]"
+  },
+  {
+   "profile": "core",
+   "input": "a:1 b:2,",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "[a:1 b:2]",
+   "compact": "[a:1 b:2]"
+  },
+  {
+   "profile": "core",
+   "input": "a:1,",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "[a:1]",
+   "compact": "[a:1]"
+  },
+  {
+   "profile": "core",
+   "input": "a:1,,b:2",
+   "outcome": "error",
+   "category": "unexpected-token",
+   "message": "consecutive commas are not allowed",
+   "offset": 4,
+   "end_offset": 4,
+   "line": 1,
+   "column": 5
+  },
+  {
+   "profile": "core",
+   "input": ",a:1",
+   "outcome": "error",
+   "category": "unexpected-token",
+   "message": "unexpected character ','",
+   "offset": 0,
+   "end_offset": 0,
+   "line": 1,
+   "column": 1
+  },
+  {
+   "profile": "core",
+   "input": "a:1 2",
+   "outcome": "error",
+   "category": "unexpected-token",
+   "message": "attribute document cannot mix pairs and values",
+   "offset": 4,
+   "end_offset": 4,
+   "line": 1,
+   "column": 5
+  },
+  {
+   "profile": "core",
+   "input": "3 a:1",
+   "outcome": "error",
+   "category": "unexpected-token",
+   "message": "unexpected character ':'",
+   "offset": 3,
+   "end_offset": 3,
+   "line": 1,
+   "column": 4
+  },
+  {
+   "profile": "core",
+   "input": "a:1 b:2 3",
+   "outcome": "error",
+   "category": "unexpected-token",
+   "message": "attribute document cannot mix pairs and values",
+   "offset": 8,
+   "end_offset": 8,
+   "line": 1,
+   "column": 9
+  },
+  {
+   "profile": "core",
+   "input": "a:1 a:2",
+   "outcome": "error",
+   "category": "duplicate-key",
+   "message": "duplicate key 'a'",
+   "offset": 7,
+   "end_offset": 7,
+   "line": 1,
+   "column": 8
+  },
+  {
+   "profile": "compat",
+   "input": "a:1 a:2",
+   "outcome": "error",
+   "category": "duplicate-key",
+   "message": "duplicate key 'a'",
+   "offset": 7,
+   "end_offset": 7,
+   "line": 1,
+   "column": 8
+  },
+  {
+   "profile": "core",
+   "input": "a:1 #_ b:2 c:3",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "[a:1 c:3]",
+   "compact": "[a:1 c:3]"
+  },
+  {
+   "profile": "core",
+   "input": "#_a:1",
+   "outcome": "error",
+   "category": "unexpected-token",
+   "message": "unexpected character ':'",
+   "offset": 3,
+   "end_offset": 3,
+   "line": 1,
+   "column": 4
+  },
+  {
+   "profile": "core",
+   "input": "\"k\":1 \"m\":2",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "[k:1 m:2]",
+   "compact": "[k:1 m:2]"
+  },
+  {
+   "profile": "core",
+   "input": "1 2 3",
+   "outcome": "accept",
+   "count": 3,
+   "canonical": "1\n2\n3",
+   "compact": "1\n2\n3"
+  },
+  {
+   "profile": "core",
+   "input": "p{x:1} a:1",
+   "outcome": "error",
+   "category": "unexpected-token",
+   "message": "unexpected character ':'",
+   "offset": 8,
+   "end_offset": 8,
+   "line": 1,
+   "column": 9
+  },
+  {
+   "profile": "core",
+   "input": "true:1",
+   "outcome": "error",
+   "category": "unexpected-token",
+   "message": "unexpected character ':'",
+   "offset": 4,
+   "end_offset": 4,
+   "line": 1,
+   "column": 5
+  },
+  {
+   "profile": "core",
+   "input": "null:1 a:2",
+   "outcome": "error",
+   "category": "unexpected-token",
+   "message": "unexpected character ':'",
+   "offset": 4,
+   "end_offset": 4,
+   "line": 1,
+   "column": 5
+  },
+  {
+   "profile": "core",
+   "input": "true:1 b:2",
+   "outcome": "error",
+   "category": "unexpected-token",
+   "message": "unexpected character ':'",
+   "offset": 4,
+   "end_offset": 4,
+   "line": 1,
+   "column": 5
+  },
+  {
+   "profile": "core",
+   "input": "'q name':1 b:2",
+   "outcome": "error",
+   "category": "unexpected-token",
+   "message": "unexpected character ':'",
+   "offset": 8,
+   "end_offset": 8,
+   "line": 1,
+   "column": 9
+  },
+  {
+   "profile": "core",
+   "input": "a:1 true:2",
+   "outcome": "error",
+   "category": "unexpected-token",
+   "message": "attribute document cannot mix pairs and values",
+   "offset": 4,
+   "end_offset": 4,
+   "line": 1,
+   "column": 5
+  },
+  {
+   "profile": "core",
+   "input": "a:[1 2] b:{c:3}",
+   "outcome": "accept",
+   "count": 1,
+   "canonical": "[a:[1 2] b:{c:3}]",
+   "compact": "[a:[1 2] b:{c:3}]"
+  },
+  {
+   "profile": "core",
+   "input": "a:1 b",
+   "outcome": "error",
+   "category": "unexpected-token",
+   "message": "attribute document cannot mix pairs and values",
+   "offset": 4,
+   "end_offset": 4,
+   "line": 1,
+   "column": 5
+  }
+ ]
+}
