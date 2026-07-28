@@ -30,6 +30,13 @@ jobs:
           node-version: "24"
 
       - name: Install build tooling
+        # setuptools and wheel are explicit: the release gate runs
+        # `python setup.py build_ext --inplace` directly, which imports
+        # setuptools at module scope (setup.py). pyproject.toml's build-system
+        # requires only cover ISOLATED builds (pip / python -m build), and
+        # setup-python does not preinstall setuptools, so without this the gate
+        # fails on every OS and Python version with ModuleNotFoundError.
+        #
         # tzdata is pinned so the named-time-zone (DST fold/gap) tests see a tzdb
         # where America/Edmonton still observes DST, independent of the runner's
         # system zoneinfo; PyYAML is used only by the JSON/YAML benchmark test.
@@ -38,7 +45,9 @@ jobs:
         # requirement: at runtime, named-zone (`tz-names`) resolution uses the
         # host tzdb per AXON 2026 SPEC §6.8, and the version in effect is
         # reported by `tzdb_version2026()` rather than pinned by the library.
-        run: python -m pip install --upgrade pip build "tzdata==2025.1" pyyaml
+        run: >-
+          python -m pip install --upgrade
+          pip setuptools wheel build "tzdata==2025.1" pyyaml
 
       - name: Run Python release gate
         run: >-
@@ -109,6 +118,12 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+      - name: Install build tooling
+        # Same reason as the matrix job: the gate builds the extensions with a
+        # direct `setup.py build_ext`, so setuptools must be present.
+        run: >-
+          python -m pip install --upgrade
+          pip setuptools wheel "tzdata==2025.1" pyyaml
       - name: Run complete gate and 25,000 values per seed
         run: >-
           python tools/release_gate.py
