@@ -1,5 +1,6 @@
 from collections import OrderedDict
 import io
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -195,9 +196,23 @@ class PublicContractRegressionTests(unittest.TestCase):
             "r=m.run('import',[__import__('sys').executable,'-c','import axon2']);"
             "raise SystemExit(r['returncode'])"
         )
+        # A deliberately minimal environment: the point of this test is that
+        # release_gate.run() injects the source layout itself rather than
+        # inheriting PYTHONPATH. On Windows a few variables cannot be dropped,
+        # because CPython 3.10 seeds hash randomisation through the CryptoAPI
+        # and needs SystemRoot to reach it -- without it the child dies during
+        # interpreter start-up with _Py_HashRandomization_Init and never runs
+        # the code under test. CPython 3.11+ uses BCryptGenRandom and does not
+        # care, which is why this only ever failed on Windows with 3.10.
+        environment = {"PATH": str(Path(sys.executable).parent)}
+        if os.name == "nt":
+            for variable in ("SystemRoot", "SystemDrive"):
+                value = os.environ.get(variable)
+                if value:
+                    environment[variable] = value
         process = subprocess.run(
             [sys.executable, "-c", code], cwd=ROOT,
-            env={"PATH": str(Path(sys.executable).parent)},
+            env=environment,
             capture_output=True, text=True, check=False)
         self.assertEqual(0, process.returncode, process.stderr)
 
