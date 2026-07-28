@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AXON 2026 — Capability Matrix</title>
+<style>
+  :root{
+    --ink:#0c0d16;
+    --ink2:#12131f;
+    --panel:#161829;
+    --line:#242840;
+    --line-soft:#1c1f30;
+    --text:#dfe3f2;
+    --dim:#7b829c;
+    --dimmer:#565d78;
+    --gold:#e9b83f;
+    --gold-soft:#3a3115;
+    --yes:#46c26b;
+    --part:#e0a63c;
+    --no:#454b66;
+    --blue:#5b8bf0;
+    --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+    --disp:'Space Grotesk',system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:var(--disp);
+    line-height:1.5;
+    padding:clamp(18px,4vw,52px) clamp(12px,4vw,52px) 80px;
+    background-image:
+      radial-gradient(900px 500px at 12% -8%, #1a1c33 0%, transparent 60%),
+      radial-gradient(700px 460px at 100% 0%, #191428 0%, transparent 55%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:1180px;margin:0 auto}
+
+  /* ---- header ---- */
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.34em;
+    text-transform:uppercase;
+    color:var(--gold);
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--gold);opacity:.7}
+  h1{
+    font-family:var(--disp);
+    font-weight:700;
+    font-size:clamp(28px,6vw,52px);
+    letter-spacing:-.02em;
+    line-height:1.02;
+    margin:16px 0 4px;
+  }
+  h1 .v{color:var(--gold)}
+  .sub{
+    color:var(--dim);
+    font-size:clamp(14px,2.4vw,17px);
+    max-width:70ch;
+    margin-top:10px;
+  }
+  .sub b{color:var(--text);font-weight:500}
+
+  /* ---- legend ---- */
+  .legend{
+    display:flex;flex-wrap:wrap;gap:8px 20px;
+    margin:26px 0 8px;
+    font-family:var(--mono);font-size:12.5px;color:var(--dim);
+    align-items:center;
+  }
+  .lg{display:inline-flex;align-items:center;gap:8px}
+  .g{width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;border:1px solid var(--line)}
+  .g.y{color:var(--yes);background:rgba(70,194,107,.10)}
+  .g.p{color:var(--part);background:rgba(224,166,60,.10)}
+  .g.n{color:var(--no);background:rgba(69,75,102,.14)}
+
+  /* ---- table ---- */
+  .scroll{
+    margin-top:16px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:auto;
+    background:var(--ink2);
+    -webkit-overflow-scrolling:touch;
+    box-shadow:0 30px 80px -40px #000;
+  }
+  table{border-collapse:separate;border-spacing:0;width:100%;font-family:var(--mono)}
+  th,td{white-space:nowrap;text-align:center}
+
+  /* column groups header */
+  .grp th{
+    font-family:var(--mono);
+    font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--dimmer);font-weight:500;
+    padding:11px 6px 7px;
+    border-bottom:1px solid var(--line-soft);
+    position:sticky;top:0;z-index:5;background:var(--ink2);
+  }
+  .grp th.gb{border-left:1px solid var(--line)}
+  /* capability header row */
+  thead.caps th{
+    position:sticky;top:34px;z-index:5;
+    background:var(--ink2);
+    font-weight:500;font-size:11px;color:var(--dim);
+    padding:0 0 12px;
+    border-bottom:1px solid var(--line);
+    height:118px;vertical-align:bottom;
+  }
+  thead.caps th .rot{
+    writing-mode:vertical-rl;transform:rotate(180deg);
+    display:inline-block;line-height:1;letter-spacing:.02em;
+    padding-bottom:4px;
+  }
+  th.corner{
+    position:sticky;left:0;top:0;z-index:7;
+    background:var(--ink2);
+    text-align:left;vertical-align:bottom;
+    padding:12px 16px 12px;
+    border-bottom:1px solid var(--line);
+    border-right:1px solid var(--line);
+    min-width:170px;
+  }
+  th.corner .ct{font-family:var(--disp);font-weight:600;font-size:14px;color:var(--text);letter-spacing:0}
+  th.corner .cs{display:block;font-family:var(--mono);font-size:10.5px;color:var(--dimmer);font-weight:400;margin-top:2px;letter-spacing:.04em}
+
+  td.fmt{
+    position:sticky;left:0;z-index:3;
+    text-align:left;
+    padding:12px 16px;
+    background:var(--ink2);
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line-soft);
+    min-width:170px;
+  }
+  td.fmt .nm{font-family:var(--disp);font-weight:600;font-size:14.5px;color:var(--text)}
+  td.fmt .nt{display:block;font-family:var(--mono);font-size:10.5px;color:var(--dimmer);margin-top:2px;letter-spacing:.02em;white-space:normal;max-width:230px}
+
+  td.c{padding:12px 0;border-bottom:1px solid var(--line-soft);font-weight:700;font-size:15px;min-width:34px}
+  td.c.gb{border-left:1px solid var(--line)}
+  td.y{color:var(--yes)}
+  td.p{color:var(--part)}
+  td.n{color:var(--no);font-weight:400}
+  td.d{color:var(--gold);font-weight:600;font-size:13px}
+
+  /* band rows */
+  tr.band td{
+    position:sticky;left:0;
+    text-align:left;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--dim);
+    background:var(--panel);
+    padding:9px 16px;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+
+  /* AXON featured row */
+  tr.axon td{background:linear-gradient(90deg,rgba(233,184,63,.14),rgba(233,184,63,.05));border-bottom:1px solid var(--gold-soft)}
+  tr.axon td.fmt{background:linear-gradient(90deg,#221d0f,#1a1723);border-right:1px solid var(--gold-soft);box-shadow:inset 3px 0 0 var(--gold)}
+  tr.axon td.fmt .nm{color:var(--gold)}
+  tr.axon td.c.y{color:#f2cf5c}
+  tr:hover td.c{background:rgba(91,139,240,.05)}
+  tr.axon:hover td.c{background:rgba(233,184,63,.08)}
+
+  /* footnotes */
+  .notes{margin-top:30px;display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;background:linear-gradient(180deg,var(--ink2),var(--ink))}
+  .card h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:10px}
+  .card p{font-size:13.5px;color:var(--dim)}
+  .card p b{color:var(--text);font-weight:500}
+  .card + .card h3{color:var(--blue)}
+  .foot{margin-top:34px;font-family:var(--mono);font-size:11.5px;color:var(--dimmer);border-top:1px solid var(--line-soft);padding-top:16px;line-height:1.7}
+  .foot b{color:var(--dim);font-weight:500}
+  .hint{display:none;font-family:var(--mono);font-size:11px;color:var(--dimmer);margin-top:10px}
+  @media (max-width:720px){.hint{display:block}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Data-format capability matrix</div>
+  <h1>What <span class="v">AXON&nbsp;2026</span> can do<br>— and everyone else</h1>
+  <p class="sub">Every capability below is graded against the actual AXON&nbsp;2026 specification and the formats surveyed in the evolution research. <b>Honest by construction:</b> a dash isn't a failure — for many formats it's a deliberate scope choice, which is why "no" is drawn quietly. AXON now has a <b>compact binary encoding</b> (Binary AXON — see below), leaving two honest marks: it deliberately isn't a programming language (⊘, a non-goal), and it isn't yet widely adopted (–, a matter of time and use).</p>
+
+  <div class="legend">
+    <span class="lg"><span class="g y">✓</span> full support</span>
+    <span class="lg"><span class="g p">~</span> partial / via extension or external standard</span>
+    <span class="lg"><span class="g n">–</span> not supported</span>
+    <span class="lg"><span class="g" style="color:var(--gold);background:rgba(233,184,63,.10)">⊘</span> deliberate non-goal</span>
+  </div>
+  <div class="hint">↔ scroll the table sideways — the format column stays pinned</div>
+
+  <div class="scroll">
+    <table id="matrix">
+      <thead>
+        <tr class="grp" id="groups"></tr>
+        <tr class="caps" id="caps"></tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="notes">
+    <div class="card">
+      <h3>Why AXON's row fills up</h3>
+      <p>It's the only <b>text</b> format here that unifies exact decimals, native date/time, native binary, sets, tagged/typed nodes, comments, cross-references, <b>cyclic graphs</b>, content-addressed links, a <b>canonical form</b>, a schema layer, and <b>comment-preserving round-trips</b> — the union that eight years of JSON, YAML, TOML, CBOR, EDN, KDL and the content-addressing world each solved only in part.</p>
+    </div>
+    <div class="card">
+      <h3>The two remaining marks</h3>
+      <p><b>Computation ⊘ — a deliberate non-goal.</b> AXON is a data format, not a config language; CUE/Pkl/Nickel/Dhall compute, and staying out of that is what keeps AXON simple and free of a code-execution attack surface. It's marked in gold, not as a deficiency. <b>Adoption –</b> is the one only time and real-world use can change; JSON and XML own the ecosystem today.</p>
+    </div>
+    <div class="card">
+      <h3>Compact binary — now earned</h3>
+      <p><b>Binary AXON</b> gives the format a self-describing, canonicalisable binary encoding of the exact same value model — a CBOR profile, so every CBOR/DAG-CBOR tool can read it, with content-addressed (CID) links and byte-stable canonical form. It's the reason the <b>Compact binary</b> cell is a ✓: the same values as the text form, in bytes.</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <b>Grading notes.</b> "Partial" collapses several honest cases: a capability that exists only via a separate standard (JSON Schema, JCS canonicalization), only through schema-typed values (XML/XSD dates &amp; decimals), only in a superseded revision (YAML 1.1 timestamps), or only for acyclic data (IPLD DAGs). CBOR's canonical column reflects dCBOR / deterministic CBOR. XSON is an early draft, so much of its row is "extensible-in-principle." Config languages are included because they were surveyed — they share the JSON data model but add computation, which places them in a different category from interchange formats. The <b>Unicode / i18n</b> column grades first-class international text: a ✓ means mandatory UTF-8, non-ASCII usable in keys/identifiers, and a surrogate-free escape; ~ marks Unicode-capable formats carrying an ASCII-only-key, 16-bit-surrogate-escape, or optional-encoding caveat.<br>
+    <b>Source.</b> Derived from AXON_2026_SPEC.md (rev 5) and AXON_2018_to_2026_Language_Evolution_MERGED.md.
+  </div>
+</div>
+
+<script>
+const GROUPS = [
+  {label:"Data model", cols:["obj","dec","int","dt","bin","set","tag","com","uni"]},
+  {label:"Structure & links", cols:["ref","cyc","cid"]},
+  {label:"Correctness & tooling", cols:["can","sch","rt"]},
+  {label:"Character", cols:["hum","cmp","adopt"]},
+  {label:"Logic", cols:["comp"]},
+];
+const CAP = {
+  obj:"Objects / maps", dec:"Exact decimals", int:"Big integers", dt:"Native date & time",
+  bin:"Native binary", set:"Sets", tag:"Tagged / typed values", com:"Comments",
+  uni:"Unicode / i18n",
+  ref:"Cross-references", cyc:"Cyclic graphs", cid:"Content-addressed links",
+  can:"Canonical form", sch:"Schema / validation", rt:"Comment-preserving round-trip",
+  hum:"Human-readable", cmp:"Compact binary", adopt:"Widely adopted", comp:"Programmable logic"
+};
+const ORDER = GROUPS.flatMap(g=>g.cols);
+const GB = new Set(GROUPS.map(g=>g.cols[0])); // group-boundary columns (left border)
+
+// y = yes, p = partial, n = no
+const F = [
+  {axon:true, name:"AXON 2026", note:"text + binary · object notation, evolved",
+   obj:"y",dec:"y",int:"y",dt:"y",bin:"y",set:"y",tag:"y",com:"y",ref:"y",cyc:"y",cid:"y",can:"y",sch:"y",rt:"y",hum:"y",cmp:"y",adopt:"n",comp:"d",uni:"y"},
+
+  {band:"Text data formats"},
+  {name:"JSON", note:"the universal baseline",
+   obj:"y",dec:"n",int:"p",dt:"n",bin:"n",set:"n",tag:"n",com:"n",ref:"n",cyc:"n",cid:"n",can:"p",sch:"p",rt:"n",hum:"y",cmp:"n",adopt:"y",comp:"n",uni:"p"},
+  {name:"JSON5", note:"JSON + human ergonomics",
+   obj:"y",dec:"n",int:"p",dt:"n",bin:"n",set:"n",tag:"n",com:"y",ref:"n",cyc:"n",cid:"n",can:"n",sch:"p",rt:"n",hum:"y",cmp:"n",adopt:"p",comp:"n",uni:"p"},
+  {name:"HJSON", note:"human JSON, quoteless",
+   obj:"y",dec:"n",int:"p",dt:"n",bin:"n",set:"n",tag:"n",com:"y",ref:"n",cyc:"n",cid:"n",can:"n",sch:"n",rt:"n",hum:"y",cmp:"n",adopt:"p",comp:"n",uni:"p"},
+  {name:"XML", note:"documents + heavy schema",
+   obj:"p",dec:"p",int:"p",dt:"p",bin:"p",set:"n",tag:"y",com:"y",ref:"y",cyc:"n",cid:"n",can:"y",sch:"y",rt:"p",hum:"p",cmp:"n",adopt:"y",comp:"n",uni:"y"},
+  {name:"YAML", note:"config, anchors, complex",
+   obj:"y",dec:"n",int:"p",dt:"p",bin:"y",set:"y",tag:"p",com:"y",ref:"y",cyc:"y",cid:"n",can:"n",sch:"p",rt:"p",hum:"y",cmp:"n",adopt:"y",comp:"n",uni:"p"},
+  {name:"TOML", note:"config, strict literals",
+   obj:"y",dec:"n",int:"p",dt:"y",bin:"n",set:"n",tag:"n",com:"y",ref:"n",cyc:"n",cid:"n",can:"n",sch:"n",rt:"p",hum:"y",cmp:"n",adopt:"y",comp:"n",uni:"p"},
+  {name:"KDL", note:"node-oriented documents",
+   obj:"p",dec:"p",int:"p",dt:"n",bin:"n",set:"n",tag:"y",com:"y",ref:"n",cyc:"n",cid:"n",can:"n",sch:"p",rt:"p",hum:"y",cmp:"n",adopt:"p",comp:"n",uni:"y"},
+  {name:"EDN", note:"extensible, Clojure-native",
+   obj:"y",dec:"y",int:"y",dt:"y",bin:"n",set:"y",tag:"y",com:"y",ref:"n",cyc:"n",cid:"n",can:"n",sch:"n",rt:"n",hum:"y",cmp:"n",adopt:"p",comp:"n",uni:"p"},
+  {name:"TOON", note:"token-efficient for LLMs",
+   obj:"y",dec:"n",int:"p",dt:"n",bin:"n",set:"n",tag:"n",com:"n",ref:"n",cyc:"n",cid:"n",can:"n",sch:"n",rt:"n",hum:"y",cmp:"p",adopt:"n",comp:"n",uni:"p"},
+  {name:"XSON", note:"extensible-syntax draft",
+   obj:"y",dec:"p",int:"p",dt:"p",bin:"p",set:"p",tag:"y",com:"p",ref:"n",cyc:"n",cid:"n",can:"n",sch:"p",rt:"n",hum:"y",cmp:"n",adopt:"n",comp:"n",uni:"p"},
+
+  {band:"Binary formats"},
+  {name:"CBOR", note:"binary, IETF, tag-rich",
+   obj:"y",dec:"y",int:"y",dt:"y",bin:"y",set:"p",tag:"y",com:"n",ref:"n",cyc:"n",cid:"n",can:"y",sch:"y",rt:"n",hum:"n",cmp:"y",adopt:"y",comp:"n",uni:"y"},
+  {name:"MessagePack", note:"binary, compact, fast",
+   obj:"y",dec:"n",int:"y",dt:"y",bin:"y",set:"n",tag:"y",com:"n",ref:"n",cyc:"n",cid:"n",can:"n",sch:"n",rt:"n",hum:"n",cmp:"y",adopt:"y",comp:"n",uni:"p"},
+  {name:"BSON", note:"binary, MongoDB documents",
+   obj:"y",dec:"y",int:"p",dt:"y",bin:"y",set:"n",tag:"p",com:"n",ref:"n",cyc:"n",cid:"n",can:"p",sch:"n",rt:"n",hum:"n",cmp:"p",adopt:"y",comp:"n",uni:"p"},
+  {name:"IPLD / DAG-CBOR", note:"content-addressed linked data",
+   obj:"y",dec:"p",int:"y",dt:"p",bin:"y",set:"n",tag:"p",com:"n",ref:"y",cyc:"n",cid:"y",can:"y",sch:"y",rt:"n",hum:"n",cmp:"y",adopt:"p",comp:"n",uni:"y"},
+
+  {band:"Config languages (surveyed — different category)"},
+  {name:"CUE", note:"types = values, constraints",
+   obj:"y",dec:"p",int:"y",dt:"n",bin:"n",set:"n",tag:"n",com:"y",ref:"y",cyc:"p",cid:"n",can:"n",sch:"y",rt:"p",hum:"y",cmp:"n",adopt:"p",comp:"y",uni:"p"},
+  {name:"Pkl", note:"Apple, programmable config",
+   obj:"y",dec:"p",int:"y",dt:"p",bin:"n",set:"n",tag:"y",com:"y",ref:"y",cyc:"n",cid:"n",can:"n",sch:"y",rt:"p",hum:"y",cmp:"n",adopt:"p",comp:"y",uni:"p"},
+  {name:"Nickel", note:"functional config + contracts",
+   obj:"y",dec:"p",int:"y",dt:"n",bin:"n",set:"n",tag:"n",com:"y",ref:"y",cyc:"n",cid:"n",can:"n",sch:"y",rt:"p",hum:"y",cmp:"n",adopt:"n",comp:"y",uni:"p"},
+  {name:"Dhall", note:"total, typed, hashable",
+   obj:"y",dec:"p",int:"y",dt:"n",bin:"n",set:"n",tag:"y",com:"y",ref:"y",cyc:"n",cid:"y",can:"y",sch:"y",rt:"p",hum:"y",cmp:"n",adopt:"p",comp:"y",uni:"p"},
+];
+
+const GLY = {y:"✓",p:"~",n:"–",d:"⊘"};
+const TITLE = {y:"full support",p:"partial / via extension or external standard",n:"not supported",d:"deliberately out of scope — a non-goal, not a gap"};
+
+// group header row
+const gEl = document.getElementById("groups");
+gEl.innerHTML = '<th class="corner"><span class="ct">Format</span><span class="cs">19 compared</span></th>' +
+  GROUPS.map(g=>`<th class="gb" colspan="${g.cols.length}">${g.label}</th>`).join("");
+
+// capability header row
+const cEl = document.getElementById("caps");
+cEl.innerHTML = '<th class="corner" aria-hidden="true"></th>' +
+  ORDER.map(k=>`<th class="${GB.has(k)?'gb':''}"><span class="rot">${CAP[k]}</span></th>`).join("");
+
+// body
+const rEl = document.getElementById("rows");
+rEl.innerHTML = F.map(row=>{
+  if(row.band){
+    return `<tr class="band"><td colspan="${ORDER.length+1}">${row.band}</td></tr>`;
+  }
+  const cells = ORDER.map(k=>{
+    const v = row[k]||"n";
+    const gb = GB.has(k)?" gb":"";
+    return `<td class="c ${v}${gb}" title="${CAP[k]}: ${TITLE[v]}">${GLY[v]}</td>`;
+  }).join("");
+  const nt = row.note?`<span class="nt">${row.note}</span>`:"";
+  return `<tr class="${row.axon?'axon':''}"><td class="fmt"><span class="nm">${row.name}</span>${nt}</td>${cells}</tr>`;
+}).join("");
+</script>
+</body>
+</html>

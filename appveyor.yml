@@ -1,0 +1,61 @@
+# AppVeyor CI - Windows build & test for pyaxon (AXON 2026 edition).
+#
+# GitHub Actions (.github/workflows/python-reference.yml) is the primary CI;
+# this mirrors it on AppVeyor's Windows images for extra coverage. Modernised
+# from the original CPython 2.7-3.5 / MSVC-2008 matrix to CPython 3.10-3.13 on
+# 64-bit, using the current build (`pip install .`) and `python -m build`
+# rather than the removed `setup.py install` / `bdist_wheel` commands.
+
+environment:
+  global:
+    # Wrap build commands so the matching MSVC toolchain is on PATH when the
+    # Cython extension is compiled.
+    CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\appveyor\\run_with_env.cmd"
+
+  matrix:
+    - PYTHON: "C:\\Python310-x64"
+      PYTHON_VERSION: "3.10.x"
+      PYTHON_ARCH: "64"
+
+    - PYTHON: "C:\\Python311-x64"
+      PYTHON_VERSION: "3.11.x"
+      PYTHON_ARCH: "64"
+
+    - PYTHON: "C:\\Python312-x64"
+      PYTHON_VERSION: "3.12.x"
+      PYTHON_ARCH: "64"
+
+    - PYTHON: "C:\\Python313-x64"
+      PYTHON_VERSION: "3.13.x"
+      PYTHON_ARCH: "64"
+
+install:
+  # Install Python from python.org only if the build image does not already
+  # provide it (current AppVeyor images ship 3.10-3.13 preinstalled).
+  - ps: if (-not(Test-Path($env:PYTHON))) { & appveyor\install.ps1 }
+
+  # Prepend the selected Python to PATH for this build.
+  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+
+  # Confirm the expected version and architecture.
+  - "python --version"
+  - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
+
+  # Upgrade pip, then install the build/test dependencies.
+  - "python -m pip install --disable-pip-version-check --upgrade pip"
+  - "%CMD_IN_ENV% python -m pip install -r dev-requirements.txt"
+
+build: false  # Not a C# project; the extension is built at the test step.
+
+test_script:
+  # Build and install the compiled extension, then run the project test gate.
+  - "%CMD_IN_ENV% python -m pip install ."
+  - "python test_all.py"
+
+after_test:
+  # On success, build a wheel and surface it as a build artifact.
+  - "%CMD_IN_ENV% python -m build --wheel"
+  - ps: "ls dist"
+
+artifacts:
+  - path: dist\*.whl

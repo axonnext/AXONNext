@@ -1,0 +1,34 @@
+include setup.py
+include README.rst
+include LICENSE-MIT
+include LICENSE-APACHE
+include LICENSE_original.txt
+include NOTICE.md
+include test_all.py
+include test_benchmark.py
+# The `include lib/axon2/*.py` glob already ships every module. That includes
+# _loader.py, _dumper.py, and _objects.py, which are Cython sources written in
+# pure-Python-mode syntax -- NOT pure-Python fallbacks. They depend on the
+# declarations their matching .pxd files cimport (SafeBuilder, PyFloat_AS_DOUBLE,
+# import_datetime, and so on), so importing them as plain Python raises
+# NameError: the compiled extensions are required, not optional. They ship
+# because the sdist must be able to rebuild those extensions from source;
+# setup.py's build_py drops them from the wheel, where the .pyd/.so replaces
+# them. The .pxd, .pyx, .c, and .h files below exist for the same reason, and
+# let a source build succeed without Cython installed.
+include lib/axon2/*.py
+include lib/axon2/odict.pyx
+include lib/axon2/*.pxd
+include lib/axon2/*.c
+include lib/axon2/*.h
+include lib/axon2/test/*.py
+include lib/axon2/test/benchmark/*.py
+# Reference documentation only. Internal working notes under docs/2026 (freeze
+# review, implementation status, closure ledger, empirical report) and audit
+# reports are deliberately NOT distributed to external consumers.
+include spec/AXON_2026_SPEC.md
+include docs/2026/AXON_2026_CONFORMANCE_TESTS.md
+include spec/AXON_2018_to_2026_Language_Evolution_MERGED.md
+recursive-include conformance *.json
+recursive-include tools *.py *.mjs
+recursive-include .github/workflows *.yml

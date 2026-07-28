@@ -1,0 +1,33 @@
+{
+  "source": "RFC 8785 Appendix B, Table 1",
+  "source_url": "https://www.rfc-editor.org/rfc/rfc8785.html#appendix-B",
+  "description": "Complete binary64 sample table. AXON preserves Float kind with .0 where JCS emits an integer spelling, preserves negative zero, and has native spellings for non-finite values.",
+  "cases": [
+    {"bits":"0000000000000000","jcs":"0","axon":"0.0","class":"finite"},
+    {"bits":"8000000000000000","jcs":"0","axon":"-0.0","class":"finite","divergence":"AXON preserves negative zero"},
+    {"bits":"0000000000000001","jcs":"5e-324","axon":"5e-324","class":"finite"},
+    {"bits":"8000000000000001","jcs":"-5e-324","axon":"-5e-324","class":"finite"},
+    {"bits":"7fefffffffffffff","jcs":"1.7976931348623157e+308","axon":"1.7976931348623157e+308","class":"finite"},
+    {"bits":"ffefffffffffffff","jcs":"-1.7976931348623157e+308","axon":"-1.7976931348623157e+308","class":"finite"},
+    {"bits":"4340000000000000","jcs":"9007199254740992","axon":"9007199254740992.0","class":"finite","divergence":"AXON preserves Float kind"},
+    {"bits":"c340000000000000","jcs":"-9007199254740992","axon":"-9007199254740992.0","class":"finite","divergence":"AXON preserves Float kind"},
+    {"bits":"4430000000000000","jcs":"295147905179352830000","axon":"295147905179352830000.0","class":"finite","divergence":"AXON preserves Float kind"},
+    {"bits":"7fffffffffffffff","jcs":null,"axon":"?","class":"nan"},
+    {"bits":"7ff0000000000000","jcs":null,"axon":"∞","class":"infinity"},
+    {"bits":"44b52d02c7e14af5","jcs":"9.999999999999997e+22","axon":"9.999999999999997e+22","class":"finite"},
+    {"bits":"44b52d02c7e14af6","jcs":"1e+23","axon":"1e+23","class":"finite"},
+    {"bits":"44b52d02c7e14af7","jcs":"1.0000000000000001e+23","axon":"1.0000000000000001e+23","class":"finite"},
+    {"bits":"444b1ae4d6e2ef4e","jcs":"999999999999999700000","axon":"999999999999999700000.0","class":"finite","divergence":"AXON preserves Float kind"},
+    {"bits":"444b1ae4d6e2ef4f","jcs":"999999999999999900000","axon":"999999999999999900000.0","class":"finite","divergence":"AXON preserves Float kind"},
+    {"bits":"444b1ae4d6e2ef50","jcs":"1e+21","axon":"1e+21","class":"finite"},
+    {"bits":"3eb0c6f7a0b5ed8c","jcs":"9.999999999999997e-7","axon":"9.999999999999997e-7","class":"finite"},
+    {"bits":"3eb0c6f7a0b5ed8d","jcs":"0.000001","axon":"0.000001","class":"finite"},
+    {"bits":"41b3de4355555553","jcs":"333333333.3333332","axon":"333333333.3333332","class":"finite"},
+    {"bits":"41b3de4355555554","jcs":"333333333.33333325","axon":"333333333.33333325","class":"finite"},
+    {"bits":"41b3de4355555555","jcs":"333333333.3333333","axon":"333333333.3333333","class":"finite"},
+    {"bits":"41b3de4355555556","jcs":"333333333.3333334","axon":"333333333.3333334","class":"finite"},
+    {"bits":"41b3de4355555557","jcs":"333333333.33333343","axon":"333333333.33333343","class":"finite"},
+    {"bits":"becbf647612f3696","jcs":"-0.0000033333333333333333","axon":"-0.0000033333333333333333","class":"finite"},
+    {"bits":"43143ff3c1cb0959","jcs":"1424953923781206.2","axon":"1424953923781206.2","class":"finite"}
+  ]
+}

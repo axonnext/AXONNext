@@ -1,0 +1,398 @@
+{
+  "schema_version": 1,
+  "specification_revision": 5,
+  "specification_file": "spec/AXON_2026_SPEC.md",
+  "algorithm": "sha256(section + NUL + whitespace-collapsed normative source line)",
+  "clause_count": 65,
+  "fingerprints": [
+    "1f88a22452cd1cffc446d7fce5bcd4810c02e66ac50de8ee08da464d0bec57e6",
+    "4333d697f3f5dbbbdeb731414485df31290a1ee12790c9e914f55f2fcbf9bdb7",
+    "4f3b2a3c7e6e6fbbce6d54e8b00747715a9d365061e6517645d058b4bbdce7a7",
+    "3868bbad1cc001641b77374ba5f5167692b5675ce32dcf36edd885ad9af30201",
+    "6656017756e92d5657ed1d61f5b8801e08bc3ece22a6a86cbab5fa5ec8e186fe",
+    "87867262455c001f37c517f9f84dc640880b58d78e0cff98c927625aa63cbff5",
+    "9f1f7498c280de3268500ac19f4aa4c72361d90d1bdfd4bd788bc804e53c1e65",
+    "3050d9c5d9f916dd91efad728b546225d45e0570f58cc79504fb6df90753cd73",
+    "c5655b4ffe082952b35e35cc256e6a91a53c2d58902e86ef385ef1ec61e4f480",
+    "1447974f159b40ad6517ac7e27bd798beadf470277d0ac8fc43e33080058bec5",
+    "3d86508f068b11979e9629043310fac298a720e420b1371977dc0fbbad90e008",
+    "d4cf31a7fd62a6d715fcbb4fa0d00012d2052fd5f029f4930b34e41d524d9163",
+    "f93b6862cd3cc835a5ff4a81e0fc93e4566aee540ad716c9d660baa9d20526b2",
+    "da97b0e4e8378369940670b9dd51ff9220a15e7854ce76317f6311eeeecb9556",
+    "53a4fa8681e877c81595895451fba3a764e35984b426f35f66f7704eda12c1c1",
+    "6d3c4acf24590d14c47d503ab054b5ed5f94a73eef25bb76f3f31523e633e00d",
+    "e1193b4b052c9bcbd71c7eaf7a34a4cdcf214945a3d880e3bac52f900439474b",
+    "b8ea3887427b932241f3f232cf340df24a7e72fcc56aae3804f2ad761404a339",
+    "8db480def37c7d9567ac20e17e85db033db031284fe3d6aa5fd7fda5b7d15be7",
+    "767fd6d239a7a92957544f0d80bb2f0e0cb063fe1c71164e5577f16b2ef4416a",
+    "ab2001fcaa13eb3fbc49d0dd5dd0f337bb73272f6d4aeba47e7e6b80ab22a845",
+    "8499b6d7abc3bd862af0d61af1cfd46be20d7750529fa3b56d2608c5574541c3",
+    "d36aa15d0681945002dcb945c8dadd458666981c59d7d674aaf4bd6fe694d8b8",
+    "a2ab2c265f17576814cfe2ab172c2205e6482c80f46f157c27ae6834a89c7386",
+    "1717d1750e18974900ed1e43dd1f3f874040a47d02b3743021186fee0d86c7b4",
+    "a2650f366258307050334a536fe2144d61793f2adc53a572abbbefe3f3325bbe",
+    "e9963a5484f23c08bb8426e6df52ad8b36f8dc8207ab2b4447ad298b66c62cc6",
+    "4c8f9fbcdfa74d050389b202b14bd6c52f04f991fe7c3df28152def1885aad58",
+    "03b8fe2228536d3bb8a54a8f0585b4824ab6b212819d89a3ab155a94dc0d5a09",
+    "588d9539d7f461cfe7aed13200ebd788bcf0aff9e145a846e3aa2d5ebdb7a4d3",
+    "7b158a4c46c6531690047317a8d9f623360ddf24590312e1a47debf646b2953d",
+    "41c6546bd89e6aa6ec2e4e962fa74e4d19adfbbe98a7eea450cd20d696e585a9",
+    "db217db4b29134b346dccce0eedccb84a23d9b5199662b9d83312a8919801e3c",
+    "49966f2ff269f7b6efde9645c11ce71670f567cce8304a57fbcdae9eb1045748",
+    "e8f963dca178d2b9e6e57160539097ff09187570eef9547f425342707d61a697",
+    "e905c2bd3e59790977dac536dd22d67b425a83ba1e66ce50672fddb6c88a1112",
+    "44be402c1f3b7121b9a728167fb65fc8ba9f70eb13d157bd34ed502f4a61f9ba",
+    "29e47ef7a2fc99505746656edf9234a3ce7647bac17ce04422587f2392db4b52",
+    "1ef2e995e7d3488870562f5525fcbe1a531f257b376974d592302b782ac6cfae",
+    "c18284e8283ef50d7e7b2889e106f2b8d14c640f0942e9cb5da0b1dac4c89c49",
+    "3984d83b9a5edadc739d4afb5e4ec22355e094e1c6d8f93302e859418ae674aa",
+    "77bba5ce72f2ebebab5870a2997e1921c96cf292fd5849b3af8a73352cae22d7",
+    "45d165c0e5f630effd1fccae56f3afb45dde21107f0e540d300aa2f835f045e5",
+    "92b86ec1fa62f78e4ae8eb42b602d5d7c8393f5216e5ca75385b13b93deaf347",
+    "b577a650acaf68adb09574076318753f5664832e61fff8170af64ea4b617ee79",
+    "d87a96c0ce08ba4cea03a27f996986efb67a7de96ee32b84029c239ca8a8d333",
+    "12bf18b43952ffce349082f2cb553eced5574a17f0e1f8a32c09c57cc2d3fc95",
+    "6a43822db8205d93e918aa1957c639d14a8d6c6f7c76c583118b00633f600764",
+    "232f8956b4151194ea09066c95b8a97889885f50ab6542a7d6c06b459c693c1d",
+    "037638e796edf147a3cb8bd532a80b1ef586a20bab31200e5c10c14b42c4dd7a",
+    "b55ec296e719789dc99459c5687334a829881fe59c7196929d4d498944060472",
+    "20481877713d2b7993cc2bf63fefd02ead13eac3e166680d7a33d9aa7b4a9eb1",
+    "63c289a73b2baacd8c4db3e4f8363229d8e2802ded8c06fa839c8cccd76579df",
+    "9f0a7b5ac5c3e6a9a6d25eb99c67f020ad954f994fc4372a69d774883ec5023e",
+    "0b836e1dc1b26459656e1ce34a7e7abc29c0e2186231c4d4603c3053ee0bb893",
+    "be5541b31aa5ef6c2f10413d0d0b22a6aba71c76e7c5b413fe9c0a2b2738f050",
+    "1f62abbac71398d1df47b83a7373934416d3018187064d5e0f09e9a934282535",
+    "ebed94b1fb573f36350dc916d579e4b2d5c9c9a40b6aa9df7cfe0d8824e4fa27",
+    "87c866875dc2ef42a6a1484867b6116f570c161c6f299473bca7fe38a5f6db80",
+    "bf2cdf949de9476f3a6c46503434fb7fe44cda1f3ad9e0b0fc80e386e631b6f0",
+    "686c75796a8e09b09b2b493c4ac73c372017c0c395c9b4f7293a1991d1d77e3e",
+    "4b6c5e2bf29f6a13a98f6926c566430fb5d5e613df183263e017603845ea71c8",
+    "14215419f7021f70f94fe0c77930048a1872124b4c9dcca1e62157b183f05603",
+    "38cfb2da62b5f6b7a5cc868755f1e6136e2e7775ac765c56eb85c01023ac4d02",
+    "2d07a173af87d7b85a29771e7998832748a66b3337e0f0b2df90e3c050e9bbff"
+  ],
+  "section_coverage": {
+    "preamble": {
+      "disposition": "Defines interpretation of RFC 2119 key words; it does not impose an executable processor behavior."
+    },
+    "1.1": {
+      "requirements": [
+        "LEX-UTF8"
+      ]
+    },
+    "1.2": {
+      "requirements": [
+        "LEX-WHITESPACE"
+      ]
+    },
+    "1.3": {
+      "requirements": [
+        "LEX-SEPARATORS"
+      ]
+    },
+    "1.4": {
+      "requirements": [
+        "LEX-COMMENTS",
+        "CST-BYTE-OWNERSHIP"
+      ]
+    },
+    "1.6.1": {
+      "requirements": [
+        "LEX-INTEGER"
+      ]
+    },
+    "1.6.2": {
+      "requirements": [
+        "LEX-FLOAT"
+      ]
+    },
+    "1.6.3": {
+      "requirements": [
+        "LEX-DECIMAL"
+      ]
+    },
+    "1.6.4": {
+      "requirements": [
+        "LEX-SPECIALS"
+      ]
+    },
+    "1.7": {
+      "disposition": "Application modelling requirement; AXON defines no currency-literal feature."
+    },
+    "1.9": {
+      "requirements": [
+        "LEX-STRINGS"
+      ]
+    },
+    "1.11": {
+      "requirements": [
+        "LEX-BINARY",
+        "BINARY-CLOSED"
+      ]
+    },
+    "1.12": {
+      "requirements": [
+        "LEX-GRAPH",
+        "PROFILE-GATING"
+      ]
+    },
+    "2.1": {
+      "requirements": [
+        "SEMANTIC-CST-INDEPENDENCE"
+      ]
+    },
+    "2.2": {
+      "requirements": [
+        "VALUE-KINDS",
+        "PROFILE-GATING"
+      ]
+    },
+    "2.3": {
+      "requirements": [
+        "RESERVED-BAREWORDS"
+      ]
+    },
+    "2.5": {
+      "requirements": [
+        "GRAPH-IDENTITY"
+      ]
+    },
+    "2.6": {
+      "requirements": [
+        "VALUE-SET-KIND",
+        "DUPLICATE-SETS"
+      ]
+    },
+    "2.7": {
+      "requirements": [
+        "TAG-UNKNOWN-PRESERVATION",
+        "IDENTIFIER-NAMESPACE"
+      ]
+    },
+    "2.9": {
+      "requirements": [
+        "VALUE-STRICT-EQUALITY",
+        "SEMANTIC-CST-INDEPENDENCE"
+      ]
+    },
+    "3.3": {
+      "requirements": [
+        "CONTAINER-LIST-OMAP"
+      ]
+    },
+    "3.4": {
+      "requirements": [
+        "CONTAINER-TUPLE"
+      ]
+    },
+    "3.5": {
+      "requirements": [
+        "CONTAINER-MAP-SET"
+      ]
+    },
+    "3.6.1": {
+      "requirements": [
+        "CONTAINER-NO-MIXING",
+        "CONTAINER-LIST-OMAP",
+        "CONTAINER-MAP-SET"
+      ]
+    },
+    "3.6.3": {
+      "disposition": "Bounded-lookahead implementation invariant; observable recognition outcomes are covered by container vectors."
+    },
+    "3.8": {
+      "requirements": [
+        "LEX-SEPARATORS"
+      ]
+    },
+    "3.9": {
+      "requirements": [
+        "CONTAINER-DISCARD"
+      ]
+    },
+    "4.1": {
+      "disposition": "Conditional legacy-writer requirement; the reference implementation does not advertise a legacy writer."
+    },
+    "4.4.1": {
+      "requirements": [
+        "NODE-BODIES"
+      ]
+    },
+    "4.4.2": {
+      "requirements": [
+        "NODE-BODIES",
+        "IDENTIFIER-KEY-COLUMNS"
+      ]
+    },
+    "4.6": {
+      "requirements": [
+        "NODE-INDENTED-CORE-REJECTION",
+        "COMPAT-INDENTED-BODIES",
+        "MIGRATION-SELECTIVE"
+      ]
+    },
+    "5.2": {
+      "requirements": [
+        "NUMBER-ARBITRARY-INT",
+        "COMPAT-LAX-NUMBERS"
+      ]
+    },
+    "5.3": {
+      "requirements": [
+        "NUMBER-KIND-PRESERVATION",
+        "CANON-FLOAT-JCS"
+      ]
+    },
+    "5.6": {
+      "requirements": [
+        "NUMBER-SEPARATORS"
+      ]
+    },
+    "5.9": {
+      "requirements": [
+        "NUMBER-ADJACENCY"
+      ]
+    },
+    "6.3": {
+      "requirements": [
+        "TEMPORAL-NANOSECONDS",
+        "COMPAT-RAW-FRACTION"
+      ]
+    },
+    "6.5": {
+      "requirements": [
+        "TEMPORAL-FIELDS"
+      ]
+    },
+    "6.6": {
+      "requirements": [
+        "TEMPORAL-OFFSETS"
+      ]
+    },
+    "9.4": {
+      "requirements": [
+        "CONSTANT-REGISTRY"
+      ]
+    },
+    "9.5": {
+      "requirements": [
+        "CANON-UNICODE-IDENTITY",
+        "STRING-NORMALIZATION"
+      ]
+    },
+    "9.6": {
+      "requirements": [
+        "IDENTIFIER-KEY-COLUMNS"
+      ]
+    },
+    "10.7": {
+      "requirements": [
+        "DOCUMENT-LINKS"
+      ]
+    },
+    "11.1": {
+      "requirements": [
+        "DOCUMENT-STREAM",
+        "DOCUMENT-ATTRIBUTES"
+      ]
+    },
+    "11.2": {
+      "requirements": [
+        "DOCUMENT-INCREMENTAL"
+      ]
+    },
+    "11.4": {
+      "requirements": [
+        "DOCUMENT-HEADER"
+      ]
+    },
+    "13.2": {
+      "requirements": [
+        "CST-SEMANTIC-TRACE",
+        "CST-RECOVERY",
+        "CST-EXPECTED-TOKENS",
+        "CST-FIXITS"
+      ]
+    },
+    "13.3": {
+      "requirements": [
+        "CST-COMPAT-TOKENIZATION"
+      ]
+    },
+    "14.7": {
+      "requirements": [
+        "CANON-DETERMINISTIC"
+      ]
+    },
+    "15.3": {
+      "requirements": [
+        "COMPAT-BUNDLE"
+      ]
+    },
+    "16.1": {
+      "requirements": [
+        "LIMIT-INPUT",
+        "LIMIT-DEPTH",
+        "LIMIT-VALUES",
+        "LIMIT-STRING",
+        "LIMIT-BINARY",
+        "LIMIT-NUMBER",
+        "LIMIT-ANCHORS",
+        "LIMIT-REFERENCES",
+        "LIMIT-LABEL",
+        "LIMIT-BARE-NAME",
+        "LIMIT-QUOTED-NAME",
+        "LIMIT-TEMPORAL",
+        "LIMIT-CONTAINER",
+        "LIMIT-HEADER",
+        "LIMIT-CST-TOKENS"
+      ]
+    },
+    "16.3": {
+      "requirements": [
+        "LIMIT-ANCHORS",
+        "LIMIT-REFERENCES",
+        "CANON-VERIFY"
+      ]
+    },
+    "17.1": {
+      "requirements": [
+        "ERROR-BYTE-SPANS"
+      ]
+    },
+    "18": {
+      "requirements": [
+        "SCHEMA-LOCAL-REFS",
+        "SCHEMA-MODULE-REGISTRY",
+        "SCHEMA-NO-NETWORK",
+        "SCHEMA-DETERMINISTIC-ISSUES",
+        "SCHEMA-ISSUE-LIMIT",
+        "SCHEMA-SHAPE-GOVERNANCE",
+        "SCHEMA-POINTER-BOUNDS",
+        "SCHEMA-REGISTRY-IMMUTABILITY",
+        "SCHEMA-REGEX-SAFETY"
+      ]
+    },
+    "19.2": {
+      "disposition": "Conditional legacy-writer requirement; the reference implementation does not advertise a legacy writer."
+    },
+    "19.3": {
+      "requirements": [
+        "MIGRATION-CANONICAL",
+        "MIGRATION-SELECTIVE",
+        "MIGRATION-EDIT-APPLICATION"
+      ]
+    },
+    "19.4": {
+      "requirements": [
+        "DOCUMENT-HEADER",
+        "MIGRATION-CANONICAL"
+      ]
+    },
+    "19.5": {
+      "requirements": [
+        "FUZZ-CORPUS"
+      ]
+    }
+  }
+}

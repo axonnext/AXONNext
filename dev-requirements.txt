@@ -1,0 +1,8 @@
+wheel
+build
+# Regenerating the extension C from source (PYAXON_USE_CYTHON=1); supports 3.10-3.13.
+Cython>=3.0
+# Test-only: named-time-zone (DST fold/gap) tests want a tzdb with Edmonton DST;
+# PyYAML backs the JSON/YAML benchmark test.
+tzdata==2025.1
+PyYAML

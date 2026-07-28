@@ -1,0 +1,5 @@
+# axon2.v2026 (the AXON 2026 edition module) is pure standard library.
+# The default build compiles the checked-in generated C with no Cython. A modern
+# Cython (3.x, which supports CPython 3.10-3.13) is only needed to *regenerate*
+# that C from the .py/.pyx sources (PYAXON_USE_CYTHON=1).
+Cython>=3.0
