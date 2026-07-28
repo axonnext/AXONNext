@@ -1,0 +1,39 @@
+name: Publish serde_axon to crates.io
+
+# Runs when you publish a GitHub Release. Publishes the serde_axon crate to
+# crates.io using Trusted Publishing (OIDC) -- no stored token.
+#
+# ONE-TIME SETUP (on crates.io): open the serde_axon crate -> Settings ->
+# Trusted Publishing -> add GitHub owner "axonnext", repo "AXONNext",
+# workflow "publish-serde-axon.yml".
+#
+# TOKEN ALTERNATIVE: remove the auth step and instead set
+#   env: { CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }} }
+# after adding a crates.io API token as the CARGO_REGISTRY_TOKEN repo secret.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: cargo publish
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write   # required for crates.io Trusted Publishing
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Verify the crate packages cleanly
+        run: cargo publish --dry-run
+        working-directory: serde_axon
+      - name: Authenticate to crates.io (Trusted Publishing)
+        uses: rust-lang/crates-io-auth-action@v1
+        id: auth
+      - name: Publish serde_axon
+        run: cargo publish
+        working-directory: serde_axon
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
