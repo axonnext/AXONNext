@@ -58,6 +58,12 @@ jobs:
         run: node tools/check_rfc8785_node.mjs
 
       - name: Differentially verify finite binary64 rendering with V8
+        # This script imports axon2 directly. The release gate puts lib/ on the
+        # path only for its own subprocesses, and that does not survive into a
+        # later workflow step, so it must be set here. The extensions are
+        # already built in place by the gate's build-extensions command.
+        env:
+          PYTHONPATH: lib
         run: python tools/check_rfc8785_differential.py --random-cases 100000
 
       - name: Build source and wheel distributions
