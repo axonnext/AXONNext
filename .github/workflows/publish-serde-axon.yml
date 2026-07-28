@@ -1,15 +1,21 @@
 name: Publish serde_axon to crates.io
 
 # Runs when you publish a GitHub Release. Publishes the serde_axon crate to
-# crates.io using Trusted Publishing (OIDC) -- no stored token.
+# crates.io using an API token stored as a repository secret.
 #
-# ONE-TIME SETUP (on crates.io): open the serde_axon crate -> Settings ->
-# Trusted Publishing -> add GitHub owner "axonnext", repo "AXONNext",
-# workflow "publish-serde-axon.yml".
+# ONE-TIME SETUP:
+#   1. crates.io -> Account Settings -> API Tokens -> New Token.
+#      Scopes: publish-new (the crate does not exist yet) and publish-update.
+#   2. GitHub -> this repo -> Settings -> Secrets and variables -> Actions ->
+#      New repository secret, named CARGO_REGISTRY_TOKEN.
 #
-# TOKEN ALTERNATIVE: remove the auth step and instead set
-#   env: { CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }} }
-# after adding a crates.io API token as the CARGO_REGISTRY_TOKEN repo secret.
+# TRUSTED-PUBLISHING ALTERNATIVE (no stored token, once the crate exists):
+# add `permissions: id-token: write`, insert the step
+#   - uses: rust-lang/crates-io-auth-action@v1
+#     id: auth
+# and set CARGO_REGISTRY_TOKEN to ${{ steps.auth.outputs.token }}, then register
+# the publisher on crates.io: owner "axonnext", repo "AXONNext", workflow
+# "publish-serde-axon.yml".
 
 on:
   release:
@@ -21,7 +27,6 @@ jobs:
     name: cargo publish
     runs-on: ubuntu-latest
     permissions:
-      id-token: write   # required for crates.io Trusted Publishing
       contents: read
     steps:
       - uses: actions/checkout@v4
@@ -29,11 +34,8 @@ jobs:
       - name: Verify the crate packages cleanly
         run: cargo publish --dry-run
         working-directory: serde_axon
-      - name: Authenticate to crates.io (Trusted Publishing)
-        uses: rust-lang/crates-io-auth-action@v1
-        id: auth
       - name: Publish serde_axon
         run: cargo publish
         working-directory: serde_axon
         env:
-          CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
