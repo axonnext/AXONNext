@@ -1,0 +1,123 @@
+name: AXON 2026 Python reference
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  platform-matrix:
+    name: ${{ matrix.os }} / Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: Install build tooling
+        # tzdata is pinned so the named-time-zone (DST fold/gap) tests see a tzdb
+        # where America/Edmonton still observes DST, independent of the runner's
+        # system zoneinfo; PyYAML is used only by the JSON/YAML benchmark test.
+        #
+        # This pin is TEST-ONLY (deterministic fixtures). It is NOT a runtime
+        # requirement: at runtime, named-zone (`tz-names`) resolution uses the
+        # host tzdb per AXON 2026 SPEC §6.8, and the version in effect is
+        # reported by `tzdb_version2026()` rather than pinned by the library.
+        run: python -m pip install --upgrade pip build "tzdata==2025.1" pyyaml
+
+      - name: Run Python release gate
+        run: >-
+          python tools/release_gate.py
+          --evidence platform-evidence/${{ runner.os }}-py${{ matrix.python }}.json
+
+      - name: Cross-check RFC 8785 with V8
+        run: node tools/check_rfc8785_node.mjs
+
+      - name: Differentially verify finite binary64 rendering with V8
+        run: python tools/check_rfc8785_differential.py --random-cases 100000
+
+      - name: Build source and wheel distributions
+        run: python -m build
+
+      - name: Install the produced wheel
+        run: python tools/install_built_wheel.py
+
+      - name: Installed-package smoke test
+        run: python tools/smoke_installed.py
+
+      - name: Upload platform evidence and distributions
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: axon2026-${{ runner.os }}-py${{ matrix.python }}
+          path: |
+            platform-evidence/
+            dist/
+          if-no-files-found: error
+
+  rust-crate:
+    name: ${{ matrix.os }} / Rust stable
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    defaults:
+      run:
+        working-directory: serde_axon
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - name: Check formatting
+        run: cargo fmt --check
+
+      - name: Lint with clippy (warnings are errors)
+        run: cargo clippy --all-targets -- -D warnings
+
+      - name: Build all targets
+        run: cargo build --all-targets
+
+      - name: Run the full test suite
+        # Includes the differential/normative fixtures generated from the
+        # Python reference, so this job also gates byte-for-byte parity.
+        run: cargo test
+
+  long-fuzz:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Run complete gate and 25,000 values per seed
+        run: >-
+          python tools/release_gate.py
+          --fuzz-iterations 25000
+          --evidence platform-evidence/Linux-long-fuzz-py312.json
+      - name: Upload long-fuzz evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: axon2026-Linux-long-fuzz-py312
+          path: platform-evidence/Linux-long-fuzz-py312.json
+          if-no-files-found: error
