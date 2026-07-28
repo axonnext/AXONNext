@@ -150,8 +150,9 @@ is active and held to byte-for-byte parity. The historical API remains
 available, while the edition API is explicit::
 
     >>> from axon2 import loads2026, dumps2026, canonical2026, Options
-    >>> loads2026('point{label:"p" 10 20}')
-    [Node('point', brace, attrs=OrderedDict({'label': 'p'}), children=[10, 20])]
+    >>> node = loads2026('point{label:"p" 10 20}')[0]
+    >>> node.name, dict(node.attributes), node.children
+    ('point', {'label': 'p'}, [10, 20])
     >>> dumps2026([{'b': 2, 'a': 1}], canonical=True)
     '{a:1 b:2}'
 
