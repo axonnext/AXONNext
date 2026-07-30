@@ -26,8 +26,8 @@ deterministic canonical form -- with two verified 1:1 implementations.
 - [Language comparison](#language-comparison)
 - [Documentation](#documentation)
 - [Implementations](#implementations)
-  - [axonnext (Python reference)](#axonnext--python-reference)
-  - [serde_axon (Rust)](#serde_axon--rust)
+  - [axonnext (Python reference)](#axonnext-python-reference)
+  - [serde_axon (Rust)](#serde_axon-rust)
 - [Conformance profiles](#conformance-profiles)
 - [Canonical form & content addressing](#canonical-form--content-addressing)
 - [Internationalisation](#internationalisation)
@@ -165,7 +165,7 @@ lives in [`comparison/axon_2026_comparison.html`](comparison/axon_2026_compariso
 AXON Next ships **two** implementations, both at **v1.0.0**, verified to agree
 1:1 (see [Parity](#parity-one-language-two-implementations)).
 
-### axonnext -- Python reference
+### axonnext (Python reference)
 
 The normative reference implementation (Python 3.10-3.13). It defines the
 behaviour everything else is measured against, and adds the 2026 engine
@@ -184,11 +184,12 @@ loads2026('point{label:"p" 10 20}')             # 2026 edition API
 dumps2026([{"b": 2, "a": 1}], canonical=True)   # -> '{a:1 b:2}'
 ```
 
-Source: the repository root (`lib/axon/`, `setup.py`, `docs/`). Gate:
-`351 tests OK`. The reference also includes a lossless CST, a schema companion,
-the Binary AXON codec, and an executable, language-neutral conformance registry.
+Package: [PyPI `axonnext`](https://pypi.org/project/axonnext/). Source: the
+repository root (`lib/axon/`, `setup.py`, `docs/`). Gate: `351 tests OK`. The
+reference also includes a lossless CST, a schema companion, the Binary AXON
+codec, and an executable, language-neutral conformance registry.
 
-### serde_axon -- Rust
+### serde_axon (Rust)
 
 A `no_std`-friendly Rust crate with Serde text support, a lossless CST, full
 migration and editor/LSP helpers, AXON Schema 2026 validation, scientific and
@@ -206,10 +207,11 @@ let value: MyType = serde_axon::from_str(&text)?;       // deserialize
 let canon = serde_axon::to_string_canonical(&value);    // Section 14 canonical form
 ```
 
-Source: [`serde_axon`](serde_axon). Gates:
-`build` / `clippy -D warnings` / `fmt` / `test` all green, including a 91-case
-semantic differential suite, CST and Schema fixtures, and a 118-case generated
-Binary/CID/migration/LSP/scientific/stream oracle from axonnext.
+Crate: [crates.io `serde_axon`](https://crates.io/crates/serde_axon). Source:
+[`serde_axon`](serde_axon). Gates: `build` / `clippy -D warnings` / `fmt` /
+`test` all green, including a 91-case semantic differential suite, CST and
+Schema fixtures, and a 118-case generated Binary/CID/migration/LSP/scientific/
+stream oracle from axonnext.
 
 ## Conformance profiles
 
