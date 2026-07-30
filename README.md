@@ -184,7 +184,7 @@ loads2026('point{label:"p" 10 20}')             # 2026 edition API
 dumps2026([{"b": 2, "a": 1}], canonical=True)   # -> '{a:1 b:2}'
 ```
 
-Package: [PyPI `axonnext`](https://pypi.org/project/axonnext/). Source: the
+Package: https://pypi.org/project/axonnext/. Source: the
 repository root (`lib/axon/`, `setup.py`, `docs/`). Gate: `351 tests OK`. The
 reference also includes a lossless CST, a schema companion, the Binary AXON
 codec, and an executable, language-neutral conformance registry.
@@ -207,7 +207,7 @@ let value: MyType = serde_axon::from_str(&text)?;       // deserialize
 let canon = serde_axon::to_string_canonical(&value);    // Section 14 canonical form
 ```
 
-Crate: [crates.io `serde_axon`](https://crates.io/crates/serde_axon). Source:
+Crate: https://crates.io/crates/serde_axon. Source:
 [`serde_axon`](serde_axon). Gates: `build` / `clippy -D warnings` / `fmt` /
 `test` all green, including a 91-case semantic differential suite, CST and
 Schema fixtures, and a 118-case generated Binary/CID/migration/LSP/scientific/
