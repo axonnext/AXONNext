@@ -2,7 +2,7 @@
 //!
 //! The fixture is produced by `gen_surfaces.py` from the Python AXON 2026
 //! reference. Robustness-only adversarial tests remain in `robustness.rs`;
-//! this file checks public, observable cross-implementation behaviour.
+//! this file checks public, observable cross-implementation behavior.
 
 use serde_axon::binary;
 use serde_axon::lsp::{DocumentSymbol, LspDiagnostic, LspHover, LspTextEdit, SymbolPathSegment};

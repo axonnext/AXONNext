@@ -9,7 +9,7 @@ use alloc::fmt;
 use alloc::string::{String, ToString};
 use core::fmt::Display;
 
-/// A stable category for a parse or serialisation failure, matching the AXON
+/// A stable category for a parse or serialization failure, matching the AXON
 /// 2026 error taxonomy.
 ///
 /// The variants are exactly the §17.2 category registry, plus `InvalidLink`
@@ -58,7 +58,7 @@ pub enum Category {
     UnsupportedProfileFeature,
     /// A configured resource limit (depth, length, or count) was exceeded.
     ResourceLimitExceeded,
-    /// A Serde (de)serialisation mismatch, carrying a human message.
+    /// A Serde (de)serialization mismatch, carrying a human message.
     Serde,
 }
 
@@ -87,7 +87,7 @@ impl Category {
     }
 }
 
-/// A parse or serialisation error, with a category, message, and (for parse
+/// A parse or serialization error, with a category, message, and (for parse
 /// errors) a 1-based source position.
 #[derive(Clone, Debug, PartialEq)]
 pub struct Error {

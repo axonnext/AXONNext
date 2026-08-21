@@ -1,4 +1,4 @@
-//! AXON Schema 2026 normalisation, registry, and validation.
+//! AXON Schema 2026 normalization, registry, and validation.
 //!
 //! Schemas are ordinary AXON maps or `schema{...}` / `field{...}` nodes. The
 //! validator operates only on semantic [`Value`]s, performs no I/O, and keeps
@@ -20,8 +20,17 @@ const DEFAULT_MAX_MODULES: usize = 1024;
 const DEFAULT_MAX_DEPTH: usize = 128;
 const DEFAULT_MAX_NODES: usize = 1_048_576;
 const DEFAULT_MAX_ISSUES: usize = 256;
+/// Maximum `any_of` alternatives evaluated in one validation call.
+///
+/// Alternatives are explored independently, so nested alternation multiplies:
+/// a schema nesting `any_of` d deep with two branches costs 2^d evaluations for
+/// a value matching none of them. The depth and node limits bound that only
+/// loosely, so the cost gets its own explicit budget. Generous for any
+/// hand-written schema. Mirrors `MAX_ANY_OF_EVALUATIONS` in the Python
+/// reference; the two must stay equal.
+const DEFAULT_MAX_ANY_OF: usize = 100_000;
 
-/// Classification for an error while loading, normalising, or governing a
+/// Classification for an error while loading, normalizing, or governing a
 /// schema registry.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum SchemaErrorKind {
@@ -33,7 +42,7 @@ pub enum SchemaErrorKind {
     RegistryFrozen,
 }
 
-/// Error returned by schema normalisation and registry operations.
+/// Error returned by schema normalization and registry operations.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct SchemaError {
     /// Stable error classification.
@@ -116,7 +125,7 @@ pub struct ValidationIssue {
     pub path: Vec<PathSegment>,
     /// Human-readable explanation.
     pub message: String,
-    /// Structured path through the normalised schema.
+    /// Structured path through the normalized schema.
     pub schema_path: Vec<PathSegment>,
 }
 
@@ -325,12 +334,12 @@ impl SchemaRegistry2026 {
         Ok(identifier)
     }
 
-    /// Register and normalise a module. Existing identifiers are rejected.
+    /// Register and normalize a module. Existing identifiers are rejected.
     pub fn register(&mut self, identifier: &str, schema: &Value) -> Result<Value, SchemaError> {
         self.register_with(identifier, schema, false)
     }
 
-    /// Register and normalise a module, optionally replacing an existing one.
+    /// Register and normalize a module, optionally replacing an existing one.
     pub fn register_with(
         &mut self,
         identifier: &str,
@@ -463,7 +472,7 @@ fn valid_bracketed_authority(authority: &str) -> bool {
     address.parse::<core::net::Ipv6Addr>().is_ok()
 }
 
-/// Parse exactly one Core AXON value and normalise it as a schema.
+/// Parse exactly one Core AXON value and normalize it as a schema.
 pub fn load_schema2026(text: &str) -> Result<Value, SchemaError> {
     let values =
         crate::from_str_stream(text).map_err(|error| SchemaError::invalid(error.to_string()))?;
@@ -475,12 +484,12 @@ pub fn load_schema2026(text: &str) -> Result<Value, SchemaError> {
     normalize_schema(&values[0])
 }
 
-/// Normalise a mapping or `schema{...}` node with the reference limits.
+/// Normalize a mapping or `schema{...}` node with the reference limits.
 pub fn normalize_schema(schema: &Value) -> Result<Value, SchemaError> {
     normalize_schema_with(schema, DEFAULT_MAX_DEPTH, DEFAULT_MAX_NODES)
 }
 
-/// Normalise a schema with explicit positive depth and node limits.
+/// Normalize a schema with explicit positive depth and node limits.
 pub fn normalize_schema_with(
     schema: &Value,
     max_depth: usize,
@@ -618,7 +627,7 @@ fn schema_keyword_scan_role(keyword: &str, value: &Value, depth: usize) -> ScanR
     let nested = depth.saturating_add(1);
     match keyword {
         "properties" | "$defs" => ScanRole::SchemaMap(nested),
-        "prefix_items" => ScanRole::SchemaSequence(nested),
+        "prefix_items" | "any_of" => ScanRole::SchemaSequence(nested),
         "items" | "children" | "attributes" => ScanRole::Schema(nested),
         "additional" if !matches!(value, Value::Bool(_)) => ScanRole::Schema(nested),
         _ => ScanRole::Opaque,
@@ -892,6 +901,22 @@ impl<'a> NormalizeState<'a> {
             schema_put(schema, "prefix_items", Value::List(normalized));
         }
 
+        if let Some(value) = schema_take(schema, "any_of") {
+            let branches = match value {
+                Value::List(items) | Value::Tuple(items) if !items.is_empty() => items,
+                _ => {
+                    return Err(SchemaError::invalid(
+                        "any_of must be a non-empty sequence of schemas",
+                    ));
+                }
+            };
+            let mut normalized = Vec::with_capacity(branches.len());
+            for branch in &branches {
+                normalized.push(self.normalize(branch, depth + 1)?);
+            }
+            schema_put(schema, "any_of", Value::List(normalized));
+        }
+
         if let Some(value) = schema_take(schema, "$defs") {
             let pairs = mapping_pairs(&value)
                 .ok_or_else(|| SchemaError::invalid("$defs must be a mapping"))?;
@@ -975,6 +1000,7 @@ const KEYWORDS: &[&str] = &[
     "examples",
     "default",
     "deprecated",
+    "any_of",
 ];
 
 fn check_schema_keywords(schema: &Value) -> Result<(), SchemaError> {
@@ -1227,6 +1253,7 @@ pub fn validate2026_with(
         max_depth: options.max_depth,
         depth: 0,
         scale_significant: options.scale_significant,
+        any_of_budget: DEFAULT_MAX_ANY_OF,
     };
     let mut seen = Vec::new();
     validate_value(
@@ -1338,6 +1365,7 @@ struct ValidationContext<'schema, 'value> {
     max_depth: usize,
     depth: usize,
     scale_significant: bool,
+    any_of_budget: usize,
 }
 
 struct ValueGraph<'a> {
@@ -1611,11 +1639,39 @@ fn validate_active(
         }
     }
 
+    if let Some(branches) = schema_get(schema, "any_of") {
+        let alternatives = collection_items(branches).unwrap_or_default();
+        let (matched, limited) = any_of_matches(
+            value,
+            &alternatives,
+            path,
+            schema_path,
+            issues,
+            seen,
+            context,
+        );
+        if limited {
+            issues.push(issue(
+                "resource-limit-exceeded",
+                path,
+                "maximum validation nesting depth exceeded",
+                &append_key(schema_path, "any_of"),
+            ));
+        } else if !matched {
+            issues.push(issue(
+                "any-of",
+                path,
+                "value does not match any permitted alternative",
+                &append_key(schema_path, "any_of"),
+            ));
+        }
+    }
+
     if matches!(actual, "int" | "float" | "decimal") {
         validate_numeric(value, schema, path, schema_path, issues);
     }
     if actual == "string" {
-        validate_string(value, schema, path, issues);
+        validate_string(value, schema, path, schema_path, issues);
     }
     if matches!(actual, "list" | "tuple" | "set") {
         validate_collection(value, schema, path, schema_path, issues, seen, context);
@@ -1627,6 +1683,58 @@ fn validate_active(
     if let Value::Node(node) = value {
         validate_node(node, schema, path, schema_path, issues, seen, context);
     }
+}
+
+/// Report whether any alternative accepts `value`, as `(matched, limited)`.
+///
+/// Each alternative is evaluated into a throwaway collector, so a rejected
+/// alternative never reports against the document: only the single `any-of`
+/// issue does, which keeps the output proportional to the failure rather than
+/// to the number of alternatives. Evaluation stops at the first alternative
+/// that accepts.
+///
+/// A resource limit reached inside an alternative is reported separately,
+/// because it is a fact about the validation rather than about the value --
+/// reporting `any-of` there would claim the value was rejected when it was
+/// never fully examined. Mirrors `_any_of_matches` in the Python reference.
+fn any_of_matches(
+    value: &Value,
+    branches: &[&Value],
+    path: &[PathSegment],
+    schema_path: &[PathSegment],
+    issues: &IssueCollector,
+    seen: &mut Vec<(*const Value, *const Value)>,
+    context: &mut ValidationContext<'_, '_>,
+) -> (bool, bool) {
+    let mut limited = false;
+    for (index, branch) in branches.iter().enumerate() {
+        if context.any_of_budget == 0 {
+            return (false, true);
+        }
+        context.any_of_budget -= 1;
+        let branch_schema_path = append_index(&append_key(schema_path, "any_of"), index);
+        let mut probe = IssueCollector::new(issues.max_issues);
+        validate_value(
+            value,
+            branch,
+            path,
+            &branch_schema_path,
+            &mut probe,
+            seen,
+            context,
+        );
+        if probe.issues.is_empty() {
+            return (true, false);
+        }
+        if probe
+            .issues
+            .iter()
+            .any(|item| item.code == "resource-limit-exceeded")
+        {
+            limited = true;
+        }
+    }
+    (false, limited)
 }
 
 fn value_kind(value: &Value) -> &'static str {
@@ -1678,34 +1786,30 @@ fn validate_numeric(
     schema_path: &[PathSegment],
     issues: &mut IssueCollector,
 ) {
-    for (keyword, code, relation, message, include_schema_path) in [
+    for (keyword, code, relation, message) in [
         (
             "minimum",
             "minimum",
             NumericRelation::Less,
             "value is below minimum",
-            true,
         ),
         (
             "maximum",
             "maximum",
             NumericRelation::Greater,
             "value is above maximum",
-            true,
         ),
         (
             "exclusive_minimum",
             "exclusive-minimum",
             NumericRelation::LessOrEqual,
             "value must be greater than exclusive minimum",
-            false,
         ),
         (
             "exclusive_maximum",
             "exclusive-maximum",
             NumericRelation::GreaterOrEqual,
             "value must be less than exclusive maximum",
-            false,
         ),
     ] {
         let Some(bound) = schema_get(schema, keyword) else {
@@ -1713,12 +1817,12 @@ fn validate_numeric(
         };
         match compare_numeric(value, bound) {
             NumericComparison::Ordered(ordering) if relation.matches(ordering) => {
-                let generated_path = if include_schema_path {
-                    append_key(schema_path, keyword)
-                } else {
-                    Vec::new()
-                };
-                issues.push(issue(code, path, message, &generated_path));
+                issues.push(issue(
+                    code,
+                    path,
+                    message,
+                    &append_key(schema_path, keyword),
+                ));
             }
             NumericComparison::Ordered(_) | NumericComparison::Unordered => {}
             NumericComparison::Error => {
@@ -1757,6 +1861,7 @@ fn validate_string(
     value: &Value,
     schema: &Value,
     path: &[PathSegment],
+    schema_path: &[PathSegment],
     issues: &mut IssueCollector,
 ) {
     let Value::String(text) = value else {
@@ -1764,20 +1869,35 @@ fn validate_string(
     };
     let length = text.chars().count();
     if schema_get(schema, "min_length").is_some_and(|limit| count_below(length, limit)) {
-        issues.push(issue("min-length", path, "string is too short", &[]));
+        issues.push(issue(
+            "min-length",
+            path,
+            "string is too short",
+            &append_key(schema_path, "min_length"),
+        ));
     }
     if schema_get(schema, "max_length").is_some_and(|limit| count_above(length, limit)) {
-        issues.push(issue("max-length", path, "string is too long", &[]));
+        issues.push(issue(
+            "max-length",
+            path,
+            "string is too long",
+            &append_key(schema_path, "max_length"),
+        ));
     }
     if let Some(Value::String(pattern)) = schema_get(schema, "pattern") {
         match safe_regex_search(pattern, text) {
             Ok(true) => {}
-            Ok(false) => issues.push(issue("pattern", path, "string does not match pattern", &[])),
+            Ok(false) => issues.push(issue(
+                "pattern",
+                path,
+                "string does not match pattern",
+                &append_key(schema_path, "pattern"),
+            )),
             Err(error) => issues.push(issue(
                 "pattern",
                 path,
                 format!("unsafe or invalid pattern: {}", error.message),
-                &[],
+                &append_key(schema_path, "pattern"),
             )),
         }
     }
@@ -1794,14 +1914,19 @@ fn validate_collection(
 ) {
     let items = collection_items(value).expect("collection kind has items");
     if schema_get(schema, "min_items").is_some_and(|limit| count_below(items.len(), limit)) {
-        issues.push(issue("min-items", path, "container has too few items", &[]));
+        issues.push(issue(
+            "min-items",
+            path,
+            "container has too few items",
+            &append_key(schema_path, "min_items"),
+        ));
     }
     if schema_get(schema, "max_items").is_some_and(|limit| count_above(items.len(), limit)) {
         issues.push(issue(
             "max-items",
             path,
             "container has too many items",
-            &[],
+            &append_key(schema_path, "max_items"),
         ));
     }
     let prefix = schema_get(schema, "prefix_items")
@@ -1922,7 +2047,7 @@ fn validate_mapping_pairs(
                     "additional",
                     &append_value_key(path, key.clone()),
                     "additional key is not permitted",
-                    &[],
+                    &append_key(schema_path, "additional"),
                 )),
                 Some(additional) if mapping_pairs(additional).is_some() => validate_value(
                     item,
@@ -1955,7 +2080,7 @@ fn validate_node(
             "node-name",
             path,
             format!("expected node {}", python_repr(expected)),
-            &[],
+            &append_key(schema_path, "name"),
         ));
     }
     if let Some(expected) = schema_get(schema, "style") {
@@ -1970,7 +2095,7 @@ fn validate_node(
                 "node-style",
                 path,
                 format!("expected node body style {}", python_repr(expected)),
-                &[],
+                &append_key(schema_path, "style"),
             ));
         }
     }
@@ -2020,7 +2145,7 @@ fn validate_node(
             "min-children",
             path,
             "node has too few children",
-            &[],
+            &append_key(schema_path, "min_children"),
         ));
     }
     if schema_get(schema, "max_children")
@@ -2030,7 +2155,7 @@ fn validate_node(
             "max-children",
             path,
             "node has too many children",
-            &[],
+            &append_key(schema_path, "max_children"),
         ));
     }
 }

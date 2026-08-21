@@ -70,13 +70,13 @@ pub fn to_string_stream_with(values: &[Value], options: WriteOptions) -> Result<
         validate_write(value, false, 1)?;
     }
     let graph = GraphDocument::from_values(values)?;
-    let normalised = if options.graph {
+    let normalized = if options.graph {
         CanonicalGraph::new(&graph, false).emit_stream()
     } else {
         materialize_graph_stream(&graph)?
     };
     let mut out = String::new();
-    for (index, value) in normalised.iter().enumerate() {
+    for (index, value) in normalized.iter().enumerate() {
         if index != 0 {
             out.push('\n');
         }
@@ -87,35 +87,35 @@ pub fn to_string_stream_with(values: &[Value], options: WriteOptions) -> Result<
 
 /// Emit `value` as Canonical AXON text (§14): deterministic, key-sorted.
 ///
-/// Under the Graph profile, canonical form also normalises anchors and
+/// Under the Graph profile, canonical form also normalizes anchors and
 /// references (§14): an anchor whose label is never referenced, or that binds a
 /// scalar, is inlined (the wrapper and label vanish); an anchor that binds a
-/// composite and is referenced keeps its identity but is relabelled to a
+/// composite and is referenced keeps its identity but is relabeled to a
 /// 1-based ordinal assigned in traversal order, and its references become
 /// `*N`. This is what makes "same value -> same bytes -> same CID" hold across
 /// implementations for graph documents.
 pub fn to_string_canonical(value: &Value) -> Result<String> {
     validate_write(value, true, 1)?;
-    let normalised = canonicalize_graph_checked(value)?;
+    let normalized = canonicalize_graph_checked(value)?;
     let mut out = String::new();
-    write_value(&mut out, &normalised, true);
+    write_value(&mut out, &normalized, true);
     Ok(out)
 }
 
 /// Emit an ordered AXON document stream in Canonical AXON form.
 ///
-/// Graph labels are analysed and normalised across the complete stream. This
+/// Graph labels are analyzed and normalized across the complete stream. This
 /// distinction matters when an anchor is one top-level value and a later
-/// top-level value references it: independently canonicalising each value
+/// top-level value references it: independently canonicalizing each value
 /// would lose that shared identity. Top-level values are separated by a single
 /// line feed; an empty slice emits an empty document.
 pub fn to_string_stream_canonical(values: &[Value]) -> Result<String> {
     for value in values {
         validate_write(value, true, 1)?;
     }
-    let normalised = canonicalize_graph_stream_checked(values)?;
+    let normalized = canonicalize_graph_stream_checked(values)?;
     let mut out = String::new();
-    for (index, value) in normalised.iter().enumerate() {
+    for (index, value) in normalized.iter().enumerate() {
         if index != 0 {
             out.push('\n');
         }
@@ -154,6 +154,22 @@ fn validate_write(value: &Value, canonical: bool, depth: u32) -> Result<()> {
                 Category::UnsupportedProfileFeature,
                 "scale-significant values are incompatible with canonical output",
             ));
+        }
+        Value::Decimal(
+            Decimal::Finite { mantissa, exponent } | Decimal::ScaledFinite { mantissa, exponent },
+        ) => {
+            // Positional notation writes every place between the mantissa and
+            // the exponent, so an extreme exponent turns a few bytes of input
+            // into gigabytes of output. Refused here, before anything is
+            // allocated, in the same place the other writer limits are enforced.
+            let too_long = decimal_render_len(mantissa, *exponent)
+                .is_none_or(|length| length > MAX_DECIMAL_RENDER_DIGITS);
+            if too_long {
+                return Err(write_error(
+                    Category::ResourceLimitExceeded,
+                    "decimal exponent expands beyond the maximum writable length",
+                ));
+            }
         }
         Value::Temporal(Temporal::Time(time)) => validate_time(time)?,
         Value::Temporal(Temporal::DateTime(datetime)) => validate_time(&datetime.time)?,
@@ -979,7 +995,7 @@ fn write_float(out: &mut String, f: f64) {
 /// (RFC 8785) and AXON §14.3 both adopt: positional for `1e-6 <= |x| < 1e21`,
 /// exponent form outside that window.
 ///
-/// Rust's `Display` never emits exponent form, so `1e21` would canonicalise to
+/// Rust's `Display` never emits exponent form, so `1e21` would canonicalize to
 /// `1000000000000000000000.0` and disagree with the reference -- and therefore
 /// produce a different CID for the same value. `{:e}` gives the same shortest
 /// round-trip digits Python's `repr` does, which is the input this layout needs.
@@ -1009,14 +1025,60 @@ fn normalize_decimal(mantissa: &str, exponent: i32) -> (String, i32) {
     let neg = mantissa.starts_with('-');
     let mut digits: String = mantissa.trim_start_matches('-').to_string();
     let mut exp = exponent;
-    while digits.len() > 1 && digits.ends_with('0') && exp < 0 {
-        digits.pop();
-        exp += 1;
+    if digits.bytes().all(|b| b == b'0') {
+        // Zero carries no scale in canonical form: `0D`, `0.0D` and `0.000D`
+        // are one value and must have one spelling, or they take different
+        // CIDs. The loop below cannot do this -- it stops while one digit
+        // remains, so a mantissa of "0" with a negative exponent kept its
+        // scale and rendered as `0.0D`.
+        digits = alloc::string::String::from("0");
+        exp = 0;
+    } else {
+        while digits.len() > 1 && digits.ends_with('0') && exp < 0 {
+            digits.pop();
+            exp += 1;
+        }
     }
+    // Zero carries no sign. AXON 5.2 states there is no signed integer zero, a
+    // Decimal's mantissa is an integer, and Binary AXON encodes it as a CBOR
+    // integer -- which has no -0 either, so `-0D` and `0D` share the bytes
+    // `c4820000`. Preserving the sign in the text form would make the normative
+    // text<->binary round-trip (Binary AXON 7) lossy for this one value.
     if neg && digits != "0" {
         (alloc::format!("-{}", digits), exp)
     } else {
         (digits, exp)
+    }
+}
+
+/// Largest decimal this writer will expand into positional text.
+///
+/// A decimal is `mantissa * 10^exponent`, and positional notation writes every
+/// place. The exponent is an `i32`, so `1E2147483647D` — fourteen bytes of
+/// input — asks for two gibibytes of output, and `1E-2147483648D` asks for the
+/// same after the point. Neither is a document anyone wrote on purpose, and
+/// neither should be attempted.
+///
+/// A million digits is far beyond any real decimal — the parser already refuses
+/// a numeric literal longer than two thousand characters — while being small
+/// enough that reaching the bound costs a megabyte rather than the machine.
+const MAX_DECIMAL_RENDER_DIGITS: usize = 1_000_000;
+
+/// Length of the positional text a decimal expands to, or `None` when that
+/// length is not representable.
+///
+/// Separate from the writer so the check runs in `validate_write`, before any
+/// allocation, which is where every other writer limit is enforced.
+fn decimal_render_len(mantissa: &str, exponent: i32) -> Option<usize> {
+    let digits = mantissa.trim_start_matches('-').len();
+    if exponent >= 0 {
+        // `mantissa` followed by `exponent` zeroes.
+        digits.checked_add(exponent.unsigned_abs() as usize)
+    } else {
+        // Either `ddd.ddd` or `0.000ddd`; the scale bounds both, and two more
+        // characters cover the leading `0` and the point.
+        let scale = exponent.unsigned_abs() as usize;
+        digits.max(scale).checked_add(2)
     }
 }
 
@@ -1030,7 +1092,14 @@ fn write_decimal_digits(out: &mut String, mantissa: &str, exponent: i32) {
     }
     let neg = mantissa.starts_with('-');
     let digits = mantissa.trim_start_matches('-');
-    let scale = (-exponent) as usize;
+    // `unsigned_abs` cannot overflow on `i32::MIN`, unlike negation. This is the
+    // same fix `write_offset` carries as audit M7; this site was missed, and
+    // negating `i32::MIN` here panicked in debug and wrapped in release, leaving
+    // the padding loop below asking for about eighteen quintillion characters.
+    //
+    // `validate_write` now refuses such a value before the writer is reached,
+    // but the writer must not be one arithmetic slip away from that again.
+    let scale = exponent.unsigned_abs() as usize;
     if neg {
         out.push('-');
     }
@@ -1108,8 +1177,12 @@ fn write_time(out: &mut String, t: &Time) {
         Zone::Local => {}
         Zone::Zulu => out.push('Z'),
         Zone::Offset(m) => write_offset(out, *m),
-        Zone::Named { offset, name } => {
-            write_offset(out, *offset);
+        Zone::Named { offset, name, zulu } => {
+            if *zulu {
+                out.push('Z');
+            } else {
+                write_offset(out, *offset);
+            }
             out.push('[');
             out.push_str(name);
             out.push(']');

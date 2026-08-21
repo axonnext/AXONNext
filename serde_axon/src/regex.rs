@@ -66,7 +66,7 @@ enum Ast {
     Concat(Vec<Ast>),
     /// `a|b|...` alternation.
     Alt(Vec<Ast>),
-    /// A parenthesised group (capturing or `(?:...)`).
+    /// A parenthesized group (capturing or `(?:...)`).
     Group(Box<Ast>),
     /// A scoped or global set of matching flags.
     Scoped { flags: Flags, node: Box<Ast> },
@@ -578,7 +578,7 @@ impl Parser {
                 // mutually exclusive and may never be turned off, as in Python.
                 'a' | 'u' => 0,
                 // Locale mode is invalid for str patterns, matching Python's
-                // parser rather than silently changing behaviour.
+                // parser rather than silently changing behavior.
                 'L' => {
                     return Err(RegexError::new(alloc::format!(
                         "cannot use 'L' flag with a str pattern at position {open}"
@@ -900,7 +900,7 @@ fn parse_u32(digits: &str) -> Option<u32> {
 }
 
 /// Fold an alternation of single-character branches into one character class,
-/// matching Python's `sre_parse` optimisation (so the safety pass sees a class,
+/// matching Python's `sre_parse` optimization (so the safety pass sees a class,
 /// not a branch, for e.g., `(a|b)+`).
 fn fold_branches(branches: Vec<Ast>) -> Ast {
     let split: Vec<Vec<Ast>> = branches

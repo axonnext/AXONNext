@@ -275,6 +275,50 @@
    "message": "key_pattern must be a string"
   },
   {
+   "id": "any-of",
+   "schema": "{kind:\"map\" any_of:[{required:[\"a\"]} {required:[\"b\"]}]}",
+   "outcome": "ok",
+   "normalized": "{any_of:[{required:[\"a\"]} {required:[\"b\"]}] kind:\"map\"}"
+  },
+  {
+   "id": "any-of-nested",
+   "schema": "{any_of:[{any_of:[{kind:\"int\"} {kind:\"float\"}]} {kind:\"string\"}]}",
+   "outcome": "ok",
+   "normalized": "{any_of:[{any_of:[{kind:\"int\"} {kind:\"float\"}]} {kind:\"string\"}]}"
+  },
+  {
+   "id": "any-of-empty",
+   "schema": "{any_of:[]}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "any_of must be a non-empty sequence of schemas"
+  },
+  {
+   "id": "any-of-not-a-sequence",
+   "schema": "{any_of:{}}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "any_of must be a non-empty sequence of schemas"
+  },
+  {
+   "id": "any-of-string",
+   "schema": "{any_of:\"x\"}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "any_of must be a non-empty sequence of schemas"
+  },
+  {
+   "id": "any-of-branch-not-a-schema",
+   "schema": "{any_of:[{kind:\"int\"} 1]}",
+   "outcome": "error",
+   "error_kind": "type",
+   "error_type": "TypeError",
+   "message": "schema must be a mapping or schema node"
+  },
+  {
    "id": "negative-length",
    "schema": "{min_length:-1}",
    "outcome": "error",
@@ -1666,7 +1710,9 @@
      {
       "code": "exclusive-minimum",
       "path": [],
-      "schema_path": [],
+      "schema_path": [
+       "exclusive_minimum"
+      ],
       "message": "value must be greater than exclusive minimum"
      }
     ],
@@ -1690,7 +1736,9 @@
      {
       "code": "exclusive-maximum",
       "path": [],
-      "schema_path": [],
+      "schema_path": [
+       "exclusive_maximum"
+      ],
       "message": "value must be less than exclusive maximum"
      }
     ],
@@ -1912,7 +1960,9 @@
      {
       "code": "min-length",
       "path": [],
-      "schema_path": [],
+      "schema_path": [
+       "min_length"
+      ],
       "message": "string is too short"
      }
     ],
@@ -1936,7 +1986,9 @@
      {
       "code": "max-length",
       "path": [],
-      "schema_path": [],
+      "schema_path": [
+       "max_length"
+      ],
       "message": "string is too long"
      }
     ],
@@ -1972,7 +2024,9 @@
      {
       "code": "max-length",
       "path": [],
-      "schema_path": [],
+      "schema_path": [
+       "max_length"
+      ],
       "message": "string is too long"
      }
     ],
@@ -2008,7 +2062,9 @@
      {
       "code": "pattern",
       "path": [],
-      "schema_path": [],
+      "schema_path": [
+       "pattern"
+      ],
       "message": "string does not match pattern"
      }
     ],
@@ -2032,7 +2088,9 @@
      {
       "code": "pattern",
       "path": [],
-      "schema_path": [],
+      "schema_path": [
+       "pattern"
+      ],
       "message": "unsafe or invalid pattern: unterminated character set at position 0"
      }
     ],
@@ -2056,7 +2114,9 @@
      {
       "code": "pattern",
       "path": [],
-      "schema_path": [],
+      "schema_path": [
+       "pattern"
+      ],
       "message": "unsafe or invalid pattern: pattern uses a potentially superlinear construct"
      }
     ],
@@ -2150,7 +2210,10 @@
       "path": [
        "en"
       ],
-      "schema_path": [],
+      "schema_path": [
+       "additional",
+       "min_length"
+      ],
       "message": "string is too short"
      }
     ],
@@ -2176,6 +2239,212 @@
    }
   },
   {
+   "id": "any-of-first-branch",
+   "value": "{startDate:\"a\"}",
+   "schema": "{kind:\"map\" any_of:[{required:[\"startDate\"]} {required:[\"endDate\"]}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-later-branch",
+   "value": "{endDate:\"b\"}",
+   "schema": "{kind:\"map\" any_of:[{required:[\"startDate\"]} {required:[\"endDate\"]}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-both-branches",
+   "value": "{startDate:\"a\" endDate:\"b\"}",
+   "schema": "{kind:\"map\" any_of:[{required:[\"startDate\"]} {required:[\"endDate\"]}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-no-branch",
+   "value": "{}",
+   "schema": "{kind:\"map\" any_of:[{required:[\"startDate\"]} {required:[\"endDate\"]}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "any-of",
+      "path": [],
+      "schema_path": [
+       "any_of"
+      ],
+      "message": "value does not match any permitted alternative"
+     }
+    ],
+    "counts": [
+     [
+      "any-of",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-composes-with-siblings",
+   "value": "{a:1}",
+   "schema": "{kind:\"map\" required:[\"id\"] any_of:[{required:[\"a\"]} {required:[\"b\"]}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "required",
+      "path": [
+       "id"
+      ],
+      "schema_path": [
+       "required"
+      ],
+      "message": "required key is missing"
+     }
+    ],
+    "counts": [
+     [
+      "required",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-sibling-and-branch-both-fail",
+   "value": "{}",
+   "schema": "{kind:\"map\" required:[\"id\"] any_of:[{required:[\"a\"]} {required:[\"b\"]}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "any-of",
+      "path": [],
+      "schema_path": [
+       "any_of"
+      ],
+      "message": "value does not match any permitted alternative"
+     },
+     {
+      "code": "required",
+      "path": [
+       "id"
+      ],
+      "schema_path": [
+       "required"
+      ],
+      "message": "required key is missing"
+     }
+    ],
+    "counts": [
+     [
+      "any-of",
+      1
+     ],
+     [
+      "required",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-by-kind",
+   "value": "\"text\"",
+   "schema": "{any_of:[{kind:\"int\"} {kind:\"string\"}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-by-kind-fail",
+   "value": "true",
+   "schema": "{any_of:[{kind:\"int\"} {kind:\"string\"}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "any-of",
+      "path": [],
+      "schema_path": [
+       "any_of"
+      ],
+      "message": "value does not match any permitted alternative"
+     }
+    ],
+    "counts": [
+     [
+      "any-of",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-nested",
+   "value": "2.5",
+   "schema": "{any_of:[{any_of:[{kind:\"int\"} {kind:\"float\"}]} {kind:\"string\"}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-single-branch",
+   "value": "1",
+   "schema": "{any_of:[{kind:\"string\"}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "any-of",
+      "path": [],
+      "schema_path": [
+       "any_of"
+      ],
+      "message": "value does not match any permitted alternative"
+     }
+    ],
+    "counts": [
+     [
+      "any-of",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
    "id": "min-items",
    "value": "[]",
    "schema": "{kind:\"list\" min_items:1}",
@@ -2186,7 +2455,9 @@
      {
       "code": "min-items",
       "path": [],
-      "schema_path": [],
+      "schema_path": [
+       "min_items"
+      ],
       "message": "container has too few items"
      }
     ],
@@ -2210,7 +2481,9 @@
      {
       "code": "max-items",
       "path": [],
-      "schema_path": [],
+      "schema_path": [
+       "max_items"
+      ],
       "message": "container has too many items"
      }
     ],
@@ -2388,7 +2661,9 @@
       "path": [
        "extra"
       ],
-      "schema_path": [],
+      "schema_path": [
+       "additional"
+      ],
       "message": "additional key is not permitted"
      },
      {
@@ -2406,7 +2681,11 @@
       "path": [
        "name"
       ],
-      "schema_path": [],
+      "schema_path": [
+       "properties",
+       "name",
+       "min_length"
+      ],
       "message": "string is too short"
      }
     ],
@@ -2544,7 +2823,11 @@
       "path": [
        "z"
       ],
-      "schema_path": [],
+      "schema_path": [
+       "properties",
+       "z",
+       "min_length"
+      ],
       "message": "string is too short"
      }
     ],
@@ -2622,7 +2905,9 @@
      {
       "code": "node-name",
       "path": [],
-      "schema_path": [],
+      "schema_path": [
+       "name"
+      ],
       "message": "expected node 'person'"
      }
     ],
@@ -2646,7 +2931,9 @@
      {
       "code": "node-style",
       "path": [],
-      "schema_path": [],
+      "schema_path": [
+       "style"
+      ],
       "message": "expected node body style 'brace'"
      }
     ],
@@ -2687,7 +2974,12 @@
        "@",
        "name"
       ],
-      "schema_path": [],
+      "schema_path": [
+       "attributes",
+       "properties",
+       "name",
+       "min_length"
+      ],
       "message": "string is too short"
      }
     ],
@@ -2754,7 +3046,10 @@
        "@",
        "extra"
       ],
-      "schema_path": [],
+      "schema_path": [
+       "attributes",
+       "additional"
+      ],
       "message": "additional key is not permitted"
      }
     ],
@@ -2807,7 +3102,9 @@
      {
       "code": "min-children",
       "path": [],
-      "schema_path": [],
+      "schema_path": [
+       "min_children"
+      ],
       "message": "node has too few children"
      }
     ],
@@ -2831,7 +3128,9 @@
      {
       "code": "max-children",
       "path": [],
-      "schema_path": [],
+      "schema_path": [
+       "max_children"
+      ],
       "message": "node has too many children"
      }
     ],

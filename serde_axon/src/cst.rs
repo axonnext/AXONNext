@@ -919,24 +919,49 @@ fn byte_offset_for_line_column(source: &str, line: u32, column: u32) -> usize {
     source.len()
 }
 
-fn span_at_bytes(source: &str, start: usize, end: usize) -> Span {
-    let mut safe_start = start.min(source.len());
-    while !source.is_char_boundary(safe_start) {
-        safe_start -= 1;
+/// Byte offsets of every `\n` in a source text, so that a byte offset can be
+/// turned into a line and column without rescanning the prefix each time.
+///
+/// Building the table costs one pass over the source; each lookup is then a
+/// binary search plus a walk of the current line. Without it, resolving a span
+/// per semantic trace event is quadratic in the size of the document.
+struct LineIndex {
+    newlines: Vec<usize>,
+}
+
+impl LineIndex {
+    fn new(source: &str) -> Self {
+        Self {
+            newlines: source
+                .bytes()
+                .enumerate()
+                .filter(|(_, byte)| *byte == b'\n')
+                .map(|(offset, _)| offset)
+                .collect(),
+        }
     }
-    let mut safe_end = end.min(source.len()).max(safe_start);
-    while !source.is_char_boundary(safe_end) {
-        safe_end -= 1;
-    }
-    let prefix = &source[..safe_start];
-    let line = prefix.bytes().filter(|&byte| byte == b'\n').count() as u32 + 1;
-    let line_start = prefix.rfind('\n').map_or(0, |offset| offset + 1);
-    let column = prefix[line_start..].chars().count() as u32 + 1;
-    Span {
-        start: safe_start,
-        end: safe_end,
-        line,
-        column,
+
+    fn span_at_bytes(&self, source: &str, start: usize, end: usize) -> Span {
+        let mut safe_start = start.min(source.len());
+        while !source.is_char_boundary(safe_start) {
+            safe_start -= 1;
+        }
+        let mut safe_end = end.min(source.len()).max(safe_start);
+        while !source.is_char_boundary(safe_end) {
+            safe_end -= 1;
+        }
+        let preceding = self.newlines.partition_point(|&offset| offset < safe_start);
+        let line = preceding as u32 + 1;
+        let line_start = preceding
+            .checked_sub(1)
+            .map_or(0, |index| self.newlines[index] + 1);
+        let column = source[line_start..safe_start].chars().count() as u32 + 1;
+        Span {
+            start: safe_start,
+            end: safe_end,
+            line,
+            column,
+        }
     }
 }
 
@@ -1080,9 +1105,10 @@ fn populate_semantics(
     }
 
     let child_index = child_node_index(nodes);
+    let lines = LineIndex::new(source);
     let mut traces = Vec::with_capacity(value_traces.len());
     for event in value_traces {
-        let span = span_at_bytes(source, event.start, event.end);
+        let span = lines.span_at_bytes(source, event.start, event.end);
         let owner = nearest_owner(nodes, &child_index, root, span.start, span.end);
         if nodes[owner].semantic_value.is_none() {
             nodes[owner].semantic_value = Some(CstSemanticValue::Value(event.value.clone()));
@@ -1112,7 +1138,7 @@ fn dedupe_diagnostics(diagnostics: &mut Vec<CstDiagnostic>) {
     *diagnostics = output;
 }
 
-/// Tokenise into a lossless stream (every source byte is owned by exactly one
+/// Tokenize into a lossless stream (every source byte is owned by exactly one
 /// token). Mirrors the reference `_tokenize`.
 fn tokenize(source: &str, opts: &Options) -> Result<Vec<CstToken>> {
     let chars: Vec<char> = source.chars().collect();

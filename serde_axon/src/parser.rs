@@ -1,7 +1,7 @@
 //! A hand-written recursive-descent parser for AXON 2026 Core text, producing
 //! [`Value`]. Grammar-generator crates fight AXON's context (maximal-munch
 //! numbers, the numeric no-adjacency rule, caret temporals), so the parser is
-//! written directly to strictly standardise the ingestion pipeline. Error
+//! written directly to strictly standardize the ingestion pipeline. Error
 //! categories match the reference implementation precisely, providing a
 //! rigorous and fail-safe parsing architecture.
 
@@ -424,7 +424,7 @@ impl<'a> Parser<'a> {
         Error::new_with_span(cat, msg, self.pos, self.pos, self.line, self.col)
     }
 
-    /// Identifier name-start test, honouring `python_name_classes` (§9.1).
+    /// Identifier name-start test, honoring `python_name_classes` (§9.1).
     fn name_start(&self, c: char) -> bool {
         if self.opts.python_name_classes() {
             is_py_name_start(c)
@@ -433,7 +433,7 @@ impl<'a> Parser<'a> {
         }
     }
 
-    /// Identifier name-continue test, honouring `python_name_classes` (§9.1).
+    /// Identifier name-continue test, honoring `python_name_classes` (§9.1).
     fn name_continue(&self, c: char) -> bool {
         if self.opts.python_name_classes() {
             is_py_name_continue(c)
@@ -996,7 +996,7 @@ impl<'a> Parser<'a> {
     }
 
     /// Parses a constant reference beginning with `$`.
-    /// Resolves standard numeric constants; unrecognised constants yield an error.
+    /// Resolves standard numeric constants; unrecognized constants yield an error.
     fn parse_constant_ref(&mut self) -> Result<Value> {
         // `$name` -- registered constant reference. The defaults resolve; unknown
         // names are an error. We only support the numeric-special defaults here.
@@ -1174,6 +1174,20 @@ impl<'a> Parser<'a> {
             return Err(self.err(Category::UnexpectedToken, "`$` is not a decimal suffix"));
         }
 
+        // The bare-temporal tripwire again, now that the *whole* literal has
+        // been consumed. The earlier check fires only after the integer run, so
+        // `3.5:` and `1d:` slipped past it and were reported as a stray token
+        // rather than as the bare temporal they look like. The specification's
+        // constraint index is explicit: in Core, digits immediately followed by
+        // `-` or `:` are the bare-shape tripwire and report `invalid-temporal`
+        // with a migration hint.
+        if matches!(self.peek(), Some('-') | Some(':')) {
+            return Err(self.err(
+                Category::InvalidTemporal,
+                "bare temporals are not permitted in Core; prefix with `^`",
+            ));
+        }
+
         let literal = &self.chars[start..self.pos];
         if !self.opts.numeric_separators && literal.contains('_') {
             return Err(self.err(Category::InvalidNumber, "numeric separators are disabled"));
@@ -1210,21 +1224,44 @@ impl<'a> Parser<'a> {
     fn try_bare_temporal(&mut self) -> Result<Option<Value>> {
         let save = (self.pos, self.line, self.col);
         let start = self.pos;
+        // True while inside an RFC 9557 zone bracket.
+        let mut zone_open = false;
         while let Some(c) = self.peek() {
-            if c == '[' && !self.opts.tz_names {
-                return Err(self.err(
-                    Category::UnsupportedProfileFeature,
-                    "named time zones require tz-names profile",
-                ));
-            }
-            if c.is_ascii_digit()
-                || matches!(c, '-' | ':' | 'T' | '.' | '+' | 'Z' | '[' | ']' | '/')
-                || c.is_alphabetic()
-            {
+            if c == '[' {
+                if !self.opts.tz_names {
+                    // This is a *speculative* parse -- `save` exists so the
+                    // number path can claim the run instead. Erroring here made
+                    // any number followed by a list fail: `1d[]` reported
+                    // `unsupported-profile-feature`. End the token and let the
+                    // caller decide; a genuine zoned temporal is still rejected
+                    // below, because the run before `[` will not validate.
+                    break;
+                }
+                zone_open = true;
                 self.bump();
-            } else {
+                continue;
+            }
+            if c == ']' {
+                // A `]` belongs to the temporal only when it closes an RFC 9557
+                // zone bracket this temporal opened. Consuming it regardless
+                // made `[^2026-07-01]` unparseable -- and the writer emits that
+                // exact shape, canonical form included, so the crate could not
+                // re-read its own output when a list ended with a temporal.
+                if !zone_open {
+                    break;
+                }
+                zone_open = false;
+                self.bump();
+                continue;
+            }
+            // Same structural terminator as the `^` form. An allow-list
+            // stopped at `{` and `*`, so `2026-01-01{1 1}` and
+            // `12:00*x` split into two values where the reference
+            // reads one malformed temporal.
+            if matches!(c, ' ' | '\t' | '\r' | '\n' | ',' | '}' | ')' | '#' | ']') {
                 break;
             }
+            self.bump();
         }
         let raw = &self.chars[start..self.pos];
         // Only commit when it is temporal-shaped; a plain number must stay a
@@ -1251,21 +1288,45 @@ impl<'a> Parser<'a> {
         self.bump(); // ^
         // read a run of temporal characters
         let start = self.pos;
+        // True while inside an RFC 9557 zone bracket.
+        let mut zone_open = false;
         while let Some(c) = self.peek() {
-            if c == '[' && !self.opts.tz_names {
-                return Err(self.err(
-                    Category::UnsupportedProfileFeature,
-                    "named time zones require tz-names profile",
-                ));
-            }
-            if c.is_ascii_digit()
-                || matches!(c, '-' | ':' | 'T' | '.' | '+' | 'Z' | '[' | ']' | '/')
-                || c.is_alphabetic()
-            {
+            if c == '[' {
+                if !self.opts.tz_names {
+                    return Err(self.err(
+                        Category::UnsupportedProfileFeature,
+                        "named time zones require tz-names profile",
+                    ));
+                }
+                zone_open = true;
                 self.bump();
-            } else {
+                continue;
+            }
+            if c == ']' {
+                // A `]` belongs to the temporal only when it closes an RFC 9557
+                // zone bracket this temporal opened. Consuming it regardless
+                // made `[^2026-07-01]` unparseable -- and the writer emits that
+                // exact shape, canonical form included, so the crate could not
+                // re-read its own output when a list ended with a temporal.
+                if !zone_open {
+                    break;
+                }
+                zone_open = false;
+                self.bump();
+                continue;
+            }
+            // Terminate on the structural set the Python reference uses, and
+            // absorb everything else into the run for `parse_temporal_text`
+            // to reject. An allow-list ended the token at the first character
+            // it did not recognize, so `^2026-01-01@` reported
+            // `unexpected-token` -- "there is a stray @" -- where the
+            // reference reports `invalid-temporal`: the temporal itself is
+            // malformed, which is the more useful thing to say. This diverged
+            // on 240 of 3,327 differential documents.
+            if matches!(c, ' ' | '\t' | '\r' | '\n' | ',' | '}' | ')' | '#') {
                 break;
             }
+            self.bump();
         }
         let raw = &self.chars[start..self.pos];
         if raw.chars().count() > self.opts.limits.max_temporal {
@@ -1327,7 +1388,7 @@ impl<'a> Parser<'a> {
                         // duplicates the accumulated buffer here and then
                         // appends a lone backslash. Verified against the legacy
                         // loader in this tree; §19.1 requires compat flags to
-                        // reproduce ground-truthed legacy behaviour, warts and
+                        // reproduce ground-truthed legacy behavior, warts and
                         // all, so this is deliberate rather than an oversight.
                         // The duplication is exponential in the number of
                         // continuations, so enforce `max_string` here -- the
@@ -1346,7 +1407,7 @@ impl<'a> Parser<'a> {
                 }
                 if self.opts.legacy_escapes() {
                     // Legacy pyaxon kept the backslash and the escaped
-                    // character literally, recognising no escape table at all.
+                    // character literally, recognizing no escape table at all.
                     out.push('\\');
                     out.push(e);
                     self.bump();
@@ -1393,7 +1454,7 @@ impl<'a> Parser<'a> {
                     }
                 }
             } else if c == '\r' {
-                // Literal CR and CRLF normalise to one LF in semantic strings.
+                // Literal CR and CRLF normalize to one LF in semantic strings.
                 out.push('\n');
                 self.bump();
                 if self.peek() == Some('\n') {
@@ -1406,7 +1467,7 @@ impl<'a> Parser<'a> {
                 && !self.opts.lax_strings()
             {
                 // The reference (and spec §17.2, which has no `invalid-string`)
-                // categorises a raw C0 control in a string as `invalid-escape`.
+                // categorizes a raw C0 control in a string as `invalid-escape`.
                 return Err(self.err(
                     Category::InvalidEscape,
                     "unescaped control character in string",
@@ -1549,6 +1610,19 @@ impl<'a> Parser<'a> {
         if self.peek().is_none() {
             return Err(self.err(Category::UnexpectedEnd, "unterminated container"));
         }
+        // A discard may lead the container. `finish_seq` handles discards
+        // between later elements, but the first element was read directly,
+        // so `[#_ 1 2]` and `(#_ c 1)` were rejected while `{a:1 #_ b:2}`
+        // and a top-level discard both worked.
+        while self.at_discard() {
+            self.discard_values(depth)?;
+            self.skip_ws();
+        }
+        // A discard run may have consumed everything up to the close.
+        if self.peek() == Some(']') {
+            self.bump();
+            return Ok(Value::List(Vec::new()));
+        }
         // Decide list vs ordered-map by whether the first element is a `key:`
         // pair. A key is a bare name or a `"string"` (never an arbitrary value),
         // and the semantic key is a String (AXON §3.7 / §9.6).
@@ -1613,7 +1687,7 @@ impl<'a> Parser<'a> {
         Ok(())
     }
 
-    /// Parses a parenthesised Tuple collection (`(...)`).
+    /// Parses a parenthesized Tuple collection (`(...)`).
     /// Verifies adherence to the tuple schema limits.
     fn parse_paren(&mut self, depth: u32) -> Result<Value> {
         let depth = self.enter(depth)?;
@@ -1627,6 +1701,18 @@ impl<'a> Parser<'a> {
             return Err(self.err(Category::UnexpectedEnd, "unterminated container"));
         }
         let mut items = Vec::new();
+        // A discard may lead the container. `finish_seq` handles discards
+        // between later elements, but the first element was read directly,
+        // so `[#_ 1 2]` and `(#_ c 1)` were rejected while `{a:1 #_ b:2}`
+        // and a top-level discard both worked.
+        while self.at_discard() {
+            self.discard_values(depth)?;
+            self.skip_ws();
+        }
+        if self.peek() == Some(')') {
+            self.bump();
+            return Ok(Value::Tuple(Vec::new()));
+        }
         let first = self.parse_value(depth)?;
         items.push(first);
         self.finish_seq(depth, ')', &mut items)?;
@@ -2000,8 +2086,20 @@ impl<'a> Parser<'a> {
                 self.bump();
                 break;
             }
-            if c == '\n' {
-                return Err(self.err(Category::InvalidName, "newline in quoted name"));
+            // AXON 9.2 forbids a literal newline in a Core quoted name,
+            // but the registry entry for `compat.lax-strings` lists
+            // "newlines in quoted names" as precisely what it permits.
+            // Rejecting unconditionally meant migration could not read
+            // its own input: it parses with `Options::compat()`, and
+            // Section 19 requires such a name to be *rewritten* to the
+            // escaped Core spelling, not refused.
+            if c == '\n' || c == '\r' {
+                if !(self.opts.lax_strings || self.opts.compatibility) {
+                    return Err(self.err(Category::InvalidName, "newline in quoted name"));
+                }
+                s.push(c);
+                self.bump();
+                continue;
             }
             if c == '\\' {
                 self.bump();
@@ -2012,6 +2110,24 @@ impl<'a> Parser<'a> {
                     }
                     Some('\\') => {
                         s.push('\\');
+                        self.bump();
+                    }
+                    // AXON 9.2: quoted names take the Section 7.3 escape
+                    // table, and Section 19 makes \n / \r the Core spelling
+                    // for a name that held a literal newline. Accepting only
+                    // \\ and \' meant this crate could not read a name its
+                    // own documented migration path produces, and rejected
+                    // documents the reference accepts.
+                    Some('n') => {
+                        s.push('\n');
+                        self.bump();
+                    }
+                    Some('t') => {
+                        s.push('\t');
+                        self.bump();
+                    }
+                    Some('r') => {
+                        s.push('\r');
                         self.bump();
                     }
                     Some('\n') => {
@@ -2098,9 +2214,26 @@ impl<'a> Parser<'a> {
             }
             // attribute (bare name or 'quoted' name followed by :) vs child value
             let save = (self.pos, self.line, self.col);
+            let quoted_key = self.peek() == Some('\'');
             if let Some(key) = self.try_attr_key()? {
                 self.skip_ws();
                 if self.eat(':') {
+                    // AXON 2.3: a reserved bareword is never a name. The check
+                    // existed for map keys but not for node attributes, so
+                    // `n{true:1}` was accepted here and produced a Node whose
+                    // attribute name is `true` -- a document the Python
+                    // reference rejects, and therefore one this crate could
+                    // write and the reference could not read.
+                    //
+                    // Only the *bareword* is reserved: `n{'true':1}` is a
+                    // quoted name and stays valid, and `n{true}` is still a
+                    // boolean child because that path never reaches a `:`.
+                    if !quoted_key && matches!(key.as_str(), "true" | "false" | "null") {
+                        return Err(self.err(
+                            Category::UnexpectedToken,
+                            "a reserved bareword cannot be a name",
+                        ));
+                    }
                     let val = self.parse_value(depth)?;
                     if let Some(slot) = attributes.iter_mut().find(|(k, _)| *k == key) {
                         // §12.1 governs node attributes exactly as it governs
@@ -2166,7 +2299,7 @@ impl<'a> Parser<'a> {
     }
 
     /// Parses a sequence-style node body (tuple or list style) and processes its child elements.
-    /// Handles the specialised document-link resolution if the `doc_link` profile is enabled.
+    /// Handles the specialized document-link resolution if the `doc_link` profile is enabled.
     fn parse_node_seq(
         &mut self,
         depth: u32,
@@ -2256,10 +2389,10 @@ fn python_string_repr(value: &str) -> String {
     output
 }
 
-/// Standardises the string representation of an integer, eliminating redundancies such as `-0`.
+/// Standardizes the string representation of an integer, eliminating redundancies such as `-0`.
 /// Ensures canonical formatting for the internal integer value.
 fn normalize_int(raw: &str) -> String {
-    // raw has no separators; canonicalise -0 to 0 and strip a leading + (none).
+    // raw has no separators; canonicalize -0 to 0 and strip a leading + (none).
     if raw == "-0" {
         "0".to_string()
     } else {
@@ -2600,7 +2733,7 @@ fn indented_name(text: &str) -> bool {
         })
 }
 
-/// Days in a Gregorian month, honouring leap years -- the check that makes
+/// Days in a Gregorian month, honoring leap years -- the check that makes
 /// `^2026-02-30` and `^2026-04-31` the errors they are.
 fn days_in_month(year: i32, month: u8) -> u8 {
     match month {
@@ -2798,7 +2931,7 @@ fn parse_time(
 }
 
 fn validate_named_zone(date: &Date, time: &Time) -> core::result::Result<(), String> {
-    let Zone::Named { offset, name } = &time.zone else {
+    let Zone::Named { offset, name, .. } = &time.zone else {
         return Ok(());
     };
     let zone: Tz = name
@@ -2845,7 +2978,27 @@ fn split_zone(
         // named zone: the offset precedes the [..]; find +/- after the seconds
         if let Some(p) = find_offset_sign(s) {
             let off = parse_offset(&s[p..], lax)?;
-            return Ok((&s[..p], Zone::Named { offset: off, name }));
+            return Ok((
+                &s[..p],
+                Zone::Named {
+                    offset: off,
+                    name,
+                    zulu: false,
+                },
+            ));
+        }
+        // `Z` is an offset too. The reference requires only *an* offset here,
+        // so `^..Z[Europe/London]` is valid and this rejected it -- RFC 9557
+        // permits the spelling and 6.6 keeps it distinct from `+00:00`.
+        if let Some(stripped) = s.strip_suffix('Z') {
+            return Ok((
+                stripped,
+                Zone::Named {
+                    offset: 0,
+                    name,
+                    zulu: true,
+                },
+            ));
         }
         return Err("named time zones require a numeric offset".to_string());
     }
@@ -2870,7 +3023,7 @@ fn find_offset_sign(s: &str) -> Option<usize> {
 }
 
 /// Evaluates a numeric time zone offset in hours and minutes.
-/// Normalises the offset into a signed integer representing the total minutes.
+/// Normalizes the offset into a signed integer representing the total minutes.
 fn parse_offset(s: &str, lax: bool) -> core::result::Result<i32, String> {
     let sign = match s.as_bytes().first() {
         Some(b'+') => 1,

@@ -176,7 +176,7 @@ pub fn formatting_edits(
 /// As in the reference helper, any CST diagnostic suppresses the symbol list.
 /// Graph anchors are transparent.  References resolve against anchors across
 /// the complete document, and each anchored identity is traversed at most once,
-/// which preserves shared-value behaviour and makes cyclic graphs safe despite
+/// which preserves shared-value behavior and makes cyclic graphs safe despite
 /// [`Value`] representing graph syntax structurally.
 pub fn document_symbols(source: &str, options: &Options) -> Result<Vec<DocumentSymbol>> {
     let document = parse_cst(source, options)?;

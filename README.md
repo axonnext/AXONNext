@@ -10,7 +10,7 @@ deterministic canonical form -- with two verified 1:1 implementations.
 
 [![spec](https://img.shields.io/badge/spec-AXON%202026-4c6ef5)](spec/AXON_2026_SPEC.md)
 [![axonnext](https://img.shields.io/badge/axonnext-1.0.0-3776ab)](docs/guide.md)
-[![serde_axon](https://img.shields.io/badge/serde__axon-1.0.0-dea584)](serde_axon)
+[![serde_axon](https://img.shields.io/badge/serde__axon-1.1.0-dea584)](serde_axon)
 [![license](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue)](#license--lineage)
 
 </div>
@@ -162,8 +162,9 @@ lives in [`comparison/axon_2026_comparison.html`](comparison/axon_2026_compariso
 
 ## Implementations
 
-AXON Next ships **two** implementations, both at **v1.0.0**, verified to agree
-1:1 (see [Parity](#parity-one-language-two-implementations)).
+AXON Next ships **two** implementations, verified to agree 1:1 (see
+[Parity](#parity-one-language-two-implementations)): axonnext **v1.0.0** and
+serde_axon **v1.1.0**.
 
 ### axonnext (Python reference)
 
@@ -198,7 +199,7 @@ secured-stream helpers, and compact/canonical Binary AXON codecs, plus
 
 ```toml
 [dependencies]
-serde_axon = "1.0"
+serde_axon = "1.1.0"
 ```
 
 ```rust
@@ -210,7 +211,7 @@ let canon = serde_axon::to_string_canonical(&value);    // Section 14 canonical 
 Crate: https://crates.io/crates/serde_axon. Source:
 [`serde_axon`](serde_axon). Gates: `build` / `clippy -D warnings` / `fmt` /
 `test` all green, including a 91-case semantic differential suite, CST and
-Schema fixtures, and a 118-case generated Binary/CID/migration/LSP/scientific/
+Schema fixtures, and a 172-case generated Binary/CID/migration/LSP/scientific/
 stream oracle from axonnext.
 
 ## Conformance profiles
@@ -341,14 +342,17 @@ practice. (FoodML ships as its own repository: [`axonnext/FoodML`](https://githu
 
 ## Release
 
-**v1.0.0 -- the first stable release.** AXON Next v1 is the AXON 2026 edition
+**AXON Next v1 -- the first stable release.** AXON Next v1 is the AXON 2026 edition
 (specification revision 5, frozen), shipping two implementations held to
 byte-for-byte parity:
 
 - **axonnext 1.0.0** -- the normative Python reference (CPython 3.10-3.13);
   `pip install axonnext`. Adds the 2026 engine (`loads2026` / `dumps2026` /
   `canonical2026`) alongside the historical API.
-- **serde_axon 1.0.0** -- the `no_std`-friendly Rust crate; `serde_axon = "1.0"`.
+- **serde_axon 1.1.0** -- the `no_std`-friendly Rust crate; `serde_axon = "1.1.0"`.
+  Adds `RawValue` for carrying arbitrary AXON through a typed structure, and
+  bounds decimal writer expansion; see
+  [`serde_axon/CHANGELOG.md`](serde_axon/CHANGELOG.md).
 
 Everything in [Feature highlights](#feature-highlights) -- exact decimals, native
 temporals, namespaced nodes, strict-by-default safety, canonical form + CIDs, and
@@ -359,7 +363,7 @@ are held in agreement by the differential suite (see
 **Release gates (green):** axonnext `351 tests OK`; serde_axon
 `build` / `clippy -D warnings` / `fmt` / `test` / `no_std + alloc` / rustdoc,
 including the 91-case semantic differential suite, the lossless-CST and Schema
-reference fixtures, and the 118-case cross-surface oracle.
+reference fixtures, and the 172-case cross-surface oracle.
 
 **Repository:** [github.com/axonnext/AXONNext](https://github.com/axonnext/AXONNext)
 (private during staging). Publish steps: `publish_kit/PUBLISH_CHECKLIST.md`.

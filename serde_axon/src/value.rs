@@ -22,7 +22,7 @@ const DEFAULT_MAX_DEPTH: u32 = 128;
 
 /// An exact base-10 decimal: `sign * coefficient * 10^exponent`, arbitrary
 /// precision, with scale preserved (trailing zeros are significant unless
-/// canonicalised). Specials are represented explicitly.
+/// canonicalized). Specials are represented explicitly.
 #[derive(Clone, Debug)]
 pub enum Decimal {
     /// `mantissa * 10^exponent`. `mantissa` is a decimal digit string with an
@@ -130,6 +130,13 @@ pub enum Zone {
         offset: i32,
         /// IANA zone name (e.g., `America/Edmonton`).
         name: String,
+        /// True when the offset was written `Z` rather than `+00:00`.
+        ///
+        /// AXON 6.6 keeps `Z` distinct from `+00:00`, and that distinction
+        /// survives into a named zone: `^..Z[Europe/London]` and
+        /// `^..+00:00[Europe/London]` are different values. Without this the
+        /// crate could not represent the first at all, and rejected it.
+        zulu: bool,
     },
 }
 
@@ -391,7 +398,7 @@ impl Value {
     /// the document *denotes*, not the sharing itself. A cyclic graph has no
     /// tree expansion at all, so `&a [1 *a]` is rejected with
     /// `unknown-reference` rather than looped on -- see the type-level note on
-    /// [`Value`] for why identity is not modelled directly.
+    /// [`Value`] for why identity is not modeled directly.
     pub fn resolve_refs(&self) -> Result<Value, Error> {
         let anchors = self.anchors();
         let mut table: Vec<(String, Value)> = Vec::new();

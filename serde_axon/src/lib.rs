@@ -14,7 +14,7 @@
 //! * full canonical/selective [`migration`] and transport-neutral [`lsp`]
 //!   helpers over that CST;
 //! * a [`binary`] codec for compact and canonical Binary AXON documents;
-//! * [`schema`] normalisation, governed local registries, and structured AXON
+//! * [`schema`] normalization, governed local registries, and structured AXON
 //!   Schema 2026 validation;
 //! * checked [`scientific`] arrays and fail-stop [`stream`] envelopes;
 //! * a Serde [`Serializer`](ser) and [`Deserializer`](de) so any type deriving
@@ -57,6 +57,7 @@ pub mod graph;
 pub mod lsp;
 pub mod migration;
 pub mod parser;
+pub mod raw;
 pub mod regex;
 pub mod schema;
 pub mod ser;
@@ -72,6 +73,8 @@ pub use crate::graph::{
 };
 #[doc(inline)]
 pub use crate::parser::{Options, tzdb_version};
+#[doc(inline)]
+pub use crate::raw::RawValue;
 #[doc(inline)]
 pub use crate::value::{
     Anchor, Date, DateTime, Decimal, Link, Node, NodeStyle, Temporal, Time, Value, Zone,
@@ -100,7 +103,7 @@ pub use crate::migration::{
     MigrationEdit, MigrationEvent, MigrationMode, MigrationResult, apply_migration_edits, migrate,
     migrate_selective, migrate_selective_with_graph, migrate_with, migrate_with_graph,
 };
-// Schema normalisation, registry, validation, and diagnostics.
+// Schema normalization, registry, validation, and diagnostics.
 #[doc(inline)]
 pub use crate::schema::{
     PathSegment, SCHEMA_DIALECT_2026, SchemaError, SchemaErrorKind, SchemaRegistry2026,
@@ -108,10 +111,10 @@ pub use crate::schema::{
     load_schema2026, normalize_schema, normalize_schema_with, validate2026, validate2026_with,
     validation_report2026, validation_report2026_with,
 };
-// Serialisation entry points.
+// Serialization entry points.
 #[doc(inline)]
 pub use crate::ser::{to_string, to_string_canonical, to_value};
-// Deserialisation entry points.
+// Deserialization entry points.
 #[doc(inline)]
 pub use crate::de::{
     StreamDeserializer, from_slice, from_slice_stream, from_slice_stream_with, from_slice_value,

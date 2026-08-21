@@ -123,7 +123,7 @@ fn direct_value_apis_reject_depth_beyond_the_section_16_bound() {
         Category::ResourceLimitExceeded
     );
 
-    // encode runs graph normalisation before the depth-checked encoder, so the
+    // encode runs graph normalization before the depth-checked encoder, so the
     // guard has to hold on that pre-pass too.
     assert!(binary::encode(&deep).is_err());
     assert!(binary::encode_canonical(&deep).is_err());

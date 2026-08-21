@@ -101,7 +101,7 @@ fn is_valid_int_text(s: &str) -> bool {
 /// major 0/1 when it fits in 64 bits, else a bignum (tag 2/3).
 ///
 /// The caller must ensure `s` is well-formed ([`is_valid_int_text`]); every
-/// value produced by the parser, the deserialiser, or the decoder already is.
+/// value produced by the parser, the deserializer, or the decoder already is.
 fn enc_int(out: &mut Vec<u8>, s: &str) {
     let neg = s.starts_with('-');
     let digits = s.trim_start_matches('-');
@@ -636,7 +636,7 @@ impl TzOr {
 
 fn tz_slot(zone: &Zone) -> TzOr {
     match zone {
-        Zone::Named { offset, name } => TzOr::Named(*offset as i64, name.clone()),
+        Zone::Named { offset, name, .. } => TzOr::Named(*offset as i64, name.clone()),
         Zone::Zulu => TzOr::Zulu,
         Zone::Offset(o) => TzOr::Int(*o as i64),
         Zone::Local => TzOr::Local,
@@ -710,7 +710,7 @@ pub fn encode_canonical(value: &Value) -> Result<Vec<u8>, Error> {
 
 /// Encode with explicit canonical flag and depth limit.
 pub fn encode_with(value: &Value, canonical: bool, max_depth: u32) -> Result<Vec<u8>, Error> {
-    // Normalise the graph exactly as canonical text does: only composite,
+    // Normalize the graph exactly as canonical text does: only composite,
     // referenced anchors keep identity (tag 28/29); scalar and unreferenced
     // anchors are inlined. This matches the reference, whose `_find_referenced`
     // only ever tracks containers.
@@ -1732,14 +1732,18 @@ fn zone_of(v: &Value) -> Result<Zone, Error> {
                 Value::String(s) => s.clone(),
                 _ => return Err(err("zone name must be text")),
             };
-            Ok(Zone::Named { offset: off, name })
+            Ok(Zone::Named {
+                offset: off,
+                name,
+                zulu: false,
+            })
         }
         _ => Err(err("invalid time-zone slot")),
     }
 }
 
 /// Decode Binary AXON bytes to a [`Value`]. Shares (tag 28) decode to
-/// [`Value::Anchor`] labelled by share index; references (tag 29) to
+/// [`Value::Anchor`] labeled by share index; references (tag 29) to
 /// [`Value::Ref`] -- the structural form, matching the text parser.
 ///
 /// Decoding is hardened against malformed input: length fields are validated
@@ -1776,7 +1780,7 @@ fn decode_impl(buf: &[u8], max_depth: u32) -> Result<Value, Error> {
 /// This is important for parity with Python list indexing: self-references,
 /// forward references, booleans, and negative indices may all be valid once
 /// the final tag-28 count is known. The Rust value model keeps graph markers
-/// structurally, so successful negative indices are normalised to their
+/// structurally, so successful negative indices are normalized to their
 /// non-negative share labels.
 fn normalize_share_references(value: Value, share_count: usize) -> Result<Value, Error> {
     #[derive(Clone, Copy)]
@@ -2259,12 +2263,12 @@ mod tests {
 
         // Post-decode share validation is iterative as well; otherwise this
         // valid forward/self-reference shape would merely move the overflow
-        // from CBOR parsing to the normalisation pass.
+        // from CBOR parsing to the normalization pass.
         let mut shared = alloc::vec![0xd8, 0x1c];
         shared.extend(core::iter::repeat_n(0x81, DEPTH));
         shared.extend_from_slice(&[0xd8, 0x1d, 0x00]);
         let shared =
-            decode_with(&shared, DEPTH as u32 + 1).expect("deep share normalisation is stack-safe");
+            decode_with(&shared, DEPTH as u32 + 1).expect("deep share normalization is stack-safe");
         let mut cursor = match &shared {
             Value::Anchor(anchor) if anchor.label == "0" => &anchor.value,
             _ => panic!("share wrapper changed"),

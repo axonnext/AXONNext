@@ -152,7 +152,7 @@ pub(crate) struct TracedDocument {
 
 /// Parse a document while retaining exact semantic value byte ranges for the
 /// CST layer. This deliberately remains crate-private: the public trace model
-/// is exposed by `cst`, not by the Serde deserialiser.
+/// is exposed by `cst`, not by the Serde deserializer.
 pub(crate) fn parse_document_with_trace(input: &str, opts: Options) -> TracedDocument {
     if let Err(error) = check_original_input(input, opts) {
         return TracedDocument {
@@ -269,7 +269,7 @@ enum StreamMode<'a> {
 }
 
 impl<'a> StreamDeserializer<'a> {
-    /// Create a new stream deserialiser.
+    /// Create a new stream deserializer.
     pub fn new(input: &'a str, opts: Options) -> Self {
         Self::new_with_constants(input, opts, &[])
     }
@@ -348,19 +348,19 @@ pub fn iter_stream_with_constants<'a>(
     StreamDeserializer::new_with_constants(input, opts, constants)
 }
 
-/// Deserialise a `T` from AXON text.
+/// Deserialize a `T` from AXON text.
 pub fn from_str<T: DeserializeOwned>(input: &str) -> Result<T> {
     let value = from_str_value(input)?;
     T::deserialize(value)
 }
 
-/// Deserialise a `T` from AXON text with explicit [`Options`].
+/// Deserialize a `T` from AXON text with explicit [`Options`].
 pub fn from_str_with<T: DeserializeOwned>(input: &str, opts: Options) -> Result<T> {
     let value = from_str_value_with(input, opts)?;
     T::deserialize(value)
 }
 
-/// Deserialise a `T` with explicit options and an application constant registry.
+/// Deserialize a `T` with explicit options and an application constant registry.
 pub fn from_str_with_constants<T: DeserializeOwned>(
     input: &str,
     opts: Options,
@@ -370,17 +370,17 @@ pub fn from_str_with_constants<T: DeserializeOwned>(
     T::deserialize(value)
 }
 
-/// Deserialise a `T` from UTF-8 bytes.
+/// Deserialize a `T` from UTF-8 bytes.
 pub fn from_slice<T: DeserializeOwned>(input: &[u8]) -> Result<T> {
     from_str(utf8_text(input)?)
 }
 
-/// Deserialise a `T` from UTF-8 bytes with explicit parser options.
+/// Deserialize a `T` from UTF-8 bytes with explicit parser options.
 pub fn from_slice_with<T: DeserializeOwned>(input: &[u8], opts: Options) -> Result<T> {
     from_str_with(utf8_text(input)?, opts)
 }
 
-/// Deserialise a `T` from UTF-8 bytes with options and custom constants.
+/// Deserialize a `T` from UTF-8 bytes with options and custom constants.
 pub fn from_slice_with_constants<T: DeserializeOwned>(
     input: &[u8],
     opts: Options,
@@ -423,11 +423,11 @@ impl<'de> de::Deserializer<'de> for Value {
             Value::Link(link) => match link {
                 Link::Cid(s) | Link::Uri(s) => visitor.visit_string(s),
             },
-            // An anchor is transparent to Serde: `&a 1` deserialises as `1`.
+            // An anchor is transparent to Serde: `&a 1` deserializes as `1`.
             Value::Anchor(a) => a.value.deserialize_any(visitor),
             // A reference cannot be: resolving it needs the whole document, so
             // the tree model has nothing to hand the visitor here. Call
-            // `Value::resolve_refs` before deserialising a graph document.
+            // `Value::resolve_refs` before deserializing a graph document.
             Value::Ref(label) => Err(Error::new(
                 Category::UnknownReference,
                 alloc::format!(
@@ -481,9 +481,18 @@ impl<'de> de::Deserializer<'de> for Value {
 
     fn deserialize_newtype_struct<V: Visitor<'de>>(
         self,
-        _name: &'static str,
+        name: &'static str,
         visitor: V,
     ) -> Result<V::Value> {
+        // A RawValue asks for the value as AXON source text rather than as
+        // something Serde can model. `self` is already the parsed subtree, so
+        // writing it back out is exact, and nothing crosses Serde's data model
+        // on the way — which is what keeps a decimal a decimal and a tuple a
+        // tuple.
+        if name == crate::raw::RAW_VALUE_TOKEN {
+            let text = crate::writer::to_string(&self)?;
+            return visitor.visit_string(text);
+        }
         visitor.visit_newtype_struct(self)
     }
 
@@ -559,7 +568,7 @@ impl<'de> MapAccess<'de> for MapDeserializer {
     }
 }
 
-/// Deserialise a node as a map of its attributes (children ignored for struct
+/// Deserialize a node as a map of its attributes (children ignored for struct
 /// mapping; use `Value` directly for full-fidelity access).
 struct NodeDeserializer {
     iter: alloc::vec::IntoIter<(String, Value)>,

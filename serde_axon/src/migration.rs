@@ -238,7 +238,7 @@ fn compatibility_values(source: &str, options: Options) -> Result<Vec<Value>> {
     // The Rust Core parser represents names directly as unit nodes. Baseline
     // compatibility used a pending-name builder instead: a name before a brace
     // binds that brace, while a name before any other value contributes null.
-    // Reconstruct that source-level behaviour locally for migration without
+    // Reconstruct that source-level behavior locally for migration without
     // weakening the Core parser.
     let expanded = rewrite_indented_bodies(source);
     let repaired = repair_legacy_compatibility(&expanded, options)?;
@@ -285,6 +285,15 @@ fn repair_legacy_compatibility(source: &str, options: Options) -> Result<String>
         if token.kind != "name" && token.kind != "quoted-name" {
             continue;
         }
+        // AXON 2.3: a reserved bareword is never a name, so it can never be a
+        // pending legacy node name either. The tokenizer classifies `true`,
+        // `false` and `null` as `name` tokens, and without this they were
+        // rewritten to `null` by the pending-name rule -- `true []` migrated to
+        // `null []`, silently changing the value. The quoted spelling
+        // `'true'` *is* a name and is deliberately unaffected.
+        if token.kind == "name" && matches!(token.text.as_str(), "true" | "false" | "null") {
+            continue;
+        }
         if index != 0
             && matches!(
                 structural[index - 1].kind,
@@ -310,13 +319,18 @@ fn repair_legacy_compatibility(source: &str, options: Options) -> Result<String>
                 token.span.column,
             ));
         }
-        let separates_body =
-            next.is_some_and(|following| following.text == "(" || following.text == "[");
+        // Separate `null` from whatever follows whenever the source did not.
+        // Only `(` and `[` were spaced before, so `'quoted name'1_0[1 2]`
+        // became `null1_0[1 2]` -- one fused bareword -- and the `1_0` was
+        // lost from the migrated document. Data loss, not a diagnostic
+        // difference. A redundant space is harmless: canonical output
+        // normalizes it away.
+        let needs_space = next.is_some_and(|following| following.span.start <= token.span.end);
         edits.push(MigrationEdit {
             code: "legacy-binding".to_string(),
             start: token.span.start,
             end: token.span.end,
-            replacement: if separates_body {
+            replacement: if needs_space {
                 "null ".to_string()
             } else {
                 "null".to_string()
@@ -531,10 +545,15 @@ fn migration_events(source: &str, rendered: &str, graph: bool) -> Result<Vec<Mig
                 structural[index - 1].kind,
                 "anchor" | "reference" | "constant" | "temporal-marker"
             );
-        if !marker_label
-            && window[0].kind == "name"
-            && (window[1].text == "(" || window[1].text == "[")
-        {
+        // Must match the reference exactly: a quoted name counts, and a
+        // reserved bareword does not. `'quoted name'[]` is a pending legacy
+        // node; `true []` is a boolean beside a list and no name at all
+        // (AXON 2.3). This condition is separate from the pending-name
+        // *rewrite* above and had drifted from it.
+        let is_name = window[0].kind == "quoted-name"
+            || (window[0].kind == "name"
+                && !matches!(window[0].text.as_str(), "true" | "false" | "null"));
+        if !marker_label && is_name && (window[1].text == "(" || window[1].text == "[") {
             has_legacy_binding = true;
             break;
         }
@@ -637,7 +656,19 @@ fn is_ascii_digits(text: &str, minimum: usize, maximum: usize) -> bool {
 }
 
 fn is_bare_temporal(text: &str) -> bool {
-    if let Some(colon) = text.find(':') {
+    // Decide time-vs-date by which delimiter comes first. Testing for a colon
+    // unconditionally misread `2026-01-01T00:00:00Z` as a bare *time*: its
+    // first colon sits inside the time part, and `2026-01-01T00` is not a 1-2
+    // digit hour, so the function returned false and the `bare-temporal`
+    // migration event never fired for a bare datetime.
+    let first_colon = text.find(':');
+    let first_dash = text.find('-');
+    let looks_like_time = match (first_colon, first_dash) {
+        (Some(_), None) => true,
+        (Some(c), Some(d)) => c < d,
+        _ => false,
+    };
+    if looks_like_time && let Some(colon) = first_colon {
         return is_ascii_digits(&text[..colon], 1, 2)
             && text
                 .as_bytes()

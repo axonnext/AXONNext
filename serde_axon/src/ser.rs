@@ -1,6 +1,6 @@
 //! Serde `Serializer`: turns any `Serialize` type into a [`Value`], then into
 //! AXON text. Going through `Value` keeps the mapping explicit and lets the
-//! writer own all formatting/canonicalisation.
+//! writer own all formatting/canonicalization.
 //!
 //! Rust -> AXON mapping (the enum-representation choices per the roadmap):
 //! * unit / unit-struct -> `null`
@@ -19,17 +19,17 @@ use crate::error::{Category, Error, Result};
 use crate::value::{Node, NodeStyle, Value};
 use crate::writer;
 
-/// Serialise `value` to compact AXON text.
+/// Serialize `value` to compact AXON text.
 pub fn to_string<T: Serialize + ?Sized>(value: &T) -> Result<String> {
     writer::to_string(&to_value(value)?)
 }
 
-/// Serialise `value` to Canonical AXON text.
+/// Serialize `value` to Canonical AXON text.
 pub fn to_string_canonical<T: Serialize + ?Sized>(value: &T) -> Result<String> {
     writer::to_string_canonical(&to_value(value)?)
 }
 
-/// Serialise `value` into the [`Value`] model.
+/// Serialize `value` into the [`Value`] model.
 pub fn to_value<T: Serialize + ?Sized>(value: &T) -> Result<Value> {
     value.serialize(Serializer)
 }
@@ -125,9 +125,18 @@ impl ser::Serializer for Serializer {
     }
     fn serialize_newtype_struct<T: Serialize + ?Sized>(
         self,
-        _name: &'static str,
+        name: &'static str,
         value: &T,
     ) -> Result<Value> {
+        // A RawValue announces itself by name. Its payload is AXON source
+        // text, so it is parsed straight back into the tree rather than being
+        // written out as a string: the whole point is that the value arrives
+        // shaped as it was authored, with its decimals, tuples, ordered maps,
+        // and tagged nodes intact.
+        if name == crate::raw::RAW_VALUE_TOKEN {
+            let text = value.serialize(crate::raw::RawTextCapture)?;
+            return crate::de::from_str_value(&text);
+        }
         value.serialize(self)
     }
     fn serialize_newtype_variant<T: Serialize + ?Sized>(

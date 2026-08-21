@@ -10,7 +10,7 @@
 //!
 //! The `Array` `data` payload is defined as **little-endian** for every
 //! multi-byte element type, regardless of the host.  The reference bridge
-//! serialises and reads little-endian too, so a non-native (e.g., big-endian)
+//! serializes and reads little-endian too, so a non-native (e.g., big-endian)
 //! source array is not silently corrupted on round-trip.  The typed extractors
 //! and constructors here read/write little-endian to match.  The `order`
 //! attribute is C/F memory layout and is unrelated to byte order.
@@ -227,7 +227,7 @@ impl ScientificArray {
         &self.node
     }
 
-    /// Recover the complete AXON node for serialisation or further processing.
+    /// Recover the complete AXON node for serialization or further processing.
     pub fn into_value(self) -> Value {
         Value::Node(Box::new(self.node))
     }
@@ -308,7 +308,7 @@ impl ScientificArray {
         }
     }
 
-    /// Returns the parsed element type, if it is a recognised dtype.
+    /// Returns the parsed element type, if it is a recognized dtype.
     pub fn dtype(&self) -> Option<ArrayDtype> {
         self.datatype().and_then(ArrayDtype::from_tag)
     }
@@ -429,14 +429,14 @@ impl ScientificArray {
     }
 
     /// Validate this array with the reference numpy bridge's effective defaults
-    /// and reshape behaviour.
+    /// and reshape behavior.
     pub fn validate_layout(&self) -> Result<(), Error> {
         self.numpy_layout().map(|_| ())
     }
 
     /// Validate a stricter, self-contained AXON array layout.
     ///
-    /// This checks the brace-node shape, required attributes, recognised dtype,
+    /// This checks the brace-node shape, required attributes, recognized dtype,
     /// `C`/`F` order, checked shape multiplication, and exact agreement between
     /// the declared element count and the byte payload.  It is an extension;
     /// [`Self::validate_layout`] is the reference-parity validator.
