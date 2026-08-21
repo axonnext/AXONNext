@@ -5,7 +5,13 @@ name: Publish serde_axon to crates.io
 #
 # ONE-TIME SETUP (on crates.io): open the serde_axon crate -> Settings ->
 # Trusted Publishing -> add GitHub owner "axonnext", repo "AXONNext",
-# workflow "publish-serde-axon.yml", environment left blank.
+# workflow "publish-serde-axon.yml", environment "release".
+#
+# The environment name below and the one recorded on crates.io MUST match
+# exactly. crates.io rejects the token with HTTP 400 -- "requires an
+# environment, but the JWT does not specify one" -- when its config names an
+# environment and this job does not declare one, which is what happened to the
+# 1.1.0 release. Leaving both blank also works; leaving only one blank does not.
 #
 # TOKEN ALTERNATIVE: remove the auth step and instead set
 #   env: { CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }} }
@@ -22,11 +28,12 @@ jobs:
   publish:
     name: cargo publish
     runs-on: ubuntu-latest
+    environment: release
     permissions:
       id-token: write   # required for crates.io Trusted Publishing
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
       - name: Verify the crate packages cleanly
         run: cargo publish --dry-run
