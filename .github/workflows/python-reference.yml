@@ -8,6 +8,14 @@ on:
 permissions:
   contents: read
 
+# Python's zoneinfo searches TZPATH (the system tzdb) before falling back to
+# the pinned `tzdata` package, so on Linux and macOS that pin was inert and
+# the runner's own tzdb won. tzdb 2026c moved Alberta to permanent -06:00,
+# which broke the America/Edmonton DST-fold tests. An empty PYTHONTZPATH
+# empties TZPATH, so the pinned tzdata is what every job actually sees.
+env:
+  PYTHONTZPATH: ""
+
 jobs:
   platform-matrix:
     name: ${{ matrix.os }} / Python ${{ matrix.python }}
