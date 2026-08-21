@@ -40,6 +40,8 @@ Or:
 cargo add serde_axon serde --features serde/derive
 ```
 
+Release notes for every version are in [CHANGELOG.md](CHANGELOG.md).
+
 ## Why AXON?
 
 For simple data, AXON reads like tidier JSON. Once you use its native types, it
