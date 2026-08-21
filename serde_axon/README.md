@@ -40,8 +40,6 @@ Or:
 cargo add serde_axon serde --features serde/derive
 ```
 
-Release notes for every version are in [CHANGELOG.md](CHANGELOG.md).
-
 ## Why AXON?
 
 For simple data, AXON reads like tidier JSON. Once you use its native types, it
@@ -291,6 +289,11 @@ full suite passes, including `no_std + alloc` and rustdoc, and the crate is
 `cargo fmt`- and `cargo clippy -D warnings`-clean.
 
 Identifier classification uses the full UAX #31 tables via `unicode-ident`.
+
+## Changelog
+
+Every release is recorded in [CHANGELOG.md](CHANGELOG.md), with the reasoning
+behind each change rather than a bare list.
 
 ## Minimum supported Rust version
 
