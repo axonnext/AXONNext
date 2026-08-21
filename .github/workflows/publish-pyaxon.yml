@@ -1,12 +1,21 @@
 name: Publish pyaxon to PyPI
 
-# Runs when you publish a GitHub Release. Builds CPython 3.10-3.13 wheels for
-# Linux/macOS/Windows plus the source sdist, then uploads them to PyPI using
-# Trusted Publishing (OIDC) -- no API token is stored anywhere.
+# Runs when you publish a GitHub Release whose tag begins `axonnext-v`. Builds
+# CPython 3.10-3.13 wheels for Linux/macOS/Windows plus the source sdist, then
+# uploads them to PyPI using Trusted Publishing (OIDC) -- no API token is
+# stored anywhere.
 #
 # ONE-TIME SETUP (on pypi.org): Account -> Publishing -> add a "pending
 # publisher" for project "axonnext", owner "axonnext", repo "AXONNext",
 # workflow "publish-pyaxon.yml", environment "pypi".
+#
+# TAG PREFIX: this repository ships two independently versioned packages, so a
+# release tag names the package it releases -- `axonnext-v1.0.1` here,
+# `serde_axon-v1.1.0` for the crate. Without the guard below, both publishers
+# woke for every release: publishing serde_axon 1.1.0 made this workflow
+# rebuild axonnext at its unchanged 1.0.0 and fail, because PyPI will not
+# accept a version it already holds. `workflow_dispatch` stays unguarded so a
+# release can always be run by hand.
 #
 # For a token-only first release instead, you can delete the `wheels` job and
 # publish just the sdist (users then compile from the checked-in C on install).
@@ -19,6 +28,9 @@ on:
 jobs:
   wheels:
     name: Wheels on ${{ matrix.os }}
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      startsWith(github.event.release.tag_name, 'axonnext-v')
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -38,6 +50,9 @@ jobs:
 
   sdist:
     name: Source distribution
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      startsWith(github.event.release.tag_name, 'axonnext-v')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

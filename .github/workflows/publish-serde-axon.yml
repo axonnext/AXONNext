@@ -3,6 +3,13 @@ name: Publish serde_axon to crates.io
 # Runs when you publish a GitHub Release. Publishes the serde_axon crate to
 # crates.io using Trusted Publishing (OIDC) -- no stored token.
 #
+# TAG PREFIX: this repository ships two independently versioned packages, so a
+# release tag names the package it releases -- `serde_axon-v1.1.1` here,
+# `axonnext-v1.0.1` for the Python reference. Without the guard below, both
+# publishers woke for every release, and publishing the crate also rebuilt
+# axonnext at its unchanged version and failed against PyPI.
+# `workflow_dispatch` stays unguarded so a release can always be run by hand.
+#
 # ONE-TIME SETUP (on crates.io): open the serde_axon crate -> Settings ->
 # Trusted Publishing -> add GitHub owner "axonnext", repo "AXONNext",
 # workflow "publish-serde-axon.yml", environment "release".
@@ -27,6 +34,9 @@ on:
 jobs:
   publish:
     name: cargo publish
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      startsWith(github.event.release.tag_name, 'serde_axon-v')
     runs-on: ubuntu-latest
     environment: release
     permissions:
