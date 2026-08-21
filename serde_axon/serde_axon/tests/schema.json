@@ -1,0 +1,4618 @@
+{
+ "note": "AXON Schema 2026 ground truth from pyaxon; values and schemas are AXON source and issue paths retain typed string/integer segments",
+ "dialect": "urn:axonnext:schema:2026",
+ "normalization": [
+  {
+   "id": "empty-map",
+   "schema": "{}",
+   "outcome": "ok",
+   "normalized": "{}"
+  },
+  {
+   "id": "dialect",
+   "schema": "{\"$schema\":\"urn:axonnext:schema:2026\" kind:\"int\"}",
+   "outcome": "ok",
+   "normalized": "{\"$schema\":\"urn:axonnext:schema:2026\" kind:\"int\"}"
+  },
+  {
+   "id": "kind-union",
+   "schema": "{kind:[\"null\" \"string\"]}",
+   "outcome": "ok",
+   "normalized": "{kind:[\"null\" \"string\"]}"
+  },
+  {
+   "id": "mapping-recursive-keywords",
+   "schema": "{kind:\"node\" properties:{p:{kind:\"int\"}} items:{kind:\"string\"} children:{kind:\"bool\"} attributes:{kind:\"map\"} additional:{kind:\"number\"} prefix_items:[{kind:\"int\"} {kind:\"string\"}] \"$defs\":{x:{kind:\"date\"}}}",
+   "outcome": "ok",
+   "normalized": "{\"$defs\":{x:{kind:\"date\"}} additional:{kind:\"number\"} attributes:{kind:\"map\"} children:{kind:\"bool\"} items:{kind:\"string\"} kind:\"node\" prefix_items:[{kind:\"int\"} {kind:\"string\"}] properties:{p:{kind:\"int\"}}}"
+  },
+  {
+   "id": "node-fields",
+   "schema": "schema{kind:\"node\" required:[\"name\"] additional:false field{name:\"name\" kind:\"string\" min_length:1} field{name:\"age\" kind:\"int\" minimum:0}}",
+   "outcome": "ok",
+   "normalized": "{additional:false kind:\"node\" properties:{age:{kind:\"int\" minimum:0} name:{kind:\"string\" min_length:1}} required:[\"name\"]}"
+  },
+  {
+   "id": "node-recursive-attributes-regression",
+   "schema": "schema{kind:\"list\" items:schema{kind:\"node\" attributes:schema{kind:\"map\" properties:{age:field{kind:\"int\" minimum:1}} additional:false}}}",
+   "outcome": "ok",
+   "normalized": "{items:{attributes:{additional:false kind:\"map\" properties:{age:{kind:\"int\" minimum:1}}} kind:\"node\"} kind:\"list\"}"
+  },
+  {
+   "id": "annotation-keywords",
+   "schema": "{title:\"T\" description:\"D\" \"$comment\":\"C\" examples:[1] default:1 deprecated:true}",
+   "outcome": "ok",
+   "normalized": "{\"$comment\":\"C\" default:1 deprecated:true description:\"D\" examples:[1] title:\"T\"}"
+  },
+  {
+   "id": "additional-bool",
+   "schema": "{kind:\"map\" additional:false}",
+   "outcome": "ok",
+   "normalized": "{additional:false kind:\"map\"}"
+  },
+  {
+   "id": "prefix-tuple",
+   "schema": "{kind:\"tuple\" prefix_items:({kind:\"int\"} {kind:\"string\"})}",
+   "outcome": "ok",
+   "normalized": "{kind:\"tuple\" prefix_items:[{kind:\"int\"} {kind:\"string\"}]}"
+  },
+  {
+   "id": "nested-error-before-unknown",
+   "schema": "{zzz:0 items:[]}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "items must be a schema"
+  },
+  {
+   "id": "node-name-keyword-is-field-metadata",
+   "schema": "schema{name:\"person\" kind:\"node\"}",
+   "outcome": "ok",
+   "normalized": "{kind:\"node\"}"
+  },
+  {
+   "id": "ordered-map-schema",
+   "schema": "[kind:\"int\"]",
+   "outcome": "ok",
+   "normalized": "{kind:\"int\"}"
+  },
+  {
+   "id": "wrong-top-level-type",
+   "schema": "1",
+   "outcome": "error",
+   "error_kind": "type",
+   "error_type": "TypeError",
+   "message": "schema must be a mapping or schema node"
+  },
+  {
+   "id": "wrong-node-name",
+   "schema": "not_schema{}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "schema node must be named schema or field"
+  },
+  {
+   "id": "wrong-node-child",
+   "schema": "schema{not_field{}}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "schema children must be field nodes"
+  },
+  {
+   "id": "field-without-name",
+   "schema": "schema{field{kind:\"int\"}}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "field requires a string name"
+  },
+  {
+   "id": "unsupported-dialect",
+   "schema": "{\"$schema\":\"urn:other\"}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "unsupported AXON Schema dialect 'urn:other'"
+  },
+  {
+   "id": "id-not-string",
+   "schema": "{\"$id\":1}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "$id must be a string"
+  },
+  {
+   "id": "ref-not-string",
+   "schema": "{\"$ref\":1}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "$ref must be a string"
+  },
+  {
+   "id": "properties-not-map",
+   "schema": "{properties:[]}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "properties must be a mapping"
+  },
+  {
+   "id": "items-not-schema",
+   "schema": "{items:[]}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "items must be a schema"
+  },
+  {
+   "id": "children-not-schema",
+   "schema": "{children:1}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "children must be a schema"
+  },
+  {
+   "id": "attributes-not-schema",
+   "schema": "{attributes:false}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "attributes must be a schema"
+  },
+  {
+   "id": "additional-wrong-shape",
+   "schema": "{additional:[]}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "additional must be a boolean or schema"
+  },
+  {
+   "id": "prefix-items-wrong-shape",
+   "schema": "{prefix_items:{kind:\"int\"}}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "prefix_items must be a sequence of schemas"
+  },
+  {
+   "id": "defs-not-map",
+   "schema": "{\"$defs\":[]}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "$defs must be a mapping"
+  },
+  {
+   "id": "unknown-keyword",
+   "schema": "{minimun:1}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "unknown schema keyword 'minimun'"
+  },
+  {
+   "id": "kind-not-string-or-sequence",
+   "schema": "{kind:1}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "kind must be a string or non-empty string sequence"
+  },
+  {
+   "id": "kind-empty-sequence",
+   "schema": "{kind:[]}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "kind must be a string or non-empty string sequence"
+  },
+  {
+   "id": "unknown-kind",
+   "schema": "{kind:\"object\"}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "unknown schema kind 'object'"
+  },
+  {
+   "id": "enum-not-container",
+   "schema": "{enum:1}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "enum must be a sequence or set"
+  },
+  {
+   "id": "required-not-sequence",
+   "schema": "{required:1}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "required must be a sequence of strings"
+  },
+  {
+   "id": "required-non-string",
+   "schema": "{required:[\"a\" 1]}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "required must be a sequence of strings"
+  },
+  {
+   "id": "required-duplicate",
+   "schema": "{required:[\"a\" \"a\"]}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "required must not contain duplicates"
+  },
+  {
+   "id": "pattern-not-string",
+   "schema": "{pattern:1}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "pattern must be a string"
+  },
+  {
+   "id": "key-pattern",
+   "schema": "{kind:\"map\" key_pattern:\"^[a-z][a-z0-9-]*$\"}",
+   "outcome": "ok",
+   "normalized": "{key_pattern:\"^[a-z][a-z0-9-]*$\" kind:\"map\"}"
+  },
+  {
+   "id": "key-pattern-not-string",
+   "schema": "{key_pattern:1}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "key_pattern must be a string"
+  },
+  {
+   "id": "any-of",
+   "schema": "{kind:\"map\" any_of:[{required:[\"a\"]} {required:[\"b\"]}]}",
+   "outcome": "ok",
+   "normalized": "{any_of:[{required:[\"a\"]} {required:[\"b\"]}] kind:\"map\"}"
+  },
+  {
+   "id": "any-of-nested",
+   "schema": "{any_of:[{any_of:[{kind:\"int\"} {kind:\"float\"}]} {kind:\"string\"}]}",
+   "outcome": "ok",
+   "normalized": "{any_of:[{any_of:[{kind:\"int\"} {kind:\"float\"}]} {kind:\"string\"}]}"
+  },
+  {
+   "id": "any-of-empty",
+   "schema": "{any_of:[]}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "any_of must be a non-empty sequence of schemas"
+  },
+  {
+   "id": "any-of-not-a-sequence",
+   "schema": "{any_of:{}}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "any_of must be a non-empty sequence of schemas"
+  },
+  {
+   "id": "any-of-string",
+   "schema": "{any_of:\"x\"}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "any_of must be a non-empty sequence of schemas"
+  },
+  {
+   "id": "any-of-branch-not-a-schema",
+   "schema": "{any_of:[{kind:\"int\"} 1]}",
+   "outcome": "error",
+   "error_kind": "type",
+   "error_type": "TypeError",
+   "message": "schema must be a mapping or schema node"
+  },
+  {
+   "id": "negative-length",
+   "schema": "{min_length:-1}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "min_length must be a non-negative integer"
+  },
+  {
+   "id": "boolean-length",
+   "schema": "{max_items:true}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "max_items must be a non-negative integer"
+  },
+  {
+   "id": "string-length",
+   "schema": "{min_children:\"1\"}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "min_children must be a non-negative integer"
+  },
+  {
+   "id": "length-bounds-inverted",
+   "schema": "{min_length:2 max_length:1}",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "min_length cannot exceed max_length"
+  },
+  {
+   "id": "normalization-depth-limit",
+   "schema": "{items:{items:{items:{kind:\"int\"}}}}",
+   "max_depth": 2,
+   "outcome": "error",
+   "error_kind": "resource-limit",
+   "error_type": "_SchemaResourceError",
+   "message": "maximum schema nesting depth exceeded"
+  },
+  {
+   "id": "normalization-node-limit",
+   "schema": "{properties:{a:{} b:{} c:{}}}",
+   "max_nodes": 3,
+   "outcome": "error",
+   "error_kind": "resource-limit",
+   "error_type": "_SchemaResourceError",
+   "message": "maximum schema node count exceeded"
+  },
+  {
+   "id": "normalization-direct-cycle",
+   "schema": "&1 {items:*1}",
+   "profile": "graph",
+   "outcome": "error",
+   "error_kind": "resource-limit",
+   "error_type": "_SchemaResourceError",
+   "message": "direct cyclic schemas must use $ref"
+  }
+ ],
+ "registry": {
+  "identifiers": [
+   {
+    "id": "urn",
+    "identifier": "urn:axon:test:module",
+    "outcome": "ok",
+    "normalized": "urn:axon:test:module"
+   },
+   {
+    "id": "https",
+    "identifier": "https://example.com/schema",
+    "outcome": "ok",
+    "normalized": "https://example.com/schema"
+   },
+   {
+    "id": "custom",
+    "identifier": "axon+schema:module/v1",
+    "outcome": "ok",
+    "normalized": "axon+schema:module/v1"
+   },
+   {
+    "id": "empty",
+    "identifier": "",
+    "outcome": "error",
+    "error_kind": "value",
+    "error_type": "ValueError",
+    "message": "schema module identifier must be a non-empty string"
+   },
+   {
+    "id": "non-string",
+    "identifier": 7,
+    "outcome": "error",
+    "error_kind": "value",
+    "error_type": "ValueError",
+    "message": "schema module identifier must be a non-empty string"
+   },
+   {
+    "id": "non-ascii",
+    "identifier": "urn:axon:café",
+    "outcome": "error",
+    "error_kind": "value",
+    "error_type": "ValueError",
+    "message": "schema module identifier must be ASCII"
+   },
+   {
+    "id": "space",
+    "identifier": "urn:axonnext:test module",
+    "outcome": "error",
+    "error_kind": "value",
+    "error_type": "ValueError",
+    "message": "schema module identifier contains whitespace or controls"
+   },
+   {
+    "id": "control",
+    "identifier": "urn:axonnext:test\nmodule",
+    "outcome": "error",
+    "error_kind": "value",
+    "error_type": "ValueError",
+    "message": "schema module identifier contains whitespace or controls"
+   },
+   {
+    "id": "relative",
+    "identifier": "schema/module",
+    "outcome": "error",
+    "error_kind": "value",
+    "error_type": "ValueError",
+    "message": "schema module identifier must be an absolute URI without a fragment"
+   },
+   {
+    "id": "fragment",
+    "identifier": "urn:axonnext:test#part",
+    "outcome": "error",
+    "error_kind": "value",
+    "error_type": "ValueError",
+    "message": "schema module identifier must be an absolute URI without a fragment"
+   },
+   {
+    "id": "empty-fragment",
+    "identifier": "urn:x#",
+    "outcome": "ok",
+    "normalized": "urn:x#"
+   },
+   {
+    "id": "empty-http-authority",
+    "identifier": "http://",
+    "outcome": "ok",
+    "normalized": "http://"
+   },
+   {
+    "id": "numeric-scheme",
+    "identifier": "1:x",
+    "outcome": "error",
+    "error_kind": "value",
+    "error_type": "ValueError",
+    "message": "schema module identifier must be an absolute URI without a fragment"
+   },
+   {
+    "id": "invalid-uri",
+    "identifier": "http://[broken",
+    "outcome": "error",
+    "error_kind": "value",
+    "error_type": "ValueError",
+    "message": "invalid schema module URI"
+   },
+   {
+    "id": "invalid-bracketed-host",
+    "identifier": "http://[notipv6]",
+    "outcome": "error",
+    "error_kind": "value",
+    "error_type": "ValueError",
+    "message": "invalid schema module URI"
+   },
+   {
+    "id": "valid-ipv6-host",
+    "identifier": "http://[::1]/schema",
+    "outcome": "ok",
+    "normalized": "http://[::1]/schema"
+   }
+  ],
+  "config": [
+   {
+    "id": "default",
+    "config": {},
+    "outcome": "ok",
+    "frozen": false,
+    "network_resolution": false,
+    "length": 0
+   },
+   {
+    "id": "bounded",
+    "config": {
+     "max_modules": 2,
+     "max_depth": 3,
+     "max_nodes": 4
+    },
+    "outcome": "ok",
+    "frozen": false,
+    "network_resolution": false,
+    "length": 0
+   },
+   {
+    "id": "zero-modules",
+    "config": {
+     "max_modules": 0
+    },
+    "outcome": "error",
+    "error_kind": "value",
+    "error_type": "ValueError",
+    "message": "max_modules must be a positive integer"
+   },
+   {
+    "id": "zero-depth",
+    "config": {
+     "max_depth": 0
+    },
+    "outcome": "error",
+    "error_kind": "value",
+    "error_type": "ValueError",
+    "message": "max_depth must be a positive integer"
+   },
+   {
+    "id": "zero-nodes",
+    "config": {
+     "max_nodes": 0
+    },
+    "outcome": "error",
+    "error_kind": "value",
+    "error_type": "ValueError",
+    "message": "max_nodes must be a positive integer"
+   },
+   {
+    "id": "string-modules",
+    "config": {
+     "max_modules": "1"
+    },
+    "outcome": "error",
+    "error_kind": "value",
+    "error_type": "ValueError",
+    "message": "max_modules must be a positive integer"
+   }
+  ],
+  "scenarios": [
+   {
+    "id": "register-freeze-and-alias-isolation",
+    "steps": [
+     {
+      "op": "register",
+      "identifier": "urn:axon:test:positive",
+      "schema": "{\"$id\":\"urn:axon:test:positive\" kind:\"int\" minimum:1}",
+      "mutate_return": {
+       "minimum": -10
+      },
+      "result": {
+       "outcome": "ok",
+       "schema": "{\"$id\":\"urn:axon:test:positive\" kind:\"int\" minimum:1}"
+      }
+     },
+     {
+      "op": "get",
+      "identifier": "urn:axon:test:positive",
+      "mutate_return": {
+       "minimum": -20
+      },
+      "result": {
+       "outcome": "ok",
+       "schema": "{\"$id\":\"urn:axon:test:positive\" kind:\"int\" minimum:1}"
+      }
+     },
+     {
+      "op": "snapshot",
+      "mutate_schema": {
+       "identifier": "urn:axon:test:positive",
+       "key": "minimum",
+       "value": -30
+      },
+      "result": {
+       "outcome": "ok",
+       "modules": [
+        [
+         "urn:axon:test:positive",
+         "{\"$id\":\"urn:axon:test:positive\" kind:\"int\" minimum:1}"
+        ]
+       ]
+      }
+     },
+     {
+      "op": "freeze",
+      "result": {
+       "outcome": "ok",
+       "frozen": true
+      }
+     },
+     {
+      "op": "validate",
+      "value": "0",
+      "schema": "{\"$ref\":\"urn:axon:test:positive\"}",
+      "result": {
+       "outcome": "ok",
+       "report": {
+        "valid": false,
+        "issues": [
+         {
+          "code": "minimum",
+          "path": [],
+          "schema_path": [
+           "$ref",
+           "urn:axon:test:positive",
+           "minimum"
+          ],
+          "message": "value is below minimum"
+         }
+        ],
+        "counts": [
+         [
+          "minimum",
+          1
+         ]
+        ],
+        "truncated": false
+       }
+      }
+     },
+     {
+      "op": "register",
+      "identifier": "urn:axon:test:late",
+      "schema": "{kind:\"any\"}",
+      "result": {
+       "outcome": "error",
+       "error_kind": "RuntimeError",
+       "error_type": "RuntimeError",
+       "message": "schema registry is frozen"
+      }
+     }
+    ],
+    "final": {
+     "length": 1,
+     "frozen": true,
+     "network_resolution": false,
+     "items": [
+      [
+       "urn:axon:test:positive",
+       "{\"$id\":\"urn:axon:test:positive\" kind:\"int\" minimum:1}"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "duplicate-and-replace",
+    "steps": [
+     {
+      "op": "register",
+      "identifier": "urn:axon:test:value",
+      "schema": "{kind:\"int\" minimum:0}",
+      "result": {
+       "outcome": "ok",
+       "schema": "{kind:\"int\" minimum:0}"
+      }
+     },
+     {
+      "op": "register",
+      "identifier": "urn:axon:test:value",
+      "schema": "{kind:\"int\" minimum:10}",
+      "result": {
+       "outcome": "error",
+       "error_kind": "value",
+       "error_type": "ValueError",
+       "message": "duplicate schema module identifier 'urn:axon:test:value'"
+      }
+     },
+     {
+      "op": "register",
+      "identifier": "urn:axon:test:value",
+      "schema": "{kind:\"int\" minimum:10}",
+      "replace": true,
+      "result": {
+       "outcome": "ok",
+       "schema": "{kind:\"int\" minimum:10}"
+      }
+     },
+     {
+      "op": "validate",
+      "value": "5",
+      "schema": "{\"$ref\":\"urn:axon:test:value\"}",
+      "result": {
+       "outcome": "ok",
+       "report": {
+        "valid": false,
+        "issues": [
+         {
+          "code": "minimum",
+          "path": [],
+          "schema_path": [
+           "$ref",
+           "urn:axon:test:value",
+           "minimum"
+          ],
+          "message": "value is below minimum"
+         }
+        ],
+        "counts": [
+         [
+          "minimum",
+          1
+         ]
+        ],
+        "truncated": false
+       }
+      }
+     }
+    ],
+    "final": {
+     "length": 1,
+     "frozen": false,
+     "network_resolution": false,
+     "items": [
+      [
+       "urn:axon:test:value",
+       "{kind:\"int\" minimum:10}"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "declared-id-mismatch",
+    "steps": [
+     {
+      "op": "register",
+      "identifier": "urn:axon:test:actual",
+      "schema": "{\"$id\":\"urn:axon:test:other\" kind:\"any\"}",
+      "result": {
+       "outcome": "error",
+       "error_kind": "value",
+       "error_type": "ValueError",
+       "message": "schema $id does not match its registry identifier"
+      }
+     }
+    ],
+    "final": {
+     "length": 0,
+     "frozen": false,
+     "network_resolution": false,
+     "items": []
+    }
+   },
+   {
+    "id": "module-limit",
+    "config": {
+     "max_modules": 1
+    },
+    "steps": [
+     {
+      "op": "register",
+      "identifier": "urn:axon:test:one",
+      "schema": "{kind:\"any\"}",
+      "result": {
+       "outcome": "ok",
+       "schema": "{kind:\"any\"}"
+      }
+     },
+     {
+      "op": "register",
+      "identifier": "urn:axon:test:two",
+      "schema": "{kind:\"any\"}",
+      "result": {
+       "outcome": "error",
+       "error_kind": "resource-limit",
+       "error_type": "_SchemaResourceError",
+       "message": "maximum schema registry size exceeded"
+      }
+     },
+     {
+      "op": "register",
+      "identifier": "urn:axon:test:one",
+      "schema": "{kind:\"int\"}",
+      "replace": true,
+      "result": {
+       "outcome": "ok",
+       "schema": "{kind:\"int\"}"
+      }
+     }
+    ],
+    "final": {
+     "length": 1,
+     "frozen": false,
+     "network_resolution": false,
+     "items": [
+      [
+       "urn:axon:test:one",
+       "{kind:\"int\"}"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "normalization-limits",
+    "config": {
+     "max_depth": 1,
+     "max_nodes": 2
+    },
+    "steps": [
+     {
+      "op": "register",
+      "identifier": "urn:axon:test:deep",
+      "schema": "{items:{items:{kind:\"int\"}}}",
+      "result": {
+       "outcome": "error",
+       "error_kind": "resource-limit",
+       "error_type": "_SchemaResourceError",
+       "message": "maximum schema nesting depth exceeded"
+      }
+     },
+     {
+      "op": "register",
+      "identifier": "urn:axon:test:wide",
+      "schema": "{properties:{a:{} b:{}}}",
+      "result": {
+       "outcome": "error",
+       "error_kind": "resource-limit",
+       "error_type": "_SchemaResourceError",
+       "message": "maximum schema node count exceeded"
+      }
+     }
+    ],
+    "final": {
+     "length": 0,
+     "frozen": false,
+     "network_resolution": false,
+     "items": []
+    }
+   },
+   {
+    "id": "external-reference-chain",
+    "steps": [
+     {
+      "op": "register",
+      "identifier": "urn:axon:test:number",
+      "schema": "{\"$id\":\"urn:axon:test:number\" kind:\"integer\" minimum:1}",
+      "result": {
+       "outcome": "ok",
+       "schema": "{\"$id\":\"urn:axon:test:number\" kind:\"integer\" minimum:1}"
+      }
+     },
+     {
+      "op": "register",
+      "identifier": "urn:axon:test:alias",
+      "schema": "{\"$id\":\"urn:axon:test:alias\" \"$ref\":\"urn:axon:test:number\"}",
+      "result": {
+       "outcome": "ok",
+       "schema": "{\"$id\":\"urn:axon:test:alias\" \"$ref\":\"urn:axon:test:number\"}"
+      }
+     },
+     {
+      "op": "validate",
+      "value": "0",
+      "schema": "{\"$ref\":\"urn:axon:test:alias\"}",
+      "result": {
+       "outcome": "ok",
+       "report": {
+        "valid": false,
+        "issues": [
+         {
+          "code": "minimum",
+          "path": [],
+          "schema_path": [
+           "$ref",
+           "urn:axon:test:alias",
+           "$ref",
+           "urn:axon:test:number",
+           "minimum"
+          ],
+          "message": "value is below minimum"
+         }
+        ],
+        "counts": [
+         [
+          "minimum",
+          1
+         ]
+        ],
+        "truncated": false
+       }
+      }
+     }
+    ],
+    "final": {
+     "length": 2,
+     "frozen": false,
+     "network_resolution": false,
+     "items": [
+      [
+       "urn:axon:test:number",
+       "{\"$id\":\"urn:axon:test:number\" kind:\"integer\" minimum:1}"
+      ],
+      [
+       "urn:axon:test:alias",
+       "{\"$id\":\"urn:axon:test:alias\" \"$ref\":\"urn:axon:test:number\"}"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "validation": [
+  {
+   "id": "kind-any",
+   "value": "p{x:1}",
+   "schema": "{}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-null",
+   "value": "null",
+   "schema": "{kind:\"null\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-bool",
+   "value": "true",
+   "schema": "{kind:\"bool\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-boolean-alias",
+   "value": "false",
+   "schema": "{kind:\"boolean\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-int",
+   "value": "1",
+   "schema": "{kind:\"int\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-integer-alias",
+   "value": "-1",
+   "schema": "{kind:\"integer\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-float",
+   "value": "1.5",
+   "schema": "{kind:\"float\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-decimal",
+   "value": "1.5D",
+   "schema": "{kind:\"decimal\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-scaled-decimal",
+   "value": "1.50D",
+   "schema": "{kind:\"decimal\"}",
+   "value_profile": "scale_significant",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-number-int",
+   "value": "1",
+   "schema": "{kind:\"number\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-number-float",
+   "value": "1.5",
+   "schema": "{kind:\"number\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-number-decimal",
+   "value": "1.5D",
+   "schema": "{kind:\"number\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-string",
+   "value": "\"x\"",
+   "schema": "{kind:\"string\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-bytes",
+   "value": "|YQ==|",
+   "schema": "{kind:\"bytes\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-binary-alias",
+   "value": "|YQ==|",
+   "schema": "{kind:\"binary\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-date",
+   "value": "^2026-01-02",
+   "schema": "{kind:\"date\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-time",
+   "value": "^12:34:56.7Z",
+   "schema": "{kind:\"time\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-datetime",
+   "value": "^2026-01-02T12:34:56Z",
+   "schema": "{kind:\"datetime\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-node-brace",
+   "value": "p{x:1}",
+   "schema": "{kind:\"node\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-set",
+   "value": "{1 2}",
+   "schema": "{kind:\"set\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-map",
+   "value": "{a:1}",
+   "schema": "{kind:\"map\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-ordered-map",
+   "value": "[a:1]",
+   "schema": "{kind:\"ordered-map\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-mapping-map",
+   "value": "{a:1}",
+   "schema": "{kind:\"mapping\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-mapping-ordered",
+   "value": "[a:1]",
+   "schema": "{kind:\"mapping\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-list",
+   "value": "[1 2]",
+   "schema": "{kind:\"list\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-tuple",
+   "value": "(1 2)",
+   "schema": "{kind:\"tuple\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-sequence-list",
+   "value": "[1]",
+   "schema": "{kind:\"sequence\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-sequence-tuple",
+   "value": "(1)",
+   "schema": "{kind:\"sequence\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-collection-set",
+   "value": "{1}",
+   "schema": "{kind:\"collection\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-collection-map",
+   "value": "{a:1}",
+   "schema": "{kind:\"collection\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-link",
+   "value": "link(\"https://example.com/x\")",
+   "schema": "{kind:\"link\"}",
+   "value_profile": "doc_link",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-union-pass",
+   "value": "\"x\"",
+   "schema": "{kind:[\"null\" \"string\"]}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "kind-failure",
+   "value": "\"1\"",
+   "schema": "{kind:[\"integer\" \"boolean\"]}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "kind",
+      "path": [],
+      "schema_path": [
+       "kind"
+      ],
+      "message": "expected integer|boolean, got string"
+     }
+    ],
+    "counts": [
+     [
+      "kind",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "const-pass",
+   "value": "1",
+   "schema": "{const:1}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "const-strict-type",
+   "value": "1.0",
+   "schema": "{const:1}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "const",
+      "path": [],
+      "schema_path": [
+       "const"
+      ],
+      "message": "value does not equal required constant"
+     }
+    ],
+    "counts": [
+     [
+      "const",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "const-nan",
+   "value": "?",
+   "schema": "{const:?}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "const",
+      "path": [],
+      "schema_path": [
+       "const"
+      ],
+      "message": "value does not equal required constant"
+     }
+    ],
+    "counts": [
+     [
+      "const",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "const-negative-zero",
+   "value": "-0.0",
+   "schema": "{const:0.0}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "const-nested-int-float",
+   "value": "[1]",
+   "schema": "{const:[1.0]}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "const-nested-bool-int",
+   "value": "[true]",
+   "schema": "{const:[1]}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "const-map-order-insensitive",
+   "value": "{a:1 b:2}",
+   "schema": "{const:{b:2 a:1}}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "const-ordered-map-order-sensitive",
+   "value": "[a:1 b:2]",
+   "schema": "{const:[b:2 a:1]}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "const",
+      "path": [],
+      "schema_path": [
+       "const"
+      ],
+      "message": "value does not equal required constant"
+     }
+    ],
+    "counts": [
+     [
+      "const",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "const-decimal-scale-core",
+   "value": "1.0D",
+   "schema": "{const:1.00D}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "const-scaled-decimal-distinct",
+   "value": "1.50D",
+   "schema": "{const:1.50D}",
+   "value_profile": "scale_significant",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "const",
+      "path": [],
+      "schema_path": [
+       "const"
+      ],
+      "message": "value does not equal required constant"
+     }
+    ],
+    "counts": [
+     [
+      "const",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "enum-scaled-decimal-distinct",
+   "value": "1.50D",
+   "schema": "{enum:[1.50D]}",
+   "value_profile": "scale_significant",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "enum",
+      "path": [],
+      "schema_path": [
+       "enum"
+      ],
+      "message": "value is not in the permitted enumeration"
+     }
+    ],
+    "counts": [
+     [
+      "enum",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "const-nested-scaled-decimal-distinct",
+   "value": "[1.50D]",
+   "schema": "{const:[1.50D]}",
+   "value_profile": "scale_significant",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "const",
+      "path": [],
+      "schema_path": [
+       "const"
+      ],
+      "message": "value does not equal required constant"
+     }
+    ],
+    "counts": [
+     [
+      "const",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "const-nested-scaled-vs-int-distinct",
+   "value": "[1.0D]",
+   "schema": "{const:[1]}",
+   "value_profile": "scale_significant",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "const",
+      "path": [],
+      "schema_path": [
+       "const"
+      ],
+      "message": "value does not equal required constant"
+     }
+    ],
+    "counts": [
+     [
+      "const",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "enum-list-pass",
+   "value": "\"b\"",
+   "schema": "{enum:[\"a\" \"b\"]}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "enum-set-pass",
+   "value": "2",
+   "schema": "{enum:{1 2 3}}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "enum-failure",
+   "value": "4",
+   "schema": "{enum:(1 2 3)}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "enum",
+      "path": [],
+      "schema_path": [
+       "enum"
+      ],
+      "message": "value is not in the permitted enumeration"
+     }
+    ],
+    "counts": [
+     [
+      "enum",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "minimum-pass",
+   "value": "1",
+   "schema": "{kind:\"number\" minimum:1}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "minimum-failure",
+   "value": "0",
+   "schema": "{kind:\"number\" minimum:1}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "minimum",
+      "path": [],
+      "schema_path": [
+       "minimum"
+      ],
+      "message": "value is below minimum"
+     }
+    ],
+    "counts": [
+     [
+      "minimum",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "maximum-failure",
+   "value": "2",
+   "schema": "{kind:\"number\" maximum:1}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "maximum",
+      "path": [],
+      "schema_path": [
+       "maximum"
+      ],
+      "message": "value is above maximum"
+     }
+    ],
+    "counts": [
+     [
+      "maximum",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "exclusive-minimum-failure",
+   "value": "1",
+   "schema": "{kind:\"number\" exclusive_minimum:1}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "exclusive-minimum",
+      "path": [],
+      "schema_path": [
+       "exclusive_minimum"
+      ],
+      "message": "value must be greater than exclusive minimum"
+     }
+    ],
+    "counts": [
+     [
+      "exclusive-minimum",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "exclusive-maximum-failure",
+   "value": "1",
+   "schema": "{kind:\"number\" exclusive_maximum:1}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "exclusive-maximum",
+      "path": [],
+      "schema_path": [
+       "exclusive_maximum"
+      ],
+      "message": "value must be less than exclusive maximum"
+     }
+    ],
+    "counts": [
+     [
+      "exclusive-maximum",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "decimal-range",
+   "value": "1.25D",
+   "schema": "{kind:\"decimal\" minimum:1 maximum:1.2D}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "maximum",
+      "path": [],
+      "schema_path": [
+       "maximum"
+      ],
+      "message": "value is above maximum"
+     }
+    ],
+    "counts": [
+     [
+      "maximum",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "schema-comparison",
+   "value": "1",
+   "schema": "{kind:\"number\" minimum:\"zero\" maximum:2}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "schema-comparison",
+      "path": [],
+      "schema_path": [],
+      "message": "numeric constraint is not comparable with the value"
+     }
+    ],
+    "counts": [
+     [
+      "schema-comparison",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "exact-float-decimal-maximum",
+   "value": "1.1",
+   "schema": "{maximum:1.1D}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "maximum",
+      "path": [],
+      "schema_path": [
+       "maximum"
+      ],
+      "message": "value is above maximum"
+     }
+    ],
+    "counts": [
+     [
+      "maximum",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "exact-float-decimal-minimum",
+   "value": "1.1",
+   "schema": "{minimum:1.1D}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "exact-float-large-int",
+   "value": "9007199254740992.0",
+   "schema": "{minimum:9007199254740993}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "minimum",
+      "path": [],
+      "schema_path": [
+       "minimum"
+      ],
+      "message": "value is below minimum"
+     }
+    ],
+    "counts": [
+     [
+      "minimum",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "float-nan-bounds",
+   "value": "?",
+   "schema": "{minimum:0 maximum:1 exclusive_minimum:0 exclusive_maximum:1}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "decimal-nan-bound",
+   "value": "?D",
+   "schema": "{minimum:0}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "schema-comparison",
+      "path": [],
+      "schema_path": [],
+      "message": "numeric constraint is not comparable with the value"
+     }
+    ],
+    "counts": [
+     [
+      "schema-comparison",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "prior-issue-before-schema-comparison",
+   "value": "5",
+   "schema": "{maximum:4 exclusive_minimum:\"x\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "maximum",
+      "path": [],
+      "schema_path": [
+       "maximum"
+      ],
+      "message": "value is above maximum"
+     },
+     {
+      "code": "schema-comparison",
+      "path": [],
+      "schema_path": [],
+      "message": "numeric constraint is not comparable with the value"
+     }
+    ],
+    "counts": [
+     [
+      "maximum",
+      1
+     ],
+     [
+      "schema-comparison",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "numeric-keyword-ignored-for-string",
+   "value": "\"x\"",
+   "schema": "{minimum:10}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "min-length",
+   "value": "\"\"",
+   "schema": "{kind:\"string\" min_length:1}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "min-length",
+      "path": [],
+      "schema_path": [
+       "min_length"
+      ],
+      "message": "string is too short"
+     }
+    ],
+    "counts": [
+     [
+      "min-length",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "max-length",
+   "value": "\"ab\"",
+   "schema": "{kind:\"string\" max_length:1}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "max-length",
+      "path": [],
+      "schema_path": [
+       "max_length"
+      ],
+      "message": "string is too long"
+     }
+    ],
+    "counts": [
+     [
+      "max-length",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "unicode-length-codepoint",
+   "value": "\"😀\"",
+   "schema": "{kind:\"string\" min_length:1 max_length:1}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "decomposed-length",
+   "value": "\"é\"",
+   "schema": "{kind:\"string\" max_length:1}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "max-length",
+      "path": [],
+      "schema_path": [
+       "max_length"
+      ],
+      "message": "string is too long"
+     }
+    ],
+    "counts": [
+     [
+      "max-length",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "pattern-pass",
+   "value": "\"AXON\"",
+   "schema": "{kind:\"string\" pattern:\"^[A-Z]+$\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "pattern-no-match",
+   "value": "\"axon\"",
+   "schema": "{kind:\"string\" pattern:\"^[A-Z]+$\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "pattern",
+      "path": [],
+      "schema_path": [
+       "pattern"
+      ],
+      "message": "string does not match pattern"
+     }
+    ],
+    "counts": [
+     [
+      "pattern",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "pattern-invalid",
+   "value": "\"x\"",
+   "schema": "{kind:\"string\" pattern:\"[\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "pattern",
+      "path": [],
+      "schema_path": [
+       "pattern"
+      ],
+      "message": "unsafe or invalid pattern: unterminated character set at position 0"
+     }
+    ],
+    "counts": [
+     [
+      "pattern",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "pattern-unsafe",
+   "value": "\"aaaa\"",
+   "schema": "{kind:\"string\" pattern:\"(a+)+$\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "pattern",
+      "path": [],
+      "schema_path": [
+       "pattern"
+      ],
+      "message": "unsafe or invalid pattern: pattern uses a potentially superlinear construct"
+     }
+    ],
+    "counts": [
+     [
+      "pattern",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "key-pattern-pass",
+   "value": "{en:\"Hello\" \"fr-CA\":\"Bonjour\"}",
+   "schema": "{kind:\"map\" key_pattern:\"^[A-Za-z][A-Za-z0-9-]*$\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "key-pattern-fail",
+   "value": "{\"not a tag!\":\"x\"}",
+   "schema": "{kind:\"map\" key_pattern:\"^[A-Za-z][A-Za-z0-9-]*$\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "key-pattern",
+      "path": [
+       "not a tag!"
+      ],
+      "schema_path": [
+       "key_pattern"
+      ],
+      "message": "mapping key does not match key_pattern"
+     }
+    ],
+    "counts": [
+     [
+      "key-pattern",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "key-pattern-unsafe",
+   "value": "{a:1}",
+   "schema": "{kind:\"map\" key_pattern:\"(a+)+$\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "key-pattern",
+      "path": [
+       "a"
+      ],
+      "schema_path": [
+       "key_pattern"
+      ],
+      "message": "unsafe or invalid key_pattern: pattern uses a potentially superlinear construct"
+     }
+    ],
+    "counts": [
+     [
+      "key-pattern",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "key-pattern-with-additional",
+   "value": "{en:\"\"}",
+   "schema": "{kind:\"map\" key_pattern:\"^[A-Za-z][A-Za-z0-9-]*$\" additional:{kind:\"string\" min_length:1}}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "min-length",
+      "path": [
+       "en"
+      ],
+      "schema_path": [
+       "additional",
+       "min_length"
+      ],
+      "message": "string is too short"
+     }
+    ],
+    "counts": [
+     [
+      "min-length",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "key-pattern-ignored-for-non-mapping",
+   "value": "\"text\"",
+   "schema": "{key_pattern:\"^[a-z]+$\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-first-branch",
+   "value": "{startDate:\"a\"}",
+   "schema": "{kind:\"map\" any_of:[{required:[\"startDate\"]} {required:[\"endDate\"]}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-later-branch",
+   "value": "{endDate:\"b\"}",
+   "schema": "{kind:\"map\" any_of:[{required:[\"startDate\"]} {required:[\"endDate\"]}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-both-branches",
+   "value": "{startDate:\"a\" endDate:\"b\"}",
+   "schema": "{kind:\"map\" any_of:[{required:[\"startDate\"]} {required:[\"endDate\"]}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-no-branch",
+   "value": "{}",
+   "schema": "{kind:\"map\" any_of:[{required:[\"startDate\"]} {required:[\"endDate\"]}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "any-of",
+      "path": [],
+      "schema_path": [
+       "any_of"
+      ],
+      "message": "value does not match any permitted alternative"
+     }
+    ],
+    "counts": [
+     [
+      "any-of",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-composes-with-siblings",
+   "value": "{a:1}",
+   "schema": "{kind:\"map\" required:[\"id\"] any_of:[{required:[\"a\"]} {required:[\"b\"]}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "required",
+      "path": [
+       "id"
+      ],
+      "schema_path": [
+       "required"
+      ],
+      "message": "required key is missing"
+     }
+    ],
+    "counts": [
+     [
+      "required",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-sibling-and-branch-both-fail",
+   "value": "{}",
+   "schema": "{kind:\"map\" required:[\"id\"] any_of:[{required:[\"a\"]} {required:[\"b\"]}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "any-of",
+      "path": [],
+      "schema_path": [
+       "any_of"
+      ],
+      "message": "value does not match any permitted alternative"
+     },
+     {
+      "code": "required",
+      "path": [
+       "id"
+      ],
+      "schema_path": [
+       "required"
+      ],
+      "message": "required key is missing"
+     }
+    ],
+    "counts": [
+     [
+      "any-of",
+      1
+     ],
+     [
+      "required",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-by-kind",
+   "value": "\"text\"",
+   "schema": "{any_of:[{kind:\"int\"} {kind:\"string\"}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-by-kind-fail",
+   "value": "true",
+   "schema": "{any_of:[{kind:\"int\"} {kind:\"string\"}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "any-of",
+      "path": [],
+      "schema_path": [
+       "any_of"
+      ],
+      "message": "value does not match any permitted alternative"
+     }
+    ],
+    "counts": [
+     [
+      "any-of",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-nested",
+   "value": "2.5",
+   "schema": "{any_of:[{any_of:[{kind:\"int\"} {kind:\"float\"}]} {kind:\"string\"}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "any-of-single-branch",
+   "value": "1",
+   "schema": "{any_of:[{kind:\"string\"}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "any-of",
+      "path": [],
+      "schema_path": [
+       "any_of"
+      ],
+      "message": "value does not match any permitted alternative"
+     }
+    ],
+    "counts": [
+     [
+      "any-of",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "min-items",
+   "value": "[]",
+   "schema": "{kind:\"list\" min_items:1}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "min-items",
+      "path": [],
+      "schema_path": [
+       "min_items"
+      ],
+      "message": "container has too few items"
+     }
+    ],
+    "counts": [
+     [
+      "min-items",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "max-items",
+   "value": "[1 2]",
+   "schema": "{kind:\"list\" max_items:1}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "max-items",
+      "path": [],
+      "schema_path": [
+       "max_items"
+      ],
+      "message": "container has too many items"
+     }
+    ],
+    "counts": [
+     [
+      "max-items",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "prefix-items",
+   "value": "(1 2)",
+   "schema": "{kind:\"tuple\" prefix_items:[{kind:\"int\"} {kind:\"string\"}]}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "kind",
+      "path": [
+       1
+      ],
+      "schema_path": [
+       "prefix_items",
+       1,
+       "kind"
+      ],
+      "message": "expected string, got int"
+     }
+    ],
+    "counts": [
+     [
+      "kind",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "items-after-prefix",
+   "value": "(1 \"x\" -1)",
+   "schema": "{kind:\"tuple\" prefix_items:[{kind:\"int\"} {kind:\"string\"}] items:{kind:\"int\" minimum:0}}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "minimum",
+      "path": [
+       2
+      ],
+      "schema_path": [
+       "items",
+       "minimum"
+      ],
+      "message": "value is below minimum"
+     }
+    ],
+    "counts": [
+     [
+      "minimum",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "list-items-two-paths",
+   "value": "[0 0]",
+   "schema": "{kind:\"list\" items:{kind:\"int\" minimum:1}}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "minimum",
+      "path": [
+       0
+      ],
+      "schema_path": [
+       "items",
+       "minimum"
+      ],
+      "message": "value is below minimum"
+     },
+     {
+      "code": "minimum",
+      "path": [
+       1
+      ],
+      "schema_path": [
+       "items",
+       "minimum"
+      ],
+      "message": "value is below minimum"
+     }
+    ],
+    "counts": [
+     [
+      "minimum",
+      2
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "set-items",
+   "value": "{-1 2}",
+   "schema": "{kind:\"set\" items:{kind:\"int\" minimum:0}}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "minimum",
+      "path": [
+       0
+      ],
+      "schema_path": [
+       "items",
+       "minimum"
+      ],
+      "message": "value is below minimum"
+     }
+    ],
+    "counts": [
+     [
+      "minimum",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "mapping-valid",
+   "value": "{name:\"Alex\" age:27}",
+   "schema": "{kind:\"map\" required:[\"name\" \"age\"] additional:false properties:{name:{kind:\"string\" min_length:1} age:{kind:\"int\" minimum:0 maximum:130}}}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "mapping-all-failures",
+   "value": "{name:\"\" age:200 extra:true}",
+   "schema": "{kind:\"map\" required:[\"name\" \"age\" \"missing\"] additional:false properties:{name:{kind:\"string\" min_length:1} age:{kind:\"int\" minimum:0 maximum:130}}}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "maximum",
+      "path": [
+       "age"
+      ],
+      "schema_path": [
+       "properties",
+       "age",
+       "maximum"
+      ],
+      "message": "value is above maximum"
+     },
+     {
+      "code": "additional",
+      "path": [
+       "extra"
+      ],
+      "schema_path": [
+       "additional"
+      ],
+      "message": "additional key is not permitted"
+     },
+     {
+      "code": "required",
+      "path": [
+       "missing"
+      ],
+      "schema_path": [
+       "required"
+      ],
+      "message": "required key is missing"
+     },
+     {
+      "code": "min-length",
+      "path": [
+       "name"
+      ],
+      "schema_path": [
+       "properties",
+       "name",
+       "min_length"
+      ],
+      "message": "string is too short"
+     }
+    ],
+    "counts": [
+     [
+      "additional",
+      1
+     ],
+     [
+      "maximum",
+      1
+     ],
+     [
+      "min-length",
+      1
+     ],
+     [
+      "required",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "additional-schema",
+   "value": "{a:1 b:\"bad\"}",
+   "schema": "{kind:\"map\" properties:{a:{kind:\"int\"}} additional:{kind:\"int\"}}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "kind",
+      "path": [
+       "b"
+      ],
+      "schema_path": [
+       "additional",
+       "kind"
+      ],
+      "message": "expected int, got string"
+     }
+    ],
+    "counts": [
+     [
+      "kind",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "ordered-mapping",
+   "value": "[a:0 b:\"bad\"]",
+   "schema": "{kind:\"ordered-map\" required:[\"c\"] properties:{a:{minimum:1}} additional:{kind:\"int\"}}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "minimum",
+      "path": [
+       "a"
+      ],
+      "schema_path": [
+       "properties",
+       "a",
+       "minimum"
+      ],
+      "message": "value is below minimum"
+     },
+     {
+      "code": "kind",
+      "path": [
+       "b"
+      ],
+      "schema_path": [
+       "additional",
+       "kind"
+      ],
+      "message": "expected int, got string"
+     },
+     {
+      "code": "required",
+      "path": [
+       "c"
+      ],
+      "schema_path": [
+       "required"
+      ],
+      "message": "required key is missing"
+     }
+    ],
+    "counts": [
+     [
+      "kind",
+      1
+     ],
+     [
+      "minimum",
+      1
+     ],
+     [
+      "required",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "stable-path-order",
+   "value": "{z:\"\" a:-1}",
+   "schema": "{kind:\"map\" properties:{z:{kind:\"string\" min_length:1} a:{kind:\"int\" minimum:0}}}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "minimum",
+      "path": [
+       "a"
+      ],
+      "schema_path": [
+       "properties",
+       "a",
+       "minimum"
+      ],
+      "message": "value is below minimum"
+     },
+     {
+      "code": "min-length",
+      "path": [
+       "z"
+      ],
+      "schema_path": [
+       "properties",
+       "z",
+       "min_length"
+      ],
+      "message": "string is too short"
+     }
+    ],
+    "counts": [
+     [
+      "min-length",
+      1
+     ],
+     [
+      "minimum",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "stable-code-order",
+   "value": "-1",
+   "schema": "{const:5 enum:[3 4] minimum:0}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "const",
+      "path": [],
+      "schema_path": [
+       "const"
+      ],
+      "message": "value does not equal required constant"
+     },
+     {
+      "code": "enum",
+      "path": [],
+      "schema_path": [
+       "enum"
+      ],
+      "message": "value is not in the permitted enumeration"
+     },
+     {
+      "code": "minimum",
+      "path": [],
+      "schema_path": [
+       "minimum"
+      ],
+      "message": "value is below minimum"
+     }
+    ],
+    "counts": [
+     [
+      "const",
+      1
+     ],
+     [
+      "enum",
+      1
+     ],
+     [
+      "minimum",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "node-name",
+   "value": "other{x:1}",
+   "schema": "{kind:\"node\" name:\"person\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "node-name",
+      "path": [],
+      "schema_path": [
+       "name"
+      ],
+      "message": "expected node 'person'"
+     }
+    ],
+    "counts": [
+     [
+      "node-name",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "node-style",
+   "value": "person(1)",
+   "schema": "{kind:\"node\" style:\"brace\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "node-style",
+      "path": [],
+      "schema_path": [
+       "style"
+      ],
+      "message": "expected node body style 'brace'"
+     }
+    ],
+    "counts": [
+     [
+      "node-style",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "node-properties-sugar",
+   "value": "person{name:\"\" age:-1}",
+   "schema": "{kind:\"node\" required:[\"name\" \"age\"] properties:{name:{kind:\"string\" min_length:1} age:{kind:\"int\" minimum:0}}}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "minimum",
+      "path": [
+       "@",
+       "age"
+      ],
+      "schema_path": [
+       "attributes",
+       "properties",
+       "age",
+       "minimum"
+      ],
+      "message": "value is below minimum"
+     },
+     {
+      "code": "min-length",
+      "path": [
+       "@",
+       "name"
+      ],
+      "schema_path": [
+       "attributes",
+       "properties",
+       "name",
+       "min_length"
+      ],
+      "message": "string is too short"
+     }
+    ],
+    "counts": [
+     [
+      "min-length",
+      1
+     ],
+     [
+      "minimum",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "node-root-required-is-ignored",
+   "value": "person{}",
+   "schema": "{kind:\"node\" required:[\"name\"]}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "node-root-additional-is-ignored",
+   "value": "person{extra:true}",
+   "schema": "{kind:\"node\" additional:false}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "node-explicit-empty-properties-block-sugar",
+   "value": "person{age:-1}",
+   "schema": "{kind:\"node\" properties:{age:{minimum:0}} attributes:{properties:{}}}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "node-attributes",
+   "value": "person{name:\"Alex\" extra:true}",
+   "schema": "{kind:\"node\" attributes:{kind:\"map\" required:[\"name\"] properties:{name:{kind:\"string\"}} additional:false}}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "additional",
+      "path": [
+       "@",
+       "extra"
+      ],
+      "schema_path": [
+       "attributes",
+       "additional"
+      ],
+      "message": "additional key is not permitted"
+     }
+    ],
+    "counts": [
+     [
+      "additional",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "node-children",
+   "value": "person(\"ok\" 0)",
+   "schema": "{kind:\"node\" style:\"tuple\" children:{kind:\"string\" min_length:1}}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "kind",
+      "path": [
+       1
+      ],
+      "schema_path": [
+       "children",
+       "kind"
+      ],
+      "message": "expected string, got int"
+     }
+    ],
+    "counts": [
+     [
+      "kind",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "node-min-children",
+   "value": "person()",
+   "schema": "{kind:\"node\" min_children:1}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "min-children",
+      "path": [],
+      "schema_path": [
+       "min_children"
+      ],
+      "message": "node has too few children"
+     }
+    ],
+    "counts": [
+     [
+      "min-children",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "node-max-children",
+   "value": "person[1 2]",
+   "schema": "{kind:\"node\" max_children:1}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "max-children",
+      "path": [],
+      "schema_path": [
+       "max_children"
+      ],
+      "message": "node has too many children"
+     }
+    ],
+    "counts": [
+     [
+      "max-children",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "node-form-recursive-regression",
+   "value": "[person{age:0}]",
+   "schema": "schema{kind:\"list\" items:schema{kind:\"node\" attributes:schema{kind:\"map\" properties:{age:field{kind:\"int\" minimum:1}} additional:false}}}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "minimum",
+      "path": [
+       0,
+       "@",
+       "age"
+      ],
+      "schema_path": [
+       "items",
+       "attributes",
+       "properties",
+       "age",
+       "minimum"
+      ],
+      "message": "value is below minimum"
+     }
+    ],
+    "counts": [
+     [
+      "minimum",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "local-ref-pass",
+   "value": "{count:2}",
+   "schema": "{kind:\"map\" properties:{count:{\"$ref\":\"#/$defs/positive\"}} \"$defs\":{positive:{kind:\"int\" minimum:1}}}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "local-ref-fail",
+   "value": "{count:0}",
+   "schema": "{kind:\"map\" properties:{count:{\"$ref\":\"#/$defs/positive\"}} \"$defs\":{positive:{kind:\"int\" minimum:1}}}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "minimum",
+      "path": [
+       "count"
+      ],
+      "schema_path": [
+       "properties",
+       "count",
+       "$ref",
+       "#/$defs/positive",
+       "minimum"
+      ],
+      "message": "value is below minimum"
+     }
+    ],
+    "counts": [
+     [
+      "minimum",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "pointer-escape-slash",
+   "value": "\"x\"",
+   "schema": "{\"$defs\":{\"a/b\":{kind:\"int\"}} \"$ref\":\"#/$defs/a~1b\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "kind",
+      "path": [],
+      "schema_path": [
+       "$ref",
+       "#/$defs/a~1b",
+       "kind"
+      ],
+      "message": "expected int, got string"
+     }
+    ],
+    "counts": [
+     [
+      "kind",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "pointer-escape-tilde",
+   "value": "\"x\"",
+   "schema": "{\"$defs\":{\"a~b\":{kind:\"int\"}} \"$ref\":\"#/$defs/a~0b\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "kind",
+      "path": [],
+      "schema_path": [
+       "$ref",
+       "#/$defs/a~0b",
+       "kind"
+      ],
+      "message": "expected int, got string"
+     }
+    ],
+    "counts": [
+     [
+      "kind",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "pointer-list-index",
+   "value": "\"x\"",
+   "schema": "{prefix_items:[{kind:\"int\"}] \"$ref\":\"#/prefix_items/0\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "kind",
+      "path": [],
+      "schema_path": [
+       "$ref",
+       "#/prefix_items/0",
+       "kind"
+      ],
+      "message": "expected int, got string"
+     }
+    ],
+    "counts": [
+     [
+      "kind",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "pointer-empty-fragment-cycle",
+   "value": "1",
+   "schema": "{\"$ref\":\"#\" kind:\"int\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "pointer-slash-is-root",
+   "value": "1",
+   "schema": "{\"$ref\":\"#/\" kind:\"int\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "pointer-skips-empty-components",
+   "value": "\"x\"",
+   "schema": "{\"$defs\":{x:{kind:\"int\"}} \"$ref\":\"#//$defs//x\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "kind",
+      "path": [],
+      "schema_path": [
+       "$ref",
+       "#//$defs//x",
+       "kind"
+      ],
+      "message": "expected int, got string"
+     }
+    ],
+    "counts": [
+     [
+      "kind",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "pointer-leading-zero-index",
+   "value": "\"x\"",
+   "schema": "{prefix_items:[{kind:\"int\"}] \"$ref\":\"#/prefix_items/00\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "kind",
+      "path": [],
+      "schema_path": [
+       "$ref",
+       "#/prefix_items/00",
+       "kind"
+      ],
+      "message": "expected int, got string"
+     }
+    ],
+    "counts": [
+     [
+      "kind",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "pointer-arabic-index",
+   "value": "\"x\"",
+   "schema": "{prefix_items:[{kind:\"int\"}] \"$ref\":\"#/prefix_items/٠\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "kind",
+      "path": [],
+      "schema_path": [
+       "$ref",
+       "#/prefix_items/٠",
+       "kind"
+      ],
+      "message": "expected int, got string"
+     }
+    ],
+    "counts": [
+     [
+      "kind",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "pointer-superscript-index",
+   "value": "1",
+   "schema": "{prefix_items:[{kind:\"int\"}] \"$ref\":\"#/prefix_items/²\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "unresolved-ref",
+      "path": [],
+      "schema_path": [
+       "$ref"
+      ],
+      "message": "unresolved schema reference '#/prefix_items/²'"
+     }
+    ],
+    "counts": [
+     [
+      "unresolved-ref",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "pointer-replacement-order",
+   "value": "\"x\"",
+   "schema": "{\"$defs\":{\"~1\":{kind:\"int\"}} \"$ref\":\"#/$defs/~01\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "kind",
+      "path": [],
+      "schema_path": [
+       "$ref",
+       "#/$defs/~01",
+       "kind"
+      ],
+      "message": "expected int, got string"
+     }
+    ],
+    "counts": [
+     [
+      "kind",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "ref-sibling-kind",
+   "value": "1",
+   "schema": "{\"$defs\":{x:{kind:\"int\"}} \"$ref\":\"#/$defs/x\" kind:\"string\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "kind",
+      "path": [],
+      "schema_path": [
+       "kind"
+      ],
+      "message": "expected string, got int"
+     }
+    ],
+    "counts": [
+     [
+      "kind",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "unresolved-external",
+   "value": "1",
+   "schema": "{\"$ref\":\"https://example.com/schema\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "unresolved-ref",
+      "path": [],
+      "schema_path": [
+       "$ref"
+      ],
+      "message": "unresolved schema reference 'https://example.com/schema'"
+     }
+    ],
+    "counts": [
+     [
+      "unresolved-ref",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "unresolved-fragment",
+   "value": "1",
+   "schema": "{\"$ref\":\"#not-a-pointer\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "unresolved-ref",
+      "path": [],
+      "schema_path": [
+       "$ref"
+      ],
+      "message": "unresolved schema reference '#not-a-pointer'"
+     }
+    ],
+    "counts": [
+     [
+      "unresolved-ref",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "unresolved-bad-escape",
+   "value": "1",
+   "schema": "{\"$ref\":\"#/$defs/a~2b\" \"$defs\":{a:{}}}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "unresolved-ref",
+      "path": [],
+      "schema_path": [
+       "$ref"
+      ],
+      "message": "unresolved schema reference '#/$defs/a~2b'"
+     }
+    ],
+    "counts": [
+     [
+      "unresolved-ref",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "unresolved-index",
+   "value": "1",
+   "schema": "{prefix_items:[{kind:\"int\"}] \"$ref\":\"#/prefix_items/9\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "unresolved-ref",
+      "path": [],
+      "schema_path": [
+       "$ref"
+      ],
+      "message": "unresolved schema reference '#/prefix_items/9'"
+     }
+    ],
+    "counts": [
+     [
+      "unresolved-ref",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "unresolved-huge-index",
+   "value": "1",
+   "schema": "{prefix_items:[{kind:\"int\"}] \"$ref\":\"#/prefix_items/9999999999999999999\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "unresolved-ref",
+      "path": [],
+      "schema_path": [
+       "$ref"
+      ],
+      "message": "unresolved schema reference '#/prefix_items/9999999999999999999'"
+     }
+    ],
+    "counts": [
+     [
+      "unresolved-ref",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "external-ref-fail",
+   "value": "0",
+   "schema": "{\"$ref\":\"urn:axon:test:positive\"}",
+   "value_profile": "core",
+   "registry": [
+    {
+     "identifier": "urn:axon:test:positive",
+     "schema": "{\"$id\":\"urn:axon:test:positive\" kind:\"int\" minimum:1}"
+    }
+   ],
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "minimum",
+      "path": [],
+      "schema_path": [
+       "$ref",
+       "urn:axon:test:positive",
+       "minimum"
+      ],
+      "message": "value is below minimum"
+     }
+    ],
+    "counts": [
+     [
+      "minimum",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "external-ref-cycle",
+   "value": "1",
+   "schema": "{\"$ref\":\"urn:axon:test:a\"}",
+   "value_profile": "core",
+   "registry": [
+    {
+     "identifier": "urn:axon:test:a",
+     "schema": "{\"$id\":\"urn:axon:test:a\" \"$ref\":\"urn:axon:test:b\"}"
+    },
+    {
+     "identifier": "urn:axon:test:b",
+     "schema": "{\"$id\":\"urn:axon:test:b\" \"$ref\":\"urn:axon:test:a\"}"
+    }
+   ],
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "recursive-list-ref",
+   "value": "[[[\"bad\"]]]",
+   "schema": "{\"$defs\":{list:{kind:\"list\" items:{\"$ref\":\"#/$defs/list\"}}} \"$ref\":\"#/$defs/list\"}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "kind",
+      "path": [
+       0,
+       0,
+       0
+      ],
+      "schema_path": [
+       "$ref",
+       "#/$defs/list",
+       "items",
+       "$ref",
+       "#/$defs/list",
+       "items",
+       "$ref",
+       "#/$defs/list",
+       "items",
+       "$ref",
+       "#/$defs/list",
+       "kind"
+      ],
+      "message": "expected list, got string"
+     }
+    ],
+    "counts": [
+     [
+      "kind",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "graph-root-anchor-transparent",
+   "value": "&a [1]",
+   "schema": "{kind:\"list\" items:{kind:\"int\"}}",
+   "value_profile": "graph",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "graph-shared-ref-transparent",
+   "value": "[&a {x:1} *a]",
+   "schema": "{kind:\"list\" items:{kind:\"map\" properties:{x:{kind:\"int\"}}}}",
+   "value_profile": "graph",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "graph-nested-const-transparent",
+   "value": "[&a {x:1} *a]",
+   "schema": "{const:[{x:1} {x:1}]}",
+   "value_profile": "graph",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "graph-nested-enum-transparent",
+   "value": "[&a {x:1} *a]",
+   "schema": "{enum:[[{x:1} {x:1}]]}",
+   "value_profile": "graph",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "graph-cycle-transparent",
+   "value": "&a [*a]",
+   "schema": "{\"$defs\":{list:{kind:\"list\" items:{\"$ref\":\"#/$defs/list\"}}} \"$ref\":\"#/$defs/list\"}",
+   "value_profile": "graph",
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "invalid-schema",
+   "value": "1",
+   "schema": "{properties:[]}",
+   "value_profile": "core",
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "invalid-schema",
+      "path": [],
+      "schema_path": [],
+      "message": "properties must be a mapping"
+     }
+    ],
+    "counts": [
+     [
+      "invalid-schema",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "normalization-resource-limit",
+   "value": "[]",
+   "schema": "{items:{items:{items:{kind:\"int\"}}}}",
+   "value_profile": "core",
+   "max_depth": 2,
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "resource-limit-exceeded",
+      "path": [],
+      "schema_path": [],
+      "message": "maximum schema nesting depth exceeded"
+     }
+    ],
+    "counts": [
+     [
+      "resource-limit-exceeded",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "validation-depth-limit",
+   "value": "[[[[1]]]]",
+   "schema": "{\"$defs\":{list:{kind:\"list\" items:{\"$ref\":\"#/$defs/list\"}}} \"$ref\":\"#/$defs/list\"}",
+   "value_profile": "core",
+   "max_depth": 6,
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "resource-limit-exceeded",
+      "path": [
+       0,
+       0,
+       0
+      ],
+      "schema_path": [
+       "$ref",
+       "#/$defs/list",
+       "items",
+       "$ref",
+       "#/$defs/list",
+       "items",
+       "$ref",
+       "#/$defs/list",
+       "items"
+      ],
+      "message": "maximum validation nesting depth exceeded"
+     }
+    ],
+    "counts": [
+     [
+      "resource-limit-exceeded",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "self-ref-depth-one",
+   "value": "1",
+   "schema": "{\"$ref\":\"#\"}",
+   "value_profile": "core",
+   "max_depth": 1,
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "resource-limit-exceeded",
+      "path": [],
+      "schema_path": [
+       "$ref",
+       "#"
+      ],
+      "message": "maximum validation nesting depth exceeded"
+     }
+    ],
+    "counts": [
+     [
+      "resource-limit-exceeded",
+      1
+     ]
+    ],
+    "truncated": false
+   }
+  },
+  {
+   "id": "self-ref-depth-two",
+   "value": "1",
+   "schema": "{\"$ref\":\"#\"}",
+   "value_profile": "core",
+   "max_depth": 2,
+   "report": {
+    "valid": true,
+    "issues": [],
+    "counts": [],
+    "truncated": false
+   }
+  },
+  {
+   "id": "issue-limit-two",
+   "value": "{a:0 b:0 c:0}",
+   "schema": "{kind:\"map\" properties:{a:{minimum:1} b:{minimum:1} c:{minimum:1}}}",
+   "value_profile": "core",
+   "max_issues": 2,
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "issue-limit-exceeded",
+      "path": [],
+      "schema_path": [],
+      "message": "validation produced more than 2 issues"
+     },
+     {
+      "code": "minimum",
+      "path": [
+       "a"
+      ],
+      "schema_path": [
+       "properties",
+       "a",
+       "minimum"
+      ],
+      "message": "value is below minimum"
+     }
+    ],
+    "counts": [
+     [
+      "issue-limit-exceeded",
+      1
+     ],
+     [
+      "minimum",
+      1
+     ]
+    ],
+    "truncated": true
+   }
+  },
+  {
+   "id": "issue-limit-one",
+   "value": "{a:0 b:0}",
+   "schema": "{kind:\"map\" properties:{a:{minimum:1} b:{minimum:1}}}",
+   "value_profile": "core",
+   "max_issues": 1,
+   "report": {
+    "valid": false,
+    "issues": [
+     {
+      "code": "issue-limit-exceeded",
+      "path": [],
+      "schema_path": [],
+      "message": "validation produced more than 1 issues"
+     }
+    ],
+    "counts": [
+     [
+      "issue-limit-exceeded",
+      1
+     ]
+    ],
+    "truncated": true
+   }
+  }
+ ],
+ "issue_ordering": {
+  "input": [
+   {
+    "code": "z-code",
+    "path": [
+     "z"
+    ],
+    "schema_path": [
+     "properties",
+     "z"
+    ],
+    "message": "last"
+   },
+   {
+    "code": "minimum",
+    "path": [
+     "a"
+    ],
+    "schema_path": [
+     "properties",
+     "a",
+     "minimum"
+    ],
+    "message": "low"
+   },
+   {
+    "code": "minimum",
+    "path": [
+     "a"
+    ],
+    "schema_path": [
+     "properties",
+     "a",
+     "minimum"
+    ],
+    "message": "low"
+   },
+   {
+    "code": "enum",
+    "path": [
+     "a"
+    ],
+    "schema_path": [
+     "properties",
+     "a",
+     "enum"
+    ],
+    "message": "enum"
+   },
+   {
+    "code": "kind",
+    "path": [
+     1
+    ],
+    "schema_path": [
+     "items"
+    ],
+    "message": "integer path"
+   },
+   {
+    "code": "kind",
+    "path": [
+     "1"
+    ],
+    "schema_path": [
+     "properties",
+     "1"
+    ],
+    "message": "string path"
+   },
+   {
+    "code": "a-code",
+    "path": [],
+    "schema_path": [],
+    "message": "root"
+   }
+  ],
+  "ordered_unique": [
+   {
+    "code": "a-code",
+    "path": [],
+    "schema_path": [],
+    "message": "root"
+   },
+   {
+    "code": "kind",
+    "path": [
+     1
+    ],
+    "schema_path": [
+     "items"
+    ],
+    "message": "integer path"
+   },
+   {
+    "code": "kind",
+    "path": [
+     "1"
+    ],
+    "schema_path": [
+     "properties",
+     "1"
+    ],
+    "message": "string path"
+   },
+   {
+    "code": "enum",
+    "path": [
+     "a"
+    ],
+    "schema_path": [
+     "properties",
+     "a",
+     "enum"
+    ],
+    "message": "enum"
+   },
+   {
+    "code": "minimum",
+    "path": [
+     "a"
+    ],
+    "schema_path": [
+     "properties",
+     "a",
+     "minimum"
+    ],
+    "message": "low"
+   },
+   {
+    "code": "z-code",
+    "path": [
+     "z"
+    ],
+    "schema_path": [
+     "properties",
+     "z"
+    ],
+    "message": "last"
+   }
+  ]
+ },
+ "safe_regex": [
+  {
+   "id": "empty",
+   "pattern": "",
+   "value": "anything",
+   "outcome": "match"
+  },
+  {
+   "id": "literal-match",
+   "pattern": "axon",
+   "value": "pyaxon",
+   "outcome": "match"
+  },
+  {
+   "id": "literal-miss",
+   "pattern": "axon",
+   "value": "AXON",
+   "outcome": "no-match"
+  },
+  {
+   "id": "dot-newline-default",
+   "pattern": "^a.b$",
+   "value": "a\nb",
+   "outcome": "no-match"
+  },
+  {
+   "id": "dotall",
+   "pattern": "(?s)^a.b$",
+   "value": "a\nb",
+   "outcome": "match"
+  },
+  {
+   "id": "multiline",
+   "pattern": "(?m)^b$",
+   "value": "a\nb\nc",
+   "outcome": "match"
+  },
+  {
+   "id": "alternation",
+   "pattern": "cat|dog",
+   "value": "a dog",
+   "outcome": "match"
+  },
+  {
+   "id": "character-range",
+   "pattern": "^[A-Z]{3}$",
+   "value": "ABC",
+   "outcome": "match"
+  },
+  {
+   "id": "negated-class",
+   "pattern": "^[^0-9]{2}$",
+   "value": "éΩ",
+   "outcome": "match"
+  },
+  {
+   "id": "unicode-digit",
+   "pattern": "^\\d+$",
+   "value": "١٢٣",
+   "outcome": "match"
+  },
+  {
+   "id": "unicode-digit-superscript",
+   "pattern": "^\\d+$",
+   "value": "²",
+   "outcome": "no-match"
+  },
+  {
+   "id": "ascii-digit-flag",
+   "pattern": "(?a)^\\d+$",
+   "value": "١",
+   "outcome": "no-match"
+  },
+  {
+   "id": "unicode-word-latin",
+   "pattern": "^\\w+$",
+   "value": "café",
+   "outcome": "match"
+  },
+  {
+   "id": "unicode-word-cjk",
+   "pattern": "^\\w+$",
+   "value": "日本語",
+   "outcome": "match"
+  },
+  {
+   "id": "unicode-word-combining-mark",
+   "pattern": "^\\w+$",
+   "value": "é",
+   "outcome": "no-match"
+  },
+  {
+   "id": "unicode-space-nbsp",
+   "pattern": "^\\s$",
+   "value": " ",
+   "outcome": "match"
+  },
+  {
+   "id": "unicode-space-em",
+   "pattern": "^\\s$",
+   "value": " ",
+   "outcome": "match"
+  },
+  {
+   "id": "ascii-space-flag",
+   "pattern": "(?a)^\\s$",
+   "value": " ",
+   "outcome": "no-match"
+  },
+  {
+   "id": "word-boundary",
+   "pattern": "\\bcafé\\b",
+   "value": "un café ici",
+   "outcome": "match"
+  },
+  {
+   "id": "unicode-ignorecase-kelvin",
+   "pattern": "(?i)^[a-z]+$",
+   "value": "K",
+   "outcome": "match"
+  },
+  {
+   "id": "unicode-ignorecase-long-s",
+   "pattern": "(?i)^[a-z]+$",
+   "value": "ſ",
+   "outcome": "match"
+  },
+  {
+   "id": "unicode-ignorecase-dotless-i",
+   "pattern": "(?i)^[a-z]+$",
+   "value": "ı",
+   "outcome": "match"
+  },
+  {
+   "id": "ascii-ignorecase-kelvin",
+   "pattern": "(?ai)^[a-z]+$",
+   "value": "K",
+   "outcome": "no-match"
+  },
+  {
+   "id": "scoped-ignorecase",
+   "pattern": "^(?i:axon)$",
+   "value": "AxOn",
+   "outcome": "match"
+  },
+  {
+   "id": "verbose",
+   "pattern": "(?x)^ a [ ] b $",
+   "value": "a b",
+   "outcome": "match"
+  },
+  {
+   "id": "absolute-anchor",
+   "pattern": "\\Aaxon\\Z",
+   "value": "axon",
+   "outcome": "match"
+  },
+  {
+   "id": "fixed-repeat-unanchored",
+   "pattern": "a{2}",
+   "value": "baac",
+   "outcome": "match"
+  },
+  {
+   "id": "fixed-repeat-unanchored-limit",
+   "pattern": "a{4096}",
+   "value": "a",
+   "outcome": "no-match"
+  },
+  {
+   "id": "fixed-repeat-cumulative-limit",
+   "pattern": "a{2048}a{2048}",
+   "value": "a",
+   "outcome": "no-match"
+  },
+  {
+   "id": "fixed-branch-cumulative-limit",
+   "pattern": "a{2048}|b{2048}",
+   "value": "c",
+   "outcome": "no-match"
+  },
+  {
+   "id": "oversized-fixed-unanchored",
+   "pattern": "a{4097}",
+   "value": "a",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "pattern uses a potentially superlinear construct"
+  },
+  {
+   "id": "oversized-fixed-failing-suffix",
+   "pattern": "a{500000}b",
+   "value": "aaaa",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "pattern uses a potentially superlinear construct"
+  },
+  {
+   "id": "oversized-fixed-anchored",
+   "pattern": "^a{500000}b$",
+   "value": "a",
+   "outcome": "no-match"
+  },
+  {
+   "id": "oversized-fixed-cumulative",
+   "pattern": "a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}b",
+   "value": "a",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "pattern uses a potentially superlinear construct"
+  },
+  {
+   "id": "oversized-fixed-branches",
+   "pattern": "a{2049}|b{2049}",
+   "value": "c",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "pattern uses a potentially superlinear construct"
+  },
+  {
+   "id": "oversized-fixed-cumulative-anchored",
+   "pattern": "^a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}a{4096}b$",
+   "value": "a",
+   "outcome": "no-match"
+  },
+  {
+   "id": "fixed-repeat-with-variable",
+   "pattern": "^a+b{2}$",
+   "value": "aaabb",
+   "outcome": "match"
+  },
+  {
+   "id": "bounded-variable",
+   "pattern": "^a{1,3}$",
+   "value": "aaa",
+   "outcome": "match"
+  },
+  {
+   "id": "lazy-repeat",
+   "pattern": "^a+?$",
+   "value": "aaa",
+   "outcome": "match"
+  },
+  {
+   "id": "possessive-repeat",
+   "pattern": "^a++$",
+   "value": "aaa",
+   "outcome": "match"
+  },
+  {
+   "id": "possessive-repeat-commits",
+   "pattern": "^a++a$",
+   "value": "aa",
+   "outcome": "no-match"
+  },
+  {
+   "id": "named-capture",
+   "pattern": "^(?P<word>[A-Z]{2})$",
+   "value": "AX",
+   "outcome": "match"
+  },
+  {
+   "id": "capturing-hidden-start-anchor",
+   "pattern": "(^a+)",
+   "value": "aaa",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "variable quantifiers require a start anchor and one repeat path"
+  },
+  {
+   "id": "noncapturing-start-anchor",
+   "pattern": "(?:^a+)",
+   "value": "aaa",
+   "outcome": "match"
+  },
+  {
+   "id": "scoped-hidden-start-anchor",
+   "pattern": "(?i:^a+)",
+   "value": "AAA",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "variable quantifiers require a start anchor and one repeat path"
+  },
+  {
+   "id": "atomic-group",
+   "pattern": "^(?>a+)b$",
+   "value": "aaab",
+   "outcome": "match"
+  },
+  {
+   "id": "atomic-hidden-start-anchor",
+   "pattern": "(?>^a+)",
+   "value": "aaa",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "variable quantifiers require a start anchor and one repeat path"
+  },
+  {
+   "id": "atomic-alternation-commits",
+   "pattern": "(?>a|ab)c",
+   "value": "abc",
+   "outcome": "no-match"
+  },
+  {
+   "id": "atomic-unanchored-variable",
+   "pattern": "(?>a+)b",
+   "value": "aaaa",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "variable quantifiers require a start anchor and one repeat path"
+  },
+  {
+   "id": "atomic-nested-repeat",
+   "pattern": "^(?>(a+)+)$",
+   "value": "aaaa",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "pattern uses a potentially superlinear construct"
+  },
+  {
+   "id": "ignorecase-sharp-s-is-not-single-s",
+   "pattern": "(?i)^ß$",
+   "value": "S",
+   "outcome": "no-match"
+  },
+  {
+   "id": "invalid-unclosed-class",
+   "pattern": "[",
+   "value": "x",
+   "outcome": "error",
+   "error_kind": "regex",
+   "error_type": "PatternError",
+   "message": "unterminated character set at position 0"
+  },
+  {
+   "id": "invalid-unclosed-group",
+   "pattern": "(abc",
+   "value": "abc",
+   "outcome": "error",
+   "error_kind": "regex",
+   "error_type": "PatternError",
+   "message": "missing ), unterminated subpattern at position 0"
+  },
+  {
+   "id": "invalid-escape",
+   "pattern": "\\k",
+   "value": "k",
+   "outcome": "error",
+   "error_kind": "regex",
+   "error_type": "PatternError",
+   "message": "bad escape \\k at position 0"
+  },
+  {
+   "id": "backreference",
+   "pattern": "^(a)\\1$",
+   "value": "aa",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "pattern uses a potentially superlinear construct"
+  },
+  {
+   "id": "positive-lookahead",
+   "pattern": "^(?=a)a$",
+   "value": "a",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "pattern uses a potentially superlinear construct"
+  },
+  {
+   "id": "negative-lookahead",
+   "pattern": "^(?!b)a$",
+   "value": "a",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "pattern uses a potentially superlinear construct"
+  },
+  {
+   "id": "positive-lookbehind",
+   "pattern": "(?<=a)b",
+   "value": "ab",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "pattern uses a potentially superlinear construct"
+  },
+  {
+   "id": "conditional",
+   "pattern": "^(a)?(?(1)b|c)$",
+   "value": "ab",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "pattern uses a potentially superlinear construct"
+  },
+  {
+   "id": "nested-repeat",
+   "pattern": "^(a+)+$",
+   "value": "aaaa",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "pattern uses a potentially superlinear construct"
+  },
+  {
+   "id": "nested-fixed-repeat",
+   "pattern": "^(a{2}){3}$",
+   "value": "aaaaaa",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "pattern uses a potentially superlinear construct"
+  },
+  {
+   "id": "branch-in-repeat",
+   "pattern": "^(?:ab|cd)+$",
+   "value": "abcd",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "pattern uses a potentially superlinear construct"
+  },
+  {
+   "id": "unanchored-variable",
+   "pattern": "a+",
+   "value": "aaaa",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "variable quantifiers require a start anchor and one repeat path"
+  },
+  {
+   "id": "multiple-variable",
+   "pattern": "^a*b*$",
+   "value": "aaabbb",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "variable quantifiers require a start anchor and one repeat path"
+  },
+  {
+   "id": "branch-two-variable-paths",
+   "pattern": "^(?:a+|b+)$",
+   "value": "aaa",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "variable quantifiers require a start anchor and one repeat path"
+  },
+  {
+   "id": "anchored-one-variable",
+   "pattern": "^[A-Z]+$",
+   "value": "AXON",
+   "outcome": "match"
+  },
+  {
+   "id": "start-string-one-variable",
+   "pattern": "\\A\\w+",
+   "value": "axon!",
+   "outcome": "match"
+  },
+  {
+   "id": "end-only-not-start",
+   "pattern": "a+$",
+   "value": "aaaa",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "variable quantifiers require a start anchor and one repeat path"
+  },
+  {
+   "id": "length-1024",
+   "pattern": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "outcome": "match"
+  },
+  {
+   "id": "length-1025",
+   "pattern": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "outcome": "error",
+   "error_kind": "value",
+   "error_type": "ValueError",
+   "message": "pattern exceeds 1024 characters"
+  }
+ ]
+}
