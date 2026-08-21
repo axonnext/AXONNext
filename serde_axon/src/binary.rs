@@ -1979,7 +1979,9 @@ mod tests {
 
         assert_eq!(text.len() % 2, 0, "test hex must contain whole bytes");
         text.as_bytes()
-            .chunks_exact(2)
+            .as_chunks::<2>()
+            .0
+            .iter()
             .map(|pair| nibble(pair[0]) << 4 | nibble(pair[1]))
             .collect()
     }

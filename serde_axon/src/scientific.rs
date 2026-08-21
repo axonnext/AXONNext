@@ -798,7 +798,7 @@ impl ScientificArray {
     pub fn to_c64_components_vec(&self) -> Result<Vec<(f32, f32)>, Error> {
         let bytes = self.typed_bytes(ArrayDtype::C64)?;
         let mut output = Vec::with_capacity(bytes.len() / 8);
-        for chunk in bytes.chunks_exact(8) {
+        for chunk in bytes.as_chunks::<8>().0 {
             let real = f32::from_le_bytes(chunk[..4].try_into().expect("c64 real width"));
             let imaginary = f32::from_le_bytes(chunk[4..].try_into().expect("c64 imaginary width"));
             output.push((real, imaginary));
@@ -810,7 +810,7 @@ impl ScientificArray {
     pub fn to_c128_components_vec(&self) -> Result<Vec<(f64, f64)>, Error> {
         let bytes = self.typed_bytes(ArrayDtype::C128)?;
         let mut output = Vec::with_capacity(bytes.len() / 16);
-        for chunk in bytes.chunks_exact(16) {
+        for chunk in bytes.as_chunks::<16>().0 {
             let real = f64::from_le_bytes(chunk[..8].try_into().expect("c128 real width"));
             let imaginary =
                 f64::from_le_bytes(chunk[8..].try_into().expect("c128 imaginary width"));
